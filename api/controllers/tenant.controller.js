@@ -13,7 +13,7 @@ var business = require('../business/tenant.business');
 module.exports.tenantsGetAll = function (req, res) {
     
     // builds clause
-    where = {};
+    var where = {};
     where = common.setClauseAll(req, where);
     where = business.setClauseQuery(req.query, where);
     
