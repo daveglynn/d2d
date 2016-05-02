@@ -1,0 +1,16 @@
+# node files will be downloaded and installed as required
+node_modules/
+
+# local development data only
+data/*.sqlite
+
+# nodemon
+nodemon.json
+
+#visual studio folders and files
+obj/
+bin/
+d2d.njsproj
+d2d.sln
+.ntvs_analysis.dat
+.vs/
