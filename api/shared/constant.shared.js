@@ -1,12 +1,14 @@
 ﻿/******************************************************************************************************
- common business layer
+ constants extension
 ******************************************************************************************************/
-
 "use strict";
-var db = require('../.././db.js');
-var _ = require('underscore');
 
-module.exports = {
-    
-};
- 
+function define(name, value) {
+    Object.defineProperty(exports, name, {
+        value: value,
+        enumerable: true
+    });
+}
+
+define("PI", 3.14);
+

@@ -1,6 +1,13 @@
-﻿"use strict";
+﻿/******************************************************************************************************
+ controller layer
+******************************************************************************************************/
+"use strict";
 var db = require('../.././db.js');
 var _ = require('underscore');
+var constants = require('.././shared/constant.shared');
+var common = require('./extensions/common.extension');
+var business = require('./extensions/order.extension');
+
 
 module.exports.ordersGetByUserId = function (req, res) {
     var query = req.query;

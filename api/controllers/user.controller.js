@@ -1,9 +1,16 @@
+/******************************************************************************************************
+ controller layer
+******************************************************************************************************/
 "use strict";
 var db = require('../.././db.js');
 var _ = require('underscore');
-var common = require('../business/common.business');
-var business = require('../business/user.business');
+var constants = require('.././shared/constant.shared');
+var common = require('./extensions/common.extension');
+var business = require('./extensions/user.extension');
 
+/******************************************************************************************************
+ Insert a Record 
+******************************************************************************************************/
 module.exports.usersPost = function(req, res) {
 
     // pick appropiate fields and set tenant
@@ -16,6 +23,9 @@ module.exports.usersPost = function(req, res) {
 	});
 };
 
+/******************************************************************************************************
+ Login 
+******************************************************************************************************/
 module.exports.usersLogin = function(req, res) {
 	var body = _.pick(req.body, 'email', 'password');
 	var userInstance;
@@ -34,7 +44,9 @@ module.exports.usersLogin = function(req, res) {
 	});
 };
 
-
+/******************************************************************************************************
+ Logout 
+******************************************************************************************************/
 module.exports.usersLogout = function(req, res) {
 	req.token.destroy().then(function() {
 		res.status(204).send();
