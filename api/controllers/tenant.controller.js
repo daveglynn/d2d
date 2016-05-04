@@ -12,19 +12,19 @@ var business = require('./extensions/tenant.extension');
 /******************************************************************************************************
  Get All Records 
 ******************************************************************************************************/
-module.exports.tenantsGetAll = function (req, res) {
-    
+module.exports.tenantsGetAll = function(req, res) {
+
     // builds clause
     var where = {};
     where = common.setClauseAll(req, where);
     where = business.setClauseQuery(req.query, where);
-    
+
     //find and return the records    
     db.tenant.findAll({
         where: where
-    }).then(function (tenants) {
+    }).then(function(tenants) {
         res.json(tenants);
-    }, function (e) {
+    }, function(e) {
         res.status(500).send();
     })
 };
@@ -32,22 +32,22 @@ module.exports.tenantsGetAll = function (req, res) {
 /******************************************************************************************************
  Get a Record created by Id 
 ******************************************************************************************************/
-module.exports.tenantsGetById = function (req, res) {
-    
+module.exports.tenantsGetById = function(req, res) {
+
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+
     //find and return the records 
     db.tenant.findOne({
         where: where
-    }).then(function (tenant) {
+    }).then(function(tenant) {
         if (!!tenant) {
             res.json(tenant.toJSON());
         } else {
             res.status(404).send();
         }
-    }, function (e) {
+    }, function(e) {
         res.status(500).send();
     })
 };
@@ -55,15 +55,15 @@ module.exports.tenantsGetById = function (req, res) {
 /******************************************************************************************************
  Insert a Record 
 ******************************************************************************************************/
-module.exports.tenantsPost = function (req, res) {
-    
+module.exports.tenantsPost = function(req, res) {
+
     // pick appropiate fields 
-    var body = business.setPost(req,'C');
-    
+    var body = business.setPost(req, 'C');
+
     // create record on database, refresh and return local record to client
-    db.tenant.create(body).then(function (tenant) {
+    db.tenant.create(body).then(function(tenant) {
         res.json(tenant.toJSON())
-    }, function (e) {
+    }, function(e) {
         res.status(400).json(e);
     });
 
@@ -72,32 +72,32 @@ module.exports.tenantsPost = function (req, res) {
 /******************************************************************************************************
  Update a Record 
 ******************************************************************************************************/
-module.exports.tenantsPut = function (req, res) {
-    
+module.exports.tenantsPut = function(req, res) {
+
     // pick appropiate fields 
     var body = business.setPost(req, 'U');
-    
+
     // set the attributes to update
     var attributes = business.prepareForUpdate(body);
-    
+
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+
     // find record on database, update record and return to client
     db.tenant.findOne({
         where: where
-    }).then(function (tenant) {
+    }).then(function(tenant) {
         if (tenant) {
-            tenant.update(attributes).then(function (tenant) {
+            tenant.update(attributes).then(function(tenant) {
                 res.json(tenant.toJSON());
-            }, function (e) {
+            }, function(e) {
                 res.status(400).json(e);
             });
         } else {
             res.status(404).send();
         }
-    }, function () {
+    }, function() {
         res.status(500).send();
     });
 };
@@ -105,16 +105,16 @@ module.exports.tenantsPut = function (req, res) {
 /******************************************************************************************************
  Delete a Record 
 ******************************************************************************************************/
-module.exports.tenantsDelete = function (req, res) {
-    
+module.exports.tenantsDelete = function(req, res) {
+
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+
     // delete record on database
     db.tenant.destroy({
         where: where
-    }).then(function (rowsDeleted) {
+    }).then(function(rowsDeleted) {
         if (rowsDeleted === 0) {
             res.status(404).json({
                 error: 'No record found with id'
@@ -122,7 +122,7 @@ module.exports.tenantsDelete = function (req, res) {
         } else {
             res.status(204).send();
         }
-    }, function () {
+    }, function() {
         res.status(500).send();
     });
 };

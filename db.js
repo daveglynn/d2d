@@ -35,6 +35,9 @@ db.token = sequelize.import(__dirname + '/api/models/token.model.js');
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.order.belongsTo(db.tenant);
+db.tenant.hasMany(db.order);
+
 db.user.belongsTo(db.tenant);
 db.tenant.hasMany(db.user);
  

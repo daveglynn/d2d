@@ -10,5 +10,5 @@ function define(name, value) {
     });
 }
 
-define("PI", 3.14);
+define("AdminRole", 1);
 

@@ -12,5 +12,6 @@ obj/
 bin/
 d2d.njsproj
 d2d.sln
+d2d.v12.suo
 .ntvs_analysis.dat
 .vs/

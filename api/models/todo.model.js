@@ -3,8 +3,8 @@
 ******************************************************************************************************/
 "use strict";
 var _ = require('underscore');
-module.exports = function (sequelize, DataTypes) {
-	return sequelize.define('todo', {
+module.exports = function(sequelize, DataTypes) {
+    return sequelize.define('todo', {
         description: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -27,13 +27,13 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true,
             defaultValue: null
         }
-     },{
-        instanceMethods: {
-            toPublicJSON: function () {
-                var json = this.toJSON();
-                return _.omit(json, 'tenantId');
+    }, {
+            instanceMethods: {
+                toPublicJSON: function() {
+                    var json = this.toJSON();
+                    return _.omit(json, 'tenantId');
+                }
             }
-        }
 
-	});
+        });
 };

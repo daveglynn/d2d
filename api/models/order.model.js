@@ -2,12 +2,12 @@
  model layer
 ******************************************************************************************************/
 "use strict";
-module.exports = function (sequelize, DataTypes) {
-	return sequelize.define('order', {
-		orderStatusId: {
-			type: DataTypes.INTEGER,
-			allowNull: false,
-			defaultValue: null
+module.exports = function(sequelize, DataTypes) {
+    return sequelize.define('order', {
+        orderStatusId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: null
         },
         orderTypeId: {
             type: DataTypes.INTEGER,
@@ -16,7 +16,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         deleted: {
             type: DataTypes.BOOLEAN,
-		    allowNull: false,
+            allowNull: false,
             defaultValue: false
         },
         description: {
@@ -25,7 +25,7 @@ module.exports = function (sequelize, DataTypes) {
             validate: {
                 len: [1, 250]
             }
-        },        
+        },
         dateOrdered: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -45,6 +45,14 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: true,
             defaultValue: null
-        },
-	});
+        }
+    }, {
+            instanceMethods: {
+                toPublicJSON: function() {
+                    var json = this.toJSON();
+                    return _.omit(json, 'tenantId');
+                }
+            }
+
+        });
 };

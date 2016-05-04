@@ -2,7 +2,7 @@
  model layer
 ******************************************************************************************************/
 "use strict";
-module.exports = function (sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
     return sequelize.define('tenant', {
         name: {
             type: DataTypes.STRING,
