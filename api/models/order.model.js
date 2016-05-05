@@ -2,6 +2,7 @@
  model layer
 ******************************************************************************************************/
 "use strict";
+var _ = require('underscore');
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define('order', {
         orderStatusId: {
@@ -28,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         dateOrdered: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             defaultValue: null
         },
         dateCompleted: {

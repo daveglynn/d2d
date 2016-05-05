@@ -6,7 +6,7 @@ var db = require('../.././db.js');
 var _ = require('underscore');
 var constants = require('.././shared/constant.shared');
 var common = require('./extensions/common.extension');
-var business = require('./extensions/todo.extension');
+var extension = require('./extensions/todo.extension');
 
 
 /******************************************************************************************************
@@ -17,7 +17,7 @@ module.exports.todosGetAll = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseAll(req, where);
-    where = business.setClauseQuery(req.query, where);
+    where = extension.setClauseQuery(req.query, where);
     where = common.setClauseTenantId(req, where);
     var attributes = common.setAttributes();
 
@@ -40,7 +40,7 @@ module.exports.todosGetByUserId = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseUserId(req, where);
-    where = business.setClauseQuery(req.query, where);
+    where = extension.setClauseQuery(req.query, where);
     where = common.setClauseTenantId(req, where);
     var attributes = common.setAttributes();
 
@@ -87,7 +87,7 @@ module.exports.todosGetById = function(req, res) {
 module.exports.todosPost = function(req, res) {
 
     // pick appropiate fields and set tenant
-    var body = business.setPost(req, 'C');
+    var body = extension.setPost(req, 'C');
 
     // create record on database, refresh and return local record to client
     db.todo.create(body).then(function(todo) {
@@ -107,10 +107,10 @@ module.exports.todosPost = function(req, res) {
 module.exports.todosPut = function(req, res) {
 
     // pick appropiate fields and set tenant
-    var body = business.setPost(req, 'U');
+    var body = extension.setPost(req, 'U');
 
     // set the attributes to update
-    var attributes = business.prepareForUpdate(body);
+    var attributes = extension.prepareForUpdate(body);
 
     // builds clause
     var where = {};

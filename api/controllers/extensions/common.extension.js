@@ -4,7 +4,7 @@
 "use strict";
 var db = require('../../.././db.js');
 var _ = require('underscore');
-
+ 
 module.exports = {
     
     setClauseAll: function (req,where ) {

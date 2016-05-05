@@ -6,7 +6,7 @@ var db = require('../.././db.js');
 var _ = require('underscore');
 var constants = require('.././shared/constant.shared');
 var common = require('./extensions/common.extension');
-var business = require('./extensions/user.extension');
+var extension = require('./extensions/user.extension');
 
 /******************************************************************************************************
  Insert a Record 
@@ -14,7 +14,7 @@ var business = require('./extensions/user.extension');
 module.exports.usersPost = function(req, res) {
 
     // pick appropiate fields and set tenant
-    var body = business.setPost(req, 'C');
+    var body = extension.setPost(req, 'C');
 
     db.user.create(body).then(function(user) {
         res.json(user.toPublicJSON())

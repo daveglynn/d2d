@@ -6,7 +6,7 @@ var db = require('../.././db.js');
 var _ = require('underscore');
 var constants = require('.././shared/constant.shared');
 var common = require('./extensions/common.extension');
-var business = require('./extensions/order.extension');
+var extension = require('./extensions/order.extension');
 
 
 /******************************************************************************************************
@@ -20,7 +20,7 @@ module.exports.ordersGetAll = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseAll(req, where);
-    where = business.setClauseQuery(req.query, where);
+    where = extension.setClauseQuery(req.query, where);
     where = common.setClauseTenantId(req, where);
     var attributes = common.setAttributes();
 
@@ -43,7 +43,7 @@ module.exports.ordersGetById = function(req, res) {
 
     // builds clause
     var where = {};
-    where = common.setClauseIdUserId(req, where);
+    where = common.setClauseId(req, where);
     where = common.setClauseTenantId(req, where);
     var attributes = common.setAttributes();
 
@@ -68,7 +68,7 @@ module.exports.ordersGetById = function(req, res) {
 module.exports.ordersPost = function(req, res) {
 
     // pick appropiate fields 
-    var body = business.setPost(req, 'C');
+    var body = extension.setPost(req, 'C');
 
     // create record on database, refresh and return local record to client
     db.order.create(body).then(function(order) {
@@ -85,14 +85,14 @@ module.exports.ordersPost = function(req, res) {
 module.exports.ordersPut = function(req, res) {
 
     // pick appropiate fields and set tenant
-    var body = business.setPost(req, 'U');
+    var body = extension.setPost(req, 'U');
 
     // set the attributes to update
-    var attributes = business.prepareForUpdate(body);
+    var attributes = extension.prepareForUpdate(body);
 
     // builds clause
     var where = {};
-    where = common.setClauseIdUserId(req, where);
+    where = common.setClauseId(req, where);
     where = common.setClauseTenantId(req, where);
 
     // find record on database, update record and return to client
@@ -120,7 +120,7 @@ module.exports.ordersDelete = function(req, res) {
 
     // builds clause
     var where = {};
-    where = common.setClauseIdUserId(req, where);
+    where = common.setClauseId(req, where);
     where = common.setClauseTenantId(req, where);
 
     // delete record on database

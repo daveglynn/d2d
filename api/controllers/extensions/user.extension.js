@@ -3,7 +3,7 @@
 ******************************************************************************************************/
 "use strict";
 var _ = require('underscore');
-var common = require('../../business/common.business');
+var common = require('./common.extension');
 
 /******************************************************************************************************
  Fetch a Record

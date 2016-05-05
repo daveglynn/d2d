@@ -6,7 +6,7 @@ var db = require('../.././db.js');
 var _ = require('underscore');
 var constants = require('.././shared/constant.shared');
 var common = require('./extensions/common.extension');
-var business = require('./extensions/tenant.extension');
+var extension = require('./extensions/tenant.extension');
 
 
 /******************************************************************************************************
@@ -17,7 +17,7 @@ module.exports.tenantsGetAll = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseAll(req, where);
-    where = business.setClauseQuery(req.query, where);
+    where = extension.setClauseQuery(req.query, where);
 
     //find and return the records    
     db.tenant.findAll({
@@ -58,7 +58,7 @@ module.exports.tenantsGetById = function(req, res) {
 module.exports.tenantsPost = function(req, res) {
 
     // pick appropiate fields 
-    var body = business.setPost(req, 'C');
+    var body = extension.setPost(req, 'C');
 
     // create record on database, refresh and return local record to client
     db.tenant.create(body).then(function(tenant) {
@@ -75,10 +75,10 @@ module.exports.tenantsPost = function(req, res) {
 module.exports.tenantsPut = function(req, res) {
 
     // pick appropiate fields 
-    var body = business.setPost(req, 'U');
+    var body = extension.setPost(req, 'U');
 
     // set the attributes to update
-    var attributes = business.prepareForUpdate(body);
+    var attributes = extension.prepareForUpdate(body);
 
     // builds clause
     var where = {};
