@@ -26,56 +26,56 @@ router
 
 router
     .route('/tenants/all')
-    .get(middleware.requireAuthentication, ctrlTenant.tenantsGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantsGetAll);
 router
     .route('/tenants/:id')
-    .get(middleware.requireAuthentication, ctrlTenant.tenantsGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantsGetById);
 router
     .route('/tenants')
-    .post(middleware.requireAuthentication, ctrlTenant.tenantsPost);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantsPost);
 router
     .route('/tenants/:id')
-    .delete(middleware.requireAuthentication, ctrlTenant.tenantsDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantsDelete);
 router
     .route('/tenants/:id')
-    .put(middleware.requireAuthentication, ctrlTenant.tenantsPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantsPut);
 
-
+      
 router
     .route('/todos')
-    .get(middleware.requireAuthentication, ctrlTodo.todosGetByUserId);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlTodo.todosGetByUserId);
 router
     .route('/todos/all')
-    .get(middleware.requireAuthentication, ctrlTodo.todosGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlTodo.todosGetAll);
 router
     .route('/todos/:id')
-    .get(middleware.requireAuthentication, ctrlTodo.todosGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todosGetById);
 router
     .route('/todos')
-    .post(middleware.requireAuthentication, ctrlTodo.todosPost);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlTodo.todosPost);
 router
     .route('/todos/:id')
-    .delete(middleware.requireAuthentication, ctrlTodo.todosDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlTodo.todosDelete);
 router
     .route('/todos/:id')
-    .put(middleware.requireAuthentication, ctrlTodo.todosPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlTodo.todosPut);
 
 
 
 router
     .route('/orders/all')
-    .get(middleware.requireAuthentication, ctrlOrder.ordersGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlOrder.ordersGetAll);
 router
     .route('/orders/:id')
-    .get(middleware.requireAuthentication, ctrlOrder.ordersGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlOrder.ordersGetById);
 router
     .route('/orders')
-    .post(middleware.requireAuthentication, ctrlOrder.ordersPost);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlOrder.ordersPost);
 router
     .route('/orders/:id')
-    .delete(middleware.requireAuthentication, ctrlOrder.ordersDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlOrder.ordersDelete);
 router
     .route('/orders/:id')
-    .put(middleware.requireAuthentication, ctrlOrder.ordersPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlOrder.ordersPut);
 
 module.exports = router;

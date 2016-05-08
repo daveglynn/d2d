@@ -4,7 +4,7 @@
 "use strict";
 var db = require('../.././db.js');
 var _ = require('underscore');
-var constants = require('.././shared/constant.shared');
+var constants = require('../.././shared/constant.shared');
 var common = require('./extensions/common.extension');
 var extension = require('./extensions/order.extension');
 
