@@ -14,9 +14,6 @@ var extension = require('./extensions/order.extension');
 ******************************************************************************************************/
 module.exports.ordersGetAll = function(req, res) {
 
-    console.log(constants.PI);
-    console.log(constants.PI);
-
     // builds clause
     var where = {};
     where = common.setClauseAll(req, where);
