@@ -63,6 +63,9 @@ router
 
 
 router
+    .route('/orders')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.ordersGetByUserId);
+router
     .route('/orders/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlOrder.ordersGetAll);
 router

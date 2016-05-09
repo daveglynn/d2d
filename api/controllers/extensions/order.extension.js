@@ -56,6 +56,13 @@ module.exports = {
 
     },
     
+    setClauseCreatedBy: function (req, where) {
+        
+        where.createdBy = req.user.get('id')
+        return where;
+
+    },
+
     setClauseQuery: function (query, where) {
         
         //set query parameters   

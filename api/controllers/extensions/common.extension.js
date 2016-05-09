@@ -27,8 +27,7 @@ module.exports = {
         return where;
 
     },
-    
-     
+         
     setClauseIdUserId: function (req, where) {
         
         where.id = parseInt(req.params.id, 10);

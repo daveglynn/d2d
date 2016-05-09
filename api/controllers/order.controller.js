@@ -35,7 +35,28 @@ module.exports.ordersGetAll = function(req, res) {
     })
 };
 
-
+/******************************************************************************************************
+ Get All Records created by UserId - Filtered by TenantId
+******************************************************************************************************/
+module.exports.ordersGetByUserId = function (req, res) {
+    
+    // builds clause
+    var where = {};
+    where = extension.setClauseCreatedBy(req, where);
+    where = extension.setClauseQuery(req.query, where);
+    where = common.setClauseTenantId(req, where);
+    var attributes = common.setAttributes();
+    
+    //find and return the records  
+    db.order.findAll({
+        attributes: attributes,
+        where: where
+    }).then(function (orders) {
+        res.json(orders);
+    }, function (e) {
+        res.status(500).send();
+    })
+};
 /******************************************************************************************************
  Get a Record created by Id - Filtered by TenantId
 ******************************************************************************************************/
