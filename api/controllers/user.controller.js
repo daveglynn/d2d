@@ -60,7 +60,7 @@ module.exports.usersLogout = function(req, res) {
 ******************************************************************************************************/
 module.exports.usersGetAll = function (req, res) {
     
-    // builds clause
+    // builds clause 
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
