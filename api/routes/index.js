@@ -25,7 +25,7 @@ router
     .delete(middleware.requireAuthentication, ctrlUser.usersLogout);
 router
     .route('/users/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlUser.usersGetAll);
+    .get(ctrlUser.usersGetAll);
 router
     .route('/users/:id')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersGetById);

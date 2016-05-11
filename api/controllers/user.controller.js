@@ -62,8 +62,8 @@ module.exports.usersGetAll = function (req, res) {
     
     // builds clause 
     var where = {};
-    where = common.setClauseAll(req, where);
-    where = extension.setClauseQuery(req.query, where);
+    //where = common.setClauseAll(req, where);
+    //where = extension.setClauseQuery(req.query, where);
     var attributes = common.setAttributes();
     
     //find and return the records    
