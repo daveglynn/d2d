@@ -28,6 +28,32 @@ module.exports = {
         return body;
 
     },
+    prepareForUpdate: function (body) {
+        
+        var attributes = {};
+        if (body.hasOwnProperty('email')) {
+            attributes.email = body.email;
+        }
+        if (body.hasOwnProperty('createdBy')) {
+            attributes.tenantId = body.createdBy;
+        }
+        if (body.hasOwnProperty('updatedBy')) {
+            attributes.tenantId = body.createdBy;
+        }
+        return attributes;
+
+    },
+    setClauseQuery: function (query, where) {
+        
+        //set query parameters   
+        if (query.hasOwnProperty('q') && query.q.length > 0) {
+            where.email = {
+                $like: '%' + query.q + '%'
+            };
+        }
+        return where;
+
+    },
 
 };
 

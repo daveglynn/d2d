@@ -23,6 +23,22 @@ router
 router
     .route('/users/login')
     .delete(middleware.requireAuthentication, ctrlUser.usersLogout);
+router
+    .route('/users/all')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlUser.usersGetAll);
+router
+    .route('/users/:id')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersGetById);
+router
+    .route('/users')
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersPost);
+router
+    .route('/users/:id')
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersDelete);
+router
+    .route('/users/:id')
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation,  ctrlUser.usersPut);
+
 
 router
     .route('/tenants/all')

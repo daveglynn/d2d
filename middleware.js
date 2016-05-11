@@ -25,7 +25,7 @@ module.exports = function(db) {
 				        req.token = tokenInstance;
 				        return db.user.findByToken(token);
 			        }).then(function(user) {
-				        req.user = user;
+                        req.user = user;
 				        next();
 			        }).catch(function() {
 				        res.status(401).send();
