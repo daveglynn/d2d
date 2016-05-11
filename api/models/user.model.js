@@ -22,6 +22,27 @@ module.exports = function(sequelize, DataTypes) {
                 isEmail: true
             }
         },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                len: [1, 150]
+            }
+        },
+        phone: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                len: [1, 50]
+            }
+        },
+        address: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                len: [1, 1000]
+            }
+        },
         salt: {
             type: DataTypes.STRING
         },
@@ -113,7 +134,7 @@ module.exports = function(sequelize, DataTypes) {
             instanceMethods: {
                 toPublicJSON: function() {
                     var json = this.toJSON();
-                    return _.pick(json, 'id', 'email', 'createdAt', 'updatedAt');
+                    return _.pick(json, 'id', 'email', 'name', 'phone', 'address', 'createdAt', 'updatedAt');
                 },
                 generateToken: function(type) {
                     if (!_.isString(type)) {

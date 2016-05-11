@@ -14,7 +14,7 @@ module.exports = {
     setPost: function (req, mode) {
         
         //clean post
-        var body = _.pick(req.body, 'email', 'password', 'tenantId', 'role');
+        var body = _.pick(req.body, 'email', 'password', 'name', 'phone', 'address', 'tenantId', 'role');
         
         //add tenant
         body.tenantId = null;
@@ -34,12 +34,22 @@ module.exports = {
         if (body.hasOwnProperty('email')) {
             attributes.email = body.email;
         }
+        if (body.hasOwnProperty('name')) {
+            attributes.name = body.name;
+        }
+        if (body.hasOwnProperty('phone')) {
+            attributes.phone = body.phone;
+        }
+        if (body.hasOwnProperty('address')) {
+            attributes.address = body.address;
+        }
         if (body.hasOwnProperty('createdBy')) {
             attributes.tenantId = body.createdBy;
         }
         if (body.hasOwnProperty('updatedBy')) {
             attributes.tenantId = body.createdBy;
         }
+
         return attributes;
 
     },
