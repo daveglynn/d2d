@@ -10,6 +10,12 @@ var app = express();
 var path = require('path');
 var PORT = process.env.PORT || 3000;
 
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 // middleware to console log every request
 app.use(function(req, res, next) {
   console.log(req.method, req.url);
