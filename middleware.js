@@ -5,7 +5,7 @@
 var cryptojs = require('crypto-js');
 var constants = require('./shared/constant.shared');
 var _ = require('underscore');
-
+ 
  
 module.exports = function(db) {
 
