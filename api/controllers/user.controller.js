@@ -78,9 +78,6 @@ module.exports.usersGetAll = function (req, res) {
 };
 
 
-
-
-
 /******************************************************************************************************
  Get a Record created by Id - Filtered by TenantId
 ******************************************************************************************************/
@@ -167,3 +164,32 @@ module.exports.usersDelete = function (req, res) {
         res.status(500).send();
     });
 };
+
+
+/******************************************************************************************************
+ EXTRA FUNCTIONS 
+******************************************************************************************************/
+
+/******************************************************************************************************
+ Get a Record by email - Filtered by TenantId
+******************************************************************************************************/
+module.exports.userCheckExistsEmail = function (req, res) {
+    
+    // builds clause
+    var where = { email: req.params.email};
+    
+    //find and return the records 
+    db.user.findOne({
+        where: where
+    }).then(function (user) {
+        if (!!user) {
+            res.status(200).send();
+        } else {
+            res.status(404).send();
+        }
+    }, function (e) {
+        res.status(500).send();
+    })
+};
+
+

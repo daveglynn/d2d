@@ -27,6 +27,9 @@ router
     .route('/users/all')
     .get(ctrlUser.usersGetAll);
 router
+    .route('/users/email/:email')
+    .get(ctrlUser.userCheckExistsEmail);
+router
     .route('/users/:id')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersGetById);
 router

@@ -65,5 +65,14 @@ module.exports = {
 
     },
 
+    setClauseEmail: function (req) {
+
+        var email =  req.params.email;
+        var where = {
+        email: email
+        };
+    return where;
+    },
+
 };
 
