@@ -14,68 +14,85 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true,
             defaultValue: null
         },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
-            validate: {
-                isEmail: true
-            }
-        },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            validate: {
-                len: [1, 150]
-            }
-        },
-        phone: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            validate: {
-                len: [1, 50]
-            }
-        },
-        address: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            validate: {
-                len: [1, 1000]
-            }
-        },
-        salt: {
-            type: DataTypes.STRING
-        },
-		password_hash: {
-			type: DataTypes.STRING
-		},
-        password: {
-            type: DataTypes.VIRTUAL,
-            allowNull: false,
-            validate: {
-                len: [6, 100]
+            email: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                validate: {
+                    isEmail: true,
+                    isUnique: function(value, next) {
+                        if (value) {
+                            user
+                                .find({ where: { email: value } })
+                                .then(function(user) {
+                                    if (user) {
+                                        next('Email is Already taken')
+                                    } else {
+                                        next()
+                                    }
+                                })
+                                .error(function(err) {
+                                    next(err.message);
+                                });
+                        } else {
+                            next("Email must be entered");
+                        }
+                    }
+                    }
+                },
+            name: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                validate: {
+                    len: [1, 150]
+                }
             },
-            set: function(value) {
-                var salt = bcrypt.genSaltSync(10);
-                var hashedPassword = bcrypt.hashSync(value, salt);
+            phone: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                validate: {
+                    len: [1, 50]
+                }
+            },
+            address: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                validate: {
+                    len: [1, 1000]
+                }
+            },
+            salt: {
+                type: DataTypes.STRING
+            },
+            password_hash: {
+                type: DataTypes.STRING
+            },
+            password: {
+                type: DataTypes.VIRTUAL,
+                allowNull: false,
+                validate: {
+                    len: [6, 100]
+                },
+                set: function(value) {
+                    var salt = bcrypt.genSaltSync(10);
+                    var hashedPassword = bcrypt.hashSync(value, salt);
 
-                this.setDataValue('password', value);
-                this.setDataValue('salt', salt);
-                this.setDataValue('password_hash', hashedPassword);
+                    this.setDataValue('password', value);
+                    this.setDataValue('salt', salt);
+                    this.setDataValue('password_hash', hashedPassword);
 
+                }
+            },
+            createdBy: {
+                type: DataTypes.INTEGER,
+                allowNull: true,
+                defaultValue: null
+            },
+            updatedBy: {
+                type: DataTypes.INTEGER,
+                allowNull: true,
+                defaultValue: null
             }
-        },
-        createdBy: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: null
-        },
-        updatedBy: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: null
-        }
-    }, {
+        }, {
             hooks: {
                 beforeValidate: function(user, options) {
                     if (typeof user.email === 'string') {
