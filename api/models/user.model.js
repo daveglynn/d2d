@@ -5,7 +5,8 @@
 var bcrypt = require('../../other_modules/bcryptjs');
 var _ = require('underscore')
 var cryptojs = require('crypto-js');
-var jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken'); 
+var validator = require('validator');
 
 module.exports = function(sequelize, DataTypes) {
     var user = sequelize.define('user', {
@@ -15,36 +16,48 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: null
         },
             email: {
-                type: DataTypes.STRING,
-                allowNull: false,
-                validate: {
-                    isEmail: true,
-                    isUnique: function(value, next) {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                isEmail: function (value, next) {
+                        if (validator.isEmail(value) === false) {
+                            next('The Email is Invalid')
+                        } else {
+                            next()
+                        }
+                },
+                isUnique: function (value, next) {
                         if (value) {
                             user
                                 .find({ where: { email: value } })
-                                .then(function(user) {
-                                    if (user) {
-                                        next('Email is Already taken')
-                                    } else {
-                                        next()
-                                    }
-                                })
-                                .error(function(err) {
-                                    next(err.message);
-                                });
+                                .then(function (user) {
+                                if (user) {
+                                    next('Email is Already taken')
+                                } else {
+                                    next()
+                                }
+                            })
+                                .error(function (err) {
+                                next(err.message);
+                            });
                         } else {
                             next("Email must be entered");
                         }
                     }
-                    }
-                },
+                }
+            },
             name: {
                 type: DataTypes.STRING,
                 allowNull: true,
                 validate: {
-                    len: [1, 150]
-                }
+                isLength: function (value, next) {
+                    if (validator.isLength(value, { min: 0, max: 150 }) === false) {
+                        next('The Length of the name is incorrect')
+                    } else {
+                        next()
+                    }
+                },
+            }
             },
             phone: {
                 type: DataTypes.STRING,
