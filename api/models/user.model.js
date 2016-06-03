@@ -5,7 +5,7 @@
 var bcrypt = require('../../other_modules/bcryptjs');
 var _ = require('underscore')
 var cryptojs = require('crypto-js');
-var jwt = require('jsonwebtoken'); 
+var jwt = require('jsonwebtoken');
 var validator = require('validator');
 
 module.exports = function(sequelize, DataTypes) {
@@ -15,97 +15,110 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true,
             defaultValue: null
         },
-            email: {
+        email: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isEmail: function (value, next) {
-                        if (validator.isEmail(value) === false) {
-                            next('The Email is Invalid')
-                        } else {
-                            next()
-                        }
+                isEmail: function(value, next) {
+                    if (validator.isEmail(validator.ltrim(value)) === false) {
+                        next('The Email is Invalid')
+                    } else {
+                        next()
+                    }
                 },
-                isUnique: function (value, next) {
-                        if (value) {
-                            user
-                                .find({ where: { email: value } })
-                                .then(function (user) {
+                isUnique: function(value, next) {
+                    if (value) {
+                        user
+                            .find({ where: { email: value } })
+                            .then(function(user) {
                                 if (user) {
                                     next('Email is Already taken')
                                 } else {
                                     next()
                                 }
                             })
-                                .error(function (err) {
+                            .error(function(err) {
                                 next(err.message);
                             });
-                        } else {
-                            next("Email must be entered");
-                        }
+                    } else {
+                        next("Email must be entered");
                     }
                 }
-            },
-            name: {
-                type: DataTypes.STRING,
-                allowNull: true,
-                validate: {
-                isLength: function (value, next) {
-                    if (validator.isLength(value, { min: 0, max: 150 }) === false) {
-                        next('The Length of the name is incorrect')
+            }
+        },
+        firstName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                isLength: function(value, next) {
+                    if (validator.isLength(validator.ltrim(value), { min: 1, max: 50 }) === false) {
+                        next('The Length of the first name is incorrect. Max 50 characters.'  )
                     } else {
                         next()
                     }
                 },
             }
-            },
-            phone: {
-                type: DataTypes.STRING,
-                allowNull: true,
-                validate: {
-                    len: [1, 50]
-                }
-            },
-            address: {
-                type: DataTypes.STRING,
-                allowNull: true,
-                validate: {
-                    len: [1, 1000]
-                }
-            },
-            salt: {
-                type: DataTypes.STRING
-            },
-            password_hash: {
-                type: DataTypes.STRING
-            },
-            password: {
-                type: DataTypes.VIRTUAL,
-                allowNull: false,
-                validate: {
-                    len: [6, 100]
+        },
+        lastName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                isLength: function(value, next) {
+                    if (validator.isLength(validator.ltrim(value), { min: 0, max: 50 }) === false) {
+                        next('The Length of the last name is incorrect. Max 50 characters.')
+                    } else {
+                        next()
+                    }
                 },
-                set: function(value) {
-                    var salt = bcrypt.genSaltSync(10);
-                    var hashedPassword = bcrypt.hashSync(value, salt);
-
-                    this.setDataValue('password', value);
-                    this.setDataValue('salt', salt);
-                    this.setDataValue('password_hash', hashedPassword);
-
-                }
-            },
-            createdBy: {
-                type: DataTypes.INTEGER,
-                allowNull: true,
-                defaultValue: null
-            },
-            updatedBy: {
-                type: DataTypes.INTEGER,
-                allowNull: true,
-                defaultValue: null
             }
-        }, {
+        },
+        phone: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                len: [1, 50]
+            }
+        },
+        address: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                len: [1, 1000]
+            }
+        },
+        salt: {
+            type: DataTypes.STRING
+        },
+        password_hash: {
+            type: DataTypes.STRING
+        },
+        password: {
+            type: DataTypes.VIRTUAL,
+            allowNull: false,
+            validate: {
+                len: [6, 100]
+            },
+            set: function(value) {
+                var salt = bcrypt.genSaltSync(10);
+                var hashedPassword = bcrypt.hashSync(value, salt);
+
+                this.setDataValue('password', value);
+                this.setDataValue('salt', salt);
+                this.setDataValue('password_hash', hashedPassword);
+
+            }
+        },
+        createdBy: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null
+        },
+        updatedBy: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null
+        }
+    }, {
             hooks: {
                 beforeValidate: function(user, options) {
                     if (typeof user.email === 'string') {
@@ -160,7 +173,7 @@ module.exports = function(sequelize, DataTypes) {
             instanceMethods: {
                 toPublicJSON: function() {
                     var json = this.toJSON();
-                    return _.pick(json, 'id', 'email', 'name', 'phone', 'address', 'createdAt', 'updatedAt');
+                    return _.pick(json, 'id', 'email', 'firstName', 'lastName','phone', 'address', 'createdAt', 'updatedAt');
                 },
                 generateToken: function(type) {
                     if (!_.isString(type)) {
