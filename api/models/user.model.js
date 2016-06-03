@@ -6,7 +6,7 @@ var bcrypt = require('../../other_modules/bcryptjs');
 var _ = require('underscore')
 var cryptojs = require('crypto-js');
 var jwt = require('jsonwebtoken');
-var validator = require('validator');
+var v = require('validator');
 
 module.exports = function(sequelize, DataTypes) {
     var user = sequelize.define('user', {
@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 isEmail: function(value, next) {
-                    if (validator.isEmail(validator.ltrim(value)) === false) {
+                    if (v.isEmail(v.ltrim(value)) === false) {
                         next('The Email is Invalid')
                     } else {
                         next()
@@ -51,8 +51,8 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 isLength: function(value, next) {
-                    if (validator.isLength(validator.ltrim(value), { min: 1, max: 50 }) === false) {
-                        next('The Length of the first name is incorrect. Max 50 characters.'  )
+                    if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
+                        next('The Length of the first name is incorrect. Max 50 characters.')
                     } else {
                         next()
                     }
@@ -64,7 +64,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 isLength: function(value, next) {
-                    if (validator.isLength(validator.ltrim(value), { min: 0, max: 50 }) === false) {
+                    if (v.isLength(v.ltrim(value), { min: 0, max: 50 }) === false) {
                         next('The Length of the last name is incorrect. Max 50 characters.')
                     } else {
                         next()
@@ -76,14 +76,26 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: true,
             validate: {
-                len: [1, 50]
+                isLength: function(value, next) {
+                    if (v.isLength(v.ltrim(value), { min: 0, max: 50 }) === false) {
+                        next('The Length of the phone is incorrect. Max 50 characters.')
+                    } else {
+                        next()
+                    }
+                },
             }
         },
         address: {
             type: DataTypes.STRING,
             allowNull: true,
             validate: {
-                len: [1, 1000]
+                isLength: function(value, next) {
+                    if (v.isLength(v.ltrim(value), { min: 0, max: 50 }) === false) {
+                        next('The Length of the address is incorrect. Max 1000 characters.')
+                    } else {
+                        next()
+                    }
+                },
             }
         },
         salt: {
@@ -96,7 +108,13 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.VIRTUAL,
             allowNull: false,
             validate: {
-                len: [6, 100]
+                isLength: function(value, next) {
+                    if (v.isLength(v.ltrim(value), { min: 6, max: 10 }) === false) {
+                        next('The Length of the password is incorrect. Min 6 , Max 10 characters.')
+                    } else {
+                        next()
+                    }
+                },
             },
             set: function(value) {
                 var salt = bcrypt.genSaltSync(10);
@@ -123,6 +141,19 @@ module.exports = function(sequelize, DataTypes) {
                 beforeValidate: function(user, options) {
                     if (typeof user.email === 'string') {
                         user.email = user.email.toLowerCase();
+                        user.email = v.trim(user.email);
+                    }
+                    if (typeof user.firstName === 'string') {
+                        user.firstName = v.trim(user.firstName);
+                    }
+                    if (typeof user.lastName === 'string') {
+                        user.lastName = v.trim(user.lastName);
+                    }
+                    if (typeof user.phone === 'string') {
+                        user.phone = v.trim(user.phone);
+                    }
+                    if (typeof user.password === 'string') {
+                        user.password = v.trim(user.password);
                     }
                 }
             },
@@ -132,7 +163,6 @@ module.exports = function(sequelize, DataTypes) {
                         if (typeof body.email !== 'string' || typeof body.password !== 'string') {
                             return reject();
                         }
-
                         user.findOne({
                             where: {
                                 email: body.email
@@ -145,7 +175,6 @@ module.exports = function(sequelize, DataTypes) {
                         }, function(e) {
                             reject();
                         });
-
                     });
                 },
                 findByToken: function(token) {
@@ -173,7 +202,7 @@ module.exports = function(sequelize, DataTypes) {
             instanceMethods: {
                 toPublicJSON: function() {
                     var json = this.toJSON();
-                    return _.pick(json, 'id', 'email', 'firstName', 'lastName','phone', 'address', 'createdAt', 'updatedAt');
+                    return _.pick(json, 'id', 'email', 'firstName', 'lastName', 'phone', 'address', 'createdAt', 'updatedAt');
                 },
                 generateToken: function(type) {
                     if (!_.isString(type)) {
@@ -195,9 +224,6 @@ module.exports = function(sequelize, DataTypes) {
                         return undefined;
                     }
                 }
-
-
-
             }
         });
 
