@@ -46,7 +46,7 @@ module.exports.usersLogin = function(req, res) {
             user: userInstance.toPublicJSON()
         })
     }).catch(function() {
-        res.status(401).send();
+        res.status(400).send('Invalid Email/Password entered');
     });
 };
 
