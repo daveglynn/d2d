@@ -46,7 +46,10 @@ module.exports.usersLogin = function(req, res) {
             user: userInstance.toPublicJSON()
         })
     }).catch(function() {
-        res.status(400).send('Invalid Email/Password entered');
+        res.status(400).json({
+            message: 'Invalid Email/Password entered',
+            title: "Access Denied"
+        })
     });
 };
 
