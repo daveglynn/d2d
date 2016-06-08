@@ -22,7 +22,7 @@ module.exports.usersPost = function(req, res) {
         res.status(400).json(e);
     });
 };
-
+ 
 /******************************************************************************************************
  Login 
 ******************************************************************************************************/
@@ -38,7 +38,13 @@ module.exports.usersLogin = function(req, res) {
         });
 
     }).then(function(tokenInstance) {
-        res.header('Auth', tokenInstance.get('token')).json(userInstance.toPublicJSON());
+        // could not read header in angular client so I jused used the response to send back the token
+        //res.header('Auth', tokenInstance.get('token')).json(userInstance.toPublicJSON());
+        res.status(200).json({
+            message: 'Signin Successful',
+            token: tokenInstance.get('token'),
+            user: userInstance.toPublicJSON()
+        })
     }).catch(function() {
         res.status(401).send();
     });
