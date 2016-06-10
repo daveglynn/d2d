@@ -22,7 +22,7 @@ router
     .post(ctrlUser.usersLogin);
 router
     .route('/users/login')
-    .delete(middleware.requireAuthentication, ctrlUser.usersLogout);
+    .delete(ctrlUser.usersLogout);
 router
     .route('/users/all')
     .get(ctrlUser.usersGetAll);
