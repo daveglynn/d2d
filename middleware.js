@@ -11,8 +11,8 @@ module.exports = function(db) {
 
 	return {
 		    requireAuthentication: function(req, res, next) {
-			    var token = req.get('Auth') || '';
- 
+			    //var token = req.get('Auth') || '';
+ var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IlUyRnNkR1ZrWDE5QVlxYytMTURYUVE3ZUpac2YxT0dMS1RPelQvdGlwMTZwUCtRSGQ1MjJrL3d3dGdwQXRheDJ5VjVaZFE1S2k2TUZ1cTFTb0xWdWFRPT0iLCJpYXQiOjE0NjU1NzYwMTF9.7DidB6HpnJCVRz36YPcdgU8I0RMs7JfX3xw_UDn6Pyg';
 			    db.token.findOne({
 				    where: { 
 					    tokenHash: cryptojs.MD5(token).toString()
