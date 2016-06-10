@@ -13,15 +13,21 @@ var PORT = process.env.PORT || 3000;
 // allow cross browser
 app.use(function (req, res, next) {
 
-     if ('OPTIONS' == req.method) {
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept,X-Auth-Token , Authorization');
-        res.header('Access-Control-Allow-Methods', 'GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS');
-        res.send(200);
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
     }
     else {
       next();
     }
+    
+    
+
+        
 });
  
 
