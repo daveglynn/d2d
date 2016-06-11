@@ -21,7 +21,7 @@ router
     .route('/users/login')
     .post(ctrlUser.usersLogin);
 router
-    .route('/users/login')
+     .route('/users/login')
     .delete(middleware.requireAuthentication, ctrlUser.usersLogout);
 router
     .route('/users/all')
