@@ -11,7 +11,7 @@ module.exports = function(db) {
 
 	return {
 		    requireAuthentication: function(req, res, next) {
-			    var token = req.get('Auth') || req.query.Auth || '';
+			    var token = req.query.Auth || req.get('Auth') ||  '';
 			    db.token.findOne({
 				    where: { 
 					    tokenHash: cryptojs.MD5(token).toString()
