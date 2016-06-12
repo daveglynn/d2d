@@ -23,17 +23,12 @@ module.exports = function(db) {
             else {
                 token = '';
             }
-            console.log('Debugging');
-            console.log('token');
-            console.log(token);
 			db.token.findOne({
 			 where: { 
 			  tokenHash: cryptojs.MD5(token).toString()
 			 }
 			    }).then(function(tokenInstance) {
                 if (!tokenInstance) {
-                    console.log('tokenInstance');
-                    console.log(tokenInstance);
 			      throw new Error();
 			     }
                 
