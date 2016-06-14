@@ -14,7 +14,8 @@ module.exports = {
     setPost: function (req, mode) {
         
         //clean post
-        var body = _.pick(req.body, 'email', 'password', 'firstName', 'lastName', 'phone', 'address', 'tenantId', 'role');
+        var body = _.pick(req.body, 'email', 'password', 'firstName', 'lastName', 'phone', 
+        'addressLine1', 'addressLine2','addressLine3','addressLine4','tenantId', 'role');
         
         //add tenant
         body.tenantId = null;
@@ -43,8 +44,17 @@ module.exports = {
         if (body.hasOwnProperty('phone')) {
             attributes.phone = body.phone;
         }
-        if (body.hasOwnProperty('address')) {
-            attributes.address = body.address;
+        if (body.hasOwnProperty('addressLine1')) {
+            attributes.addressLine1 = body.addressLine1;
+        }
+        if (body.hasOwnProperty('addressLine2')) {
+            attributes.addressLine2 = body.addressLine2;
+        }
+        if (body.hasOwnProperty('addressLine3')) {
+            attributes.addressLine3 = body.addressLine3;
+        }
+        if (body.hasOwnProperty('addressLine4')) {
+            attributes.addressLine4 = body.addressLine4;
         }
         if (body.hasOwnProperty('createdBy')) {
             attributes.tenantId = body.createdBy;

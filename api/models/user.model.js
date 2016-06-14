@@ -85,13 +85,52 @@ module.exports = function(sequelize, DataTypes) {
                 },
             }
         },
-        address: {
+        addressLine1: {
             type: DataTypes.STRING,
             allowNull: true,
             validate: {
                 isLength: function(value, next) {
-                    if (v.isLength(v.ltrim(value), { min: 0, max: 50 }) === false) {
-                        next('The Length of the address is incorrect. Max 1000 characters.')
+                    if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
+                        next('The Length of the address line 1 is incorrect. Max 100 characters.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },
+        addressLine2: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                isLength: function(value, next) {
+                    if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
+                        next('The Length of the address line 2 is incorrect. Max 100 characters.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },
+        addressLine3: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                isLength: function(value, next) {
+                    if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
+                        next('The Length of the address line 3 is incorrect. Max 100 characters.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },
+        addressLine4: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                isLength: function(value, next) {
+                    if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
+                        next('The Length of the address line 4 is incorrect. Max 100 characters.')
                     } else {
                         next()
                     }
@@ -206,7 +245,9 @@ module.exports = function(sequelize, DataTypes) {
             instanceMethods: {
                 toPublicJSON: function() {
                     var json = this.toJSON();
-                    return _.pick(json, 'id', 'email', 'firstName', 'lastName', 'phone', 'address', 'createdAt', 'updatedAt');
+                    return _.pick(json, 'id', 'email', 'firstName', 'lastName', 'phone', 
+                    'addressLine1','addressLine2','addressLine3','addressLine4', 
+                    'createdAt', 'updatedAt');
                 },
                 generateToken: function(type) {
                     if (!_.isString(type)) {
