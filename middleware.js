@@ -38,7 +38,8 @@ module.exports = function(db) {
                         req.user = user;
 				        next();
 			        }).catch(function() {
-				        res.status(401).send('Access Denied');
+				        res.status(401).json({error: 'Access Denied'});
+ 
 			        });
             },
             requireAuthorisation: function (req, res, next) {
