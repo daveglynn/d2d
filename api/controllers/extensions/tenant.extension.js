@@ -31,11 +31,12 @@ module.exports = {
             attributes.name = body.name;
         }
         if (body.hasOwnProperty('createdBy')) {
-            attributes.tenantId = body.createdBy;
+            attributes.createdBy = body.createdBy;
         }
         if (body.hasOwnProperty('updatedBy')) {
-            attributes.tenantId = body.createdBy;
+            attributes.updatedBy = body.updatedBy;
         }
+
         return attributes;
 
     },
