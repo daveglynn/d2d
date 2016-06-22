@@ -7,6 +7,8 @@ var _ = require('underscore')
 var cryptojs = require('crypto-js');
 var jwt = require('jsonwebtoken');
 var v = require('validator');
+var constants = require('../../shared/constant.shared');
+
 
 module.exports = function(sequelize, DataTypes) {
     var user = sequelize.define('user', {
@@ -205,12 +207,27 @@ module.exports = function(sequelize, DataTypes) {
                             }
                             user.findOne({
                                 where: {
-                                    email: body.email
+                                email: body.email
                                 }
-                            }).then(function(user) {
-                                if (!user || !bcrypt.compareSync(body.password, user.get('password_hash'))) {
+                        }).then(function (user) {
+                            // password does not match
+                            if (!user || !bcrypt.compareSync(body.password, user.get('password_hash'))) {
+                                return reject();
+                            }
+                            // user must have a role
+                            if (user.get('role') ==null) {
+                                return reject();
+                            }
+                            //  host user must not have a tenant while all other users must have a tenant
+                            if (user.get('role') == constants.role_Host) {
+                                if (user.get('tenantId') !== null) {
                                     return reject();
                                 }
+                            } else {
+                                if (user.get('tenantId') == null) {
+                                    return reject();
+                                }
+                            }
                                 resolve(user);
                             }, function(e) {
                                 reject();

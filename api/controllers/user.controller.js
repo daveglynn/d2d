@@ -47,7 +47,7 @@ module.exports.usersLogin = function(req, res) {
             user: userInstance.toPublicJSON()
         })
     }).catch(function() {
-        res.status(400).json({ title: controller, message: "Invalid Email/Password combination entered.",  function: helpers.getFunctionName("usersLogin") });
+        res.status(400).json({ title: controller, message: "Invalid Email/Password combination or incorrect Tenancy / Role",  function: helpers.getFunctionName("usersLogin") });
     });
 };
 
