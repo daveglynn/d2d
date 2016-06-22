@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
         role: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: null
+            defaultValue: constants.role_User
         },
         email: {
             type: DataTypes.STRING,
