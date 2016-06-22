@@ -7,6 +7,7 @@ var _ = require('underscore');
 var constants = require('../.././shared/constant.shared');
 var common = require('./extensions/common.extension');
 var extension = require('./extensions/user.extension');
+var controller = "user";
 
 /******************************************************************************************************
  Insert a Record 
@@ -19,7 +20,7 @@ module.exports.usersPost = function(req, res) {
     db.user.create(body).then(function(user) {
         res.json(user.toPublicJSON())
     }, function(e) {
-        res.status(400).json(e);
+        res.status(400).json({ title: controller, message: "An error occurred inserting a record", error: e, function: helpers.getFunctionName("usersPost") });
     });
 };
 
@@ -45,10 +46,7 @@ module.exports.usersLogin = function(req, res) {
             user: userInstance.toPublicJSON()
         })
     }).catch(function() {
-        res.status(400).json({
-            title: "Access Denied",
-            message: 'Invalid Email/Password combination entered.'
-        })
+        res.status(400).json({ title: controller, message: "Invalid Email/Password combination entered.",  function: helpers.getFunctionName("usersLogin") });
     });
 };
 
@@ -59,10 +57,7 @@ module.exports.usersLogout = function(req, res) {
     req.token.destroy().then(function() {
         res.status(204).send();
     }).catch(function() {
-         res.status(500).json({
-            title: "Logout",
-            message: 'Invalid Email/Password combination entered.'
-        })
+        res.status(500).json({ title: controller, message: "An error occured Logging Out.", function: helpers.getFunctionName("usersLogin") });
     });
 };
 
@@ -84,8 +79,8 @@ module.exports.usersGetAll = function(req, res) {
     }).then(function(users) {
         res.json(users);
     }, function(e) {
-        res.status(500).send();
-    })
+        res.status(500).json({ title: controller, message: "An error occurred finding records", error: e, function: helpers.getFunctionName("usersGetAll") });
+     })
 };
 
 
@@ -108,10 +103,10 @@ module.exports.usersGetById = function(req, res) {
         if (!!user) {
             res.json(user.toPublicJSON());
         } else {
-            res.status(404).send();
+            res.status(404).json({ title: controller, message: "No record found", function: helpers.getFunctionName("usersGetById") });
         }
     }, function(e) {
-        res.status(500).send();
+        res.status(500).json({ title: controller, message: "Error finding a record", error: e, function: "usersGetById" });
     })
 };
 
@@ -140,13 +135,13 @@ module.exports.usersPut = function(req, res) {
             user.update(attributes).then(function(user) {
                 res.json(user.toPublicJSON());
             }, function(e) {
-                res.status(400).json(e);
-            });
+                res.status(400).json({ title: controller, message: "Error updating a record", error: e, function: helpers.getFunctionName("usersPut") });
+             });
         } else {
-            res.status(404).send();
+            res.status(404).json({ title: controller, message: "Error updating a record", function: helpers.getFunctionName("usersPut") });
         }
     }, function() {
-        res.status(500).send();
+        res.status(500).json({ title: controller, message: "Error updating a record", function: helpers.getFunctionName("usersPut") });
     });
 };
 
@@ -165,14 +160,12 @@ module.exports.usersDelete = function(req, res) {
         where: where
     }).then(function(rowsDeleted) {
         if (rowsDeleted === 0) {
-            res.status(404).json({
-                error: 'No record found with id'
-            });
+            res.status(404).json({ title: controller, message: "No record found to delete", function: helpers.getFunctionName("usersDelete") });
         } else {
             res.status(204).send();
         }
     }, function() {
-        res.status(500).send();
+        res.status(500).json({ title: controller, message: "An error occurred deleting the record", function: helpers.getFunctionName("usersDelete") });
     });
 };
 
@@ -196,7 +189,7 @@ module.exports.userCheckExistsEmail = function(req, res) {
         if (!!user) {
             res.status(200).send();
         } else {
-            res.status(404).send();
+            res.status(404).json({ title: controller, message: "No user email found", function: helpers.getFunctionName("userCheckExistsEmail") });
         }
     }, function(e) {
         res.status(500).send();

@@ -130,7 +130,7 @@ module.exports.ordersPut = function(req, res) {
             res.status(404).json({ title: controller, message: "Error updating a record", function: helpers.getFunctionName("ordersPut") });
         }
     }, function() {
-        res.status(500).json({ title: controller, message: "Error updating a record", error: e, function: helpers.getFunctionName("ordersPut") });
+        res.status(500).json({ title: controller, message: "Error updating a record", function: helpers.getFunctionName("ordersPut") });
     });
 };
 

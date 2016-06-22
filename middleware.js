@@ -39,9 +39,7 @@ module.exports = function(db) {
 				        next();
 			        }).catch(function() {
                 res.status(401).json({ title: "Authentication", message: "Authentication Denied", function: 'requireAuthentication'});
- 
- 
-			        });
+ 			        });
             },
             requireAuthorisation: function (req, res, next) {
             
