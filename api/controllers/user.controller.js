@@ -5,6 +5,7 @@
 var db = require('../.././db.js');
 var _ = require('underscore');
 var constants = require('../.././shared/constant.shared');
+var helpers = require('../.././shared/helpers.shared');
 var common = require('./extensions/common.extension');
 var extension = require('./extensions/user.extension');
 var controller = "user";
