@@ -16,7 +16,7 @@ module.exports = {
         body.tenantId = common.modelTenantId(req);
         
         //add createdBy,updatedBy
-        if (mode = 'C') {
+        if (mode == 'C') {
             body.createdBy = common.modelUserId(req);
         } else {
             body.updatedBy = common.modelUserId(req);

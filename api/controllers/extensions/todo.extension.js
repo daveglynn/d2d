@@ -16,7 +16,7 @@ module.exports = {
         body.tenantId = common.modelTenantId(req);
         
         //add createdBy,updatedBy
-        if (mode = 'C') {
+        if (mode == 'C') {
             body.createdBy = common.modelUserId(req);
         } else {
             body.updatedBy = common.modelUserId(req);
@@ -35,10 +35,10 @@ module.exports = {
             attributes.description = body.description;
         }
         if (body.hasOwnProperty('createdBy')) {
-            attributes.tenantId = body.createdBy;
+            attributes.createdBy = body.createdBy;
         }
         if (body.hasOwnProperty('updatedBy')) {
-            attributes.tenantId = body.createdBy;
+            attributes.updatedBy = body.updatedBy;
         }
         return attributes;
 

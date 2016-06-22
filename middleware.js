@@ -38,7 +38,8 @@ module.exports = function(db) {
                         req.user = user;
 				        next();
 			        }).catch(function() {
-				        res.status(401).json({error: 'Access Denied'});
+                res.status(401).json({ title: "Authentication", message: "Authentication Denied", function: 'requireAuthentication'});
+ 
  
 			        });
             },
@@ -48,7 +49,7 @@ module.exports = function(db) {
             var url = req.url
             
             if (url.includes("tenants") && (role !== constants.role_Host)) {
-                res.status(401).send();
+                res.status(401).json({ title: "Authorisation", message: "Authorisation Denied", function: 'requireAuthorisation' });
             } else
                 next();
             }

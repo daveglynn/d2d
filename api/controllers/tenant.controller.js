@@ -25,7 +25,7 @@ module.exports.tenantsGetAll = function(req, res) {
     }).then(function(tenants) {
         res.json(tenants);
     }, function(e) {
-        res.status(500).send();
+        res.status(500).json({ title: controller, message: "An error occurred finding records", error: e, function: helpers.getFunctionName("tenantsGetAll") });
     })
 };
 
@@ -45,10 +45,10 @@ module.exports.tenantsGetById = function(req, res) {
         if (!!tenant) {
             res.json(tenant.toJSON());
         } else {
-            res.status(404).send();
+            res.status(404).json({ title: controller, message: "No record found", error: e, function: helpers.getFunctionName("tenantsGetById") });
         }
     }, function(e) {
-        res.status(500).send();
+        res.status(500).json({ title: controller, message: "An error occurred finding records", error: e, function: helpers.getFunctionName("tenantsGetById") });
     })
 };
 
@@ -64,7 +64,7 @@ module.exports.tenantsPost = function(req, res) {
     db.tenant.create(body).then(function(tenant) {
         res.json(tenant.toJSON())
     }, function(e) {
-        res.status(400).json(e);
+        res.status(400).json({ title: controller, message: "Error inserting a record", error: e, function: helpers.getFunctionName("tenantsPost") });
     });
 
 };
@@ -92,13 +92,13 @@ module.exports.tenantsPut = function(req, res) {
             tenant.update(attributes).then(function(tenant) {
                 res.json(tenant.toJSON());
             }, function(e) {
-                res.status(400).json(e);
+                res.status(400).json({ title: controller, message: "Error updating a record", error: e, function: helpers.getFunctionName("tenantsPut") });
             });
         } else {
             res.status(404).send();
         }
     }, function() {
-        res.status(500).send();
+        res.status(500).json({ title: controller, message: "Error updating a record", error: e, function: helpers.getFunctionName("tenantsPut") });
     });
 };
 
@@ -116,13 +116,12 @@ module.exports.tenantsDelete = function(req, res) {
         where: where
     }).then(function(rowsDeleted) {
         if (rowsDeleted === 0) {
-            res.status(404).json({
-                error: 'No record found with id'
-            });
+            res.status(404).json({ title: controller, message: "No record found to delete", error: e, function: helpers.getFunctionName("tenantsDelete") });
+
         } else {
             res.status(204).send();
         }
     }, function() {
-        res.status(500).send();
+        res.status(500).json({ title: controller, message: "Error deleting a record", error: e, function: helpers.getFunctionName("tenantsPut") });
     });
 };

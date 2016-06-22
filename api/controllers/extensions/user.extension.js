@@ -21,7 +21,7 @@ module.exports = {
         body.tenantId = null;
         
         //add createdBy
-        if (mode = 'C') {
+        if (mode == 'C') {
             body.createdBy = null;
         } else {
             body.updatedBy = common.modelUserId(req);
