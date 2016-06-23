@@ -21,7 +21,7 @@ module.exports.usersPost = function(req, res) {
     db.user.create(body).then(function(user) {
         res.json(user.toPublicJSON())
     }, function(e) {
-        res.status(400).json({ title: controller, message: "An error occurred inserting a record", error: e, function: helpers.getFunctionName("usersPost") });
+        res.status(400).json({ title: controller, message: "An error occurred inserting a record",  function: helpers.getFunctionName("usersPost") });
     });
 };
 
@@ -80,7 +80,7 @@ module.exports.usersGetAll = function(req, res) {
     }).then(function(users) {
         res.json(users);
     }, function(e) {
-        res.status(500).json({ title: controller, message: "An error occurred finding records", error: e, function: helpers.getFunctionName("usersGetAll") });
+        res.status(500).json({ title: controller, message: "An error occurred finding records", function: helpers.getFunctionName("usersGetAll") });
      })
 };
 
@@ -107,7 +107,7 @@ module.exports.usersGetById = function(req, res) {
             res.status(404).json({ title: controller, message: "No record found", function: helpers.getFunctionName("usersGetById") });
         }
     }, function(e) {
-        res.status(500).json({ title: controller, message: "Error finding a record", error: e, function: "usersGetById" });
+        res.status(500).json({ title: controller, message: "Error finding a record", function: "usersGetById" });
     })
 };
 
@@ -136,7 +136,7 @@ module.exports.usersPut = function(req, res) {
             user.update(attributes).then(function(user) {
                 res.json(user.toPublicJSON());
             }, function(e) {
-                res.status(400).json({ title: controller, message: "Error updating a record", error: e, function: helpers.getFunctionName("usersPut") });
+                res.status(400).json({ title: controller, message: "Error updating a record",  function: helpers.getFunctionName("usersPut") });
              });
         } else {
             res.status(404).json({ title: controller, message: "Error updating a record", function: helpers.getFunctionName("usersPut") });
