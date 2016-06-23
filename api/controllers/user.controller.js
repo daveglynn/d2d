@@ -20,8 +20,8 @@ module.exports.usersPost = function(req, res) {
 
     db.user.create(body).then(function(user) {
         res.json(user.toPublicJSON())
-    }, function(e) {
-        res.status(400).json({ title: controller, message: "An error occurred inserting a record",  function: helpers.getFunctionName("usersPost") });
+    }, function (e) {
+        res.status(400).json(helpers.setDebugInfo(e, controller, "usersPost", "An error occurred inserting a record"));
     });
 };
 
@@ -47,7 +47,7 @@ module.exports.usersLogin = function(req, res) {
             user: userInstance.toPublicJSON()
         })
     }).catch(function() {
-        res.status(400).json({ title: controller, message: "Invalid Email/Password combination or incorrect Tenancy / Role",  function: helpers.getFunctionName("usersLogin") });
+        res.status(400).json({ title: controller, message: "Invalid Email/Password combination or incorrect Tenancy / Role", function: helpers.getFunctionName("usersLogin") });
     });
 };
 
@@ -58,7 +58,7 @@ module.exports.usersLogout = function(req, res) {
     req.token.destroy().then(function() {
         res.status(204).send();
     }).catch(function() {
-        res.status(500).json({ title: controller, message: "An error occured Logging Out.", function: helpers.getFunctionName("usersLogin") });
+        res.status(500).send();
     });
 };
 
@@ -80,8 +80,8 @@ module.exports.usersGetAll = function(req, res) {
     }).then(function(users) {
         res.json(users);
     }, function(e) {
-        res.status(500).json({ title: controller, message: "An error occurred finding records", function: helpers.getFunctionName("usersGetAll") });
-     })
+        res.status(500).json(helpers.setDebugInfo(e, controller, "usersGetAll", "An error occurred finding records"));
+    })
 };
 
  
@@ -104,10 +104,10 @@ module.exports.usersGetById = function(req, res) {
         if (!!user) {
             res.json(user.toPublicJSON());
         } else {
-            res.status(404).json({ title: controller, message: "No record found", function: helpers.getFunctionName("usersGetById") });
+            res.status(404).send();
         }
     }, function(e) {
-        res.status(500).json({ title: controller, message: "Error finding a record", function: "usersGetById" });
+        res.status(500).json(helpers.setDebugInfo(e, controller, "usersGetById", "Error finding a record"));
     })
 };
 
@@ -136,13 +136,13 @@ module.exports.usersPut = function(req, res) {
             user.update(attributes).then(function(user) {
                 res.json(user.toPublicJSON());
             }, function(e) {
-                res.status(400).json({ title: controller, message: "Error updating a record",  function: helpers.getFunctionName("usersPut") });
-             });
+                res.status(400).send();
+            });
         } else {
-            res.status(404).json({ title: controller, message: "Error updating a record", function: helpers.getFunctionName("usersPut") });
+            res.status(404).send();
         }
     }, function() {
-        res.status(500).json({ title: controller, message: "Error updating a record", function: helpers.getFunctionName("usersPut") });
+         res.status(500).send();
     });
 };
 
@@ -161,12 +161,12 @@ module.exports.usersDelete = function(req, res) {
         where: where
     }).then(function(rowsDeleted) {
         if (rowsDeleted === 0) {
-            res.status(404).json({ title: controller, message: "No record found to delete", function: helpers.getFunctionName("usersDelete") });
+            res.status(404).send()
         } else {
             res.status(204).send();
         }
     }, function() {
-        res.status(500).json({ title: controller, message: "An error occurred deleting the record", function: helpers.getFunctionName("usersDelete") });
+        res.status(500).json(helpers.setDebugInfo(e, controller, "usersDelete", "An error occurred deleting the record"));
     });
 };
 
@@ -190,7 +190,7 @@ module.exports.userCheckExistsEmail = function(req, res) {
         if (!!user) {
             res.status(200).send();
         } else {
-            res.status(404).json({ title: controller, message: "No user email found", function: helpers.getFunctionName("userCheckExistsEmail") });
+             res.status(404).send();
         }
     }, function(e) {
         res.status(500).send();
