@@ -29,7 +29,7 @@ module.exports.ordersGetAll = function(req, res) {
     }).then(function(orders) {
         res.json(orders);
     }, function(e) {
-        res.status(500).json({ title: controller, message: "An error occurred finding records", error: e, function: helpers.getFunctionName("ordersGetAll") });
+         res.status(500).json(helpers.setDebugInfo(e, controller, "ordersGetAll", "An error occurred finding records"));
     })
 };
 
@@ -52,7 +52,7 @@ module.exports.ordersGetByUserId = function (req, res) {
     }).then(function (orders) {
         res.json(orders);
     }, function (e) {
-         res.status(500).json({ title: errorTitle, message: "An error occurred finding records", error: e, function: helpers.getFunctionName("ordersGetByUserId") });
+        res.status(500).json(helpers.setDebugInfo(e, controller, "ordersGetByUserId", "error occurred finding records"));
     })
 };
 /******************************************************************************************************
@@ -74,7 +74,7 @@ module.exports.ordersGetById = function(req, res) {
         if (!!order) {
             res.json(order.toPublicJSON());
         } else {
-             res.status(404).json({ title: controller, message: "No record found", function: helpers.getFunctionName("ordersGetById") });
+            res.status(404).send();
 
         }
     }, function(e) {
@@ -95,7 +95,7 @@ module.exports.ordersPost = function(req, res) {
         res.json(order.toPublicJSON())
     }, function (e) {
         //res.status(400).json(e);
-        res.status(400).json({ title: controller, message: "Error inserting a record", error: e, function: helpers.getFunctionName("ordersPost") });
+        res.status(400).json(helpers.setDebugInfo(e, controller, "ordersPost", "Error inserting a record"));
     });
 
 };
@@ -124,13 +124,13 @@ module.exports.ordersPut = function(req, res) {
             order.update(attributes).then(function(order) {
                 res.json(order.toPublicJSON());
             }, function(e) {
-                res.status(400).json({ title: controller, message: "Error updating a record", error: e, function: helpers.getFunctionName("ordersPut") });
+                res.status(400).send();
             });
         } else {
-            res.status(404).json({ title: controller, message: "Error updating a record", function: helpers.getFunctionName("ordersPut") });
+            res.status(404).send();
         }
     }, function() {
-        res.status(500).json({ title: controller, message: "Error updating a record", function: helpers.getFunctionName("ordersPut") });
+        res.status(500).send();
     });
 };
 
@@ -149,11 +149,11 @@ module.exports.ordersDelete = function(req, res) {
         where: where
     }).then(function(rowsDeleted) {
         if (rowsDeleted === 0) {
-            res.status(404).json({ title: controller, message: "No record found to delete",  function: helpers.getFunctionName("ordersDelete") });
+            res.status(404).send();
         } else {
             res.status(204).send();
         }
     }, function() {
-        res.status(500).json({ title: controller, message: "An error occurred deleting the record", function: helpers.getFunctionName("ordersDelete") });
+         res.status(500).json(helpers.setDebugInfo(e, controller, "ordersDelete", "An error occurred deleting the record"));
     });
 };

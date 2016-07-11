@@ -161,7 +161,7 @@ module.exports.usersDelete = function(req, res) {
         where: where
     }).then(function(rowsDeleted) {
         if (rowsDeleted === 0) {
-            res.status(404).send()
+            res.status(404).json(helpers.setDebugInfo(e, controller, "usersDelete", "No User Record found to delete"));
         } else {
             res.status(204).send();
         }
