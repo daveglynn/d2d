@@ -166,7 +166,8 @@ module.exports.usersDelete = function(req, res) {
             res.status(204).send();
         }
     }, function() {
-        res.status(500).json(helpers.setDebugInfo(e, controller, "usersDelete", "An error occurred deleting the record"));
+        //res.status(500).json(helpers.setDebugInfo(e, controller, "usersDelete", "An error occurred deleting the record"));
+        res.status(500);
     });
 };
 
