@@ -9,22 +9,8 @@ var helpers = require('../.././shared/helpers.shared');
 var common = require('./extensions/common.extension');
 var extension = require('./extensions/user.extension');
 var controller = "user";
+var Sequelize = require('sequelize');
 
-/******************************************************************************************************
- Insert a Record 
-******************************************************************************************************/
-module.exports.usersPost = function(req, res) {
-
-    // pick appropiate fields and set tenant
-    var body = extension.setPost(req, 'C');
-
-    db.user.create(body).then(function(user) {
-        res.json(user.toPublicJSON())
-    }, function (e) {
-        //res.status(400).json(helpers.setDebugInfo(e, controller, "usersPost", "An error occurred inserting a record"));
-        res.status(400).send();
-    });
-};
 
 /******************************************************************************************************
  Login 
@@ -48,7 +34,6 @@ module.exports.usersLogin = function(req, res) {
             user: userInstance.toPublicJSON()
         })
     }).catch(function() {
-        //res.status(400).json({ title: controller, message: "Invalid Email/Password combination or incorrect Tenancy / Role", function: helpers.getFunctionName("usersLogin") });
         res.status(400).send();
     });
 };
@@ -59,8 +44,25 @@ module.exports.usersLogin = function(req, res) {
 module.exports.usersLogout = function(req, res) {
     req.token.destroy().then(function() {
         res.status(204).send();
-    }).catch(function() {
-        res.status(500).send();
+    }).catch(function(err) {
+        res.status(500).send(err);
+    });
+};
+
+/******************************************************************************************************
+ Insert a Record 
+******************************************************************************************************/
+module.exports.usersPost = function(req, res) {
+
+    // pick appropiate fields and set tenant
+    var body = extension.setPost(req, 'C');
+               
+    db.user.create(body).then(function(user) {
+        res.json(user.toPublicJSON())
+    }).catch(Sequelize.ValidationError, function(err) {
+         res.status(422).send(err.errors);
+    }).catch(function(err) {
+         res.status(400).send({err});
     });
 };
 
@@ -71,23 +73,21 @@ module.exports.usersGetAll = function(req, res) {
 
     // builds clause 
     var where = {};
-    //where = common.setClauseAll(req, where);
-    //where = extension.setClauseQuery(req.query, where);
+    where = common.setClauseAll(req, where);
+    where = extension.setClauseQuery(req.query, where);
     var attributes = common.setAttributes();
 
-    //find and return the records    
     db.user.findAll({
         attributes: attributes,
         where: where
     }).then(function(users) {
         res.json(users);
-    }, function(e) {
-        //res.status(500).json(helpers.setDebugInfo(e, controller, "usersGetAll", "An error occurred finding records"));
-        res.status(500);        
+    }, function(err) {
+        res.status(500).json(err);
     })
 };
 
- 
+
 /******************************************************************************************************
  Get a Record created by Id - Filtered by TenantId
 ******************************************************************************************************/
@@ -110,8 +110,8 @@ module.exports.usersGetById = function(req, res) {
             res.status(404).send();
         }
     }, function(e) {
-       // res.status(500).json(helpers.setDebugInfo(e, controller, "usersGetById", "Error finding a record"));
-      res.status(500);
+        // res.status(500).json(helpers.setDebugInfo(e, controller, "usersGetById", "Error finding a record"));
+        res.status(500);
     })
 };
 
@@ -146,7 +146,7 @@ module.exports.usersPut = function(req, res) {
             res.status(404).send();
         }
     }, function() {
-         res.status(500).send();
+        res.status(500).send();
     });
 };
 
@@ -195,7 +195,7 @@ module.exports.userCheckExistsEmail = function(req, res) {
         if (!!user) {
             res.status(200).send();
         } else {
-             res.status(404).send();
+            res.status(404).send();
         }
     }, function(e) {
         res.status(500).send();

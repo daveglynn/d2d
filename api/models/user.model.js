@@ -34,14 +34,14 @@ module.exports = function(sequelize, DataTypes) {
                             .find({ where: { email: value } })
                             .then(function(user) {
                                 if (user) {
-                                    next('Email is Already taken')
+                                    next('Email ' + value + ' is already taken')
                                 } else {
                                     next()
                                 }
                             })
-                            .error(function(err) {
-                                next(err.message);
-                            });
+                            .catch(function (err) {
+                            return next(err);
+                        });
                     } else {
                         next("Email must be entered");
                     }
@@ -66,7 +66,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 isLength: function(value, next) {
-                    if (v.isLength(v.ltrim(value), { min: 0, max: 50 }) === false) {
+                    if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
                         next('The Length of the last name is incorrect. Max 50 characters.')
                     } else {
                         next()
@@ -215,24 +215,24 @@ module.exports = function(sequelize, DataTypes) {
                                 return reject();
                             }
                             // user must have a role
-                            if (user.get('role') ==null) {
+                            if (user.get('role') === null) {
                                 return reject();
                             }
                             //  host user must not have a tenant while all other users must have a tenant
-                            if (user.get('role') == constants.role_Host) {
+                            if (user.get('role') === constants.role_Host) {
                                 if (user.get('tenantId') !== null) {
                                     return reject();
                                 }
                             } else {
-                                if (user.get('tenantId') == null) {
+                                if (user.get('tenantId') === null) {
                                     return reject();
                                 }
                             }
                                 resolve(user);
-                            }, function(e) {
+                            }, function(err) {
                                 reject();
                             });
-                        } catch (e) {
+                        } catch (err) {
                             reject();
                         }
                     });
@@ -250,10 +250,10 @@ module.exports = function(sequelize, DataTypes) {
                                 } else {
                                     reject();
                                 }
-                            }, function(e) {
+                            }, function(err) {
                                 reject();
                             });
-                        } catch (e) {
+                        } catch (err) {
                             reject();
                         }
                     });
@@ -281,8 +281,8 @@ module.exports = function(sequelize, DataTypes) {
                             token: encryptedData
                         }, 'qwerty098');
                         return token;
-                    } catch (e) {
-                        console.log(e);
+                    } catch (err) {
+                        console.log(err);
                         return undefined;
                     }
                 }
