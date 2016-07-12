@@ -37,7 +37,7 @@ router
     .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersPost);
 router
     .route('/users/:id')
-    .delete(middleware.requireAuthentication,  ctrlUser.usersDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersDelete);
 router
     .route('/users/:id')
     .put(middleware.requireAuthentication, middleware.requireAuthorisation,  ctrlUser.usersPut);
