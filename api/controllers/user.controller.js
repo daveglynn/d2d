@@ -21,7 +21,8 @@ module.exports.usersPost = function(req, res) {
     db.user.create(body).then(function(user) {
         res.json(user.toPublicJSON())
     }, function (e) {
-        res.status(400).json(helpers.setDebugInfo(e, controller, "usersPost", "An error occurred inserting a record"));
+        //res.status(400).json(helpers.setDebugInfo(e, controller, "usersPost", "An error occurred inserting a record"));
+        res.status(400).send();
     });
 };
 
@@ -47,7 +48,8 @@ module.exports.usersLogin = function(req, res) {
             user: userInstance.toPublicJSON()
         })
     }).catch(function() {
-        res.status(400).json({ title: controller, message: "Invalid Email/Password combination or incorrect Tenancy / Role", function: helpers.getFunctionName("usersLogin") });
+        //res.status(400).json({ title: controller, message: "Invalid Email/Password combination or incorrect Tenancy / Role", function: helpers.getFunctionName("usersLogin") });
+        res.status(400).send();
     });
 };
 
@@ -80,7 +82,8 @@ module.exports.usersGetAll = function(req, res) {
     }).then(function(users) {
         res.json(users);
     }, function(e) {
-        res.status(500).json(helpers.setDebugInfo(e, controller, "usersGetAll", "An error occurred finding records"));
+        //res.status(500).json(helpers.setDebugInfo(e, controller, "usersGetAll", "An error occurred finding records"));
+        res.status(500);        
     })
 };
 
@@ -107,7 +110,8 @@ module.exports.usersGetById = function(req, res) {
             res.status(404).send();
         }
     }, function(e) {
-        res.status(500).json(helpers.setDebugInfo(e, controller, "usersGetById", "Error finding a record"));
+       // res.status(500).json(helpers.setDebugInfo(e, controller, "usersGetById", "Error finding a record"));
+      res.status(500);
     })
 };
 
