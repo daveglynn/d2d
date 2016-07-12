@@ -34,7 +34,7 @@ module.exports.usersLogin = function(req, res) {
             user: userInstance.toPublicJSON()
         })
     }).catch(function() {
-        res.status(400).send();
+        res.status(400).json({message: 'Signin UnSuccessful'});
     });
 };
 
