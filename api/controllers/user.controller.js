@@ -159,10 +159,15 @@ module.exports.usersDelete = function(req, res) {
     // delete record on database
     db.user.destroy({
         where: where
-    }).then(function() {
-        res.status(204).send();
-    }).catch(function() {
-        res.status(500).send();
+    }).then(function(rowsDeleted) {
+        if (rowsDeleted === 0) {
+            res.status(404).send("No User Record found to delete");
+        } else {
+            res.status(204).send();
+        }
+    }, function() {
+        //res.status(500).json(helpers.setDebugInfo(e, controller, "usersDelete", "An error occurred deleting the record"));
+        res.status(500);
     });
 };
 
