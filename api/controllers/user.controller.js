@@ -32,7 +32,7 @@ module.exports.usersLogin = function(req, res) {
             message: 'Signin Successful',
             token: tokenInstance.get('token'),
             user: userInstance.toPublicJSON()
-        })
+        }) 
     }).catch(function() {
         res.status(400).json({"err": {"name": "authorisation", "message": "Signin UnSuccessful"  }}   );
     });
