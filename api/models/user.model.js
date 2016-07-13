@@ -34,7 +34,7 @@ module.exports = function(sequelize, DataTypes) {
                             .find({ where: { email: value } })
                             .then(function(user) {
                                 if (user) {
-                                    next('Email:  ' + value + ' is already taken')
+                                    next('Email: ' + value + ' is already taken')
                                 } else {
                                     next()
                                 }
@@ -43,7 +43,7 @@ module.exports = function(sequelize, DataTypes) {
                             return next(err);
                         });
                     } else {
-                        next("Email:  Must be entered");
+                        next("Email: Must be entered");
                     }
                 }
             }
@@ -53,8 +53,8 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 isLength: function(value, next) {
-                    if (v.isLength(v.ltrim(value), { min: 1, max: 100 }) === false) {
-                        next('First Name:  Length is incorrect. Max 50 characters.')
+                    if (v.isLength(v.ltrim(value), { min: 1, max: 500 }) === false) {
+                        next('First Name: Length is incorrect. Max 50 characters.')
                     } else {
                         next()
                     }
@@ -67,7 +67,7 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
-                        next('Last Name:  Length is incorrect. Max 50 characters.')
+                        next('Last Name: Length is incorrect. Max 50 characters.')
                     } else {
                         next()
                     }
@@ -80,7 +80,7 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 0, max: 50 }) === false) {
-                        next('Phone:  The Length is incorrect. Max 50 characters')
+                        next('Phone: The Length is incorrect. Max 50 characters')
                     } else {
                         next()
                     }
@@ -93,7 +93,7 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
-                        next('Address Line 1:  The Length is incorrect. Max 100 characters')
+                        next('Address Line 1: The Length is incorrect. Max 100 characters')
                     } else {
                         next()
                     }
@@ -106,7 +106,7 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
-                           next('Address Line 2:  The Length is incorrect. Max 100 characters')
+                           next('Address Line 2: The Length is incorrect. Max 100 characters')
                     } else {
                         next()
                     }
@@ -119,7 +119,7 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
-                           next('Address Line 3:  The Length is incorrect. Max 100 characters')
+                           next('Address Line 3: The Length is incorrect. Max 100 characters')
                     } else {
                         next()
                     }
@@ -132,7 +132,7 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
-                           next('Address Line 4:  The Length is incorrect. Max 100 characters')
+                           next('Address Line 4: The Length is incorrect. Max 100 characters')
                     } else {
                         next()
                     }
