@@ -25,7 +25,7 @@ router
     .delete(middleware.requireAuthentication, ctrlUser.usersLogout);
 router
     .route('/users/all')
-    .get(ctrlUser.usersGetAll);
+    .get(middleware.requireAuthentication,ctrlUser.usersGetAll);
 router
     .route('/users/email/:email')
     .get(ctrlUser.userCheckExistsEmail);
