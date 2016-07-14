@@ -53,7 +53,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 isLength: function(value, next) {
-                    if (v.isLength(v.ltrim(value), { min: 1, max: 500 }) === false) {
+                    if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
                         next('First Name: Length is incorrect. Max 50 characters.')
                     } else {
                         next()

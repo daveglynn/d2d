@@ -107,11 +107,11 @@ module.exports.usersGetById = function(req, res) {
         if (!!user) {
             res.json(user.toPublicJSON());
         } else {
-            res.status(404).send();
+            //res.status(404).send();
+            res.status(404).json({"err": {"name": "user", "message": "An error occurred retrieving the users"  }});
         }
-    }, function(e) {
-        // res.status(500).json(helpers.setDebugInfo(e, controller, "usersGetById", "Error finding a record"));
-        res.status(500);
+    }, function(err) {
+        res.status(500).json(err);
     })
 };
 
@@ -139,14 +139,14 @@ module.exports.usersPut = function(req, res) {
         if (user) {
             user.update(attributes).then(function(user) {
                 res.json(user.toPublicJSON());
-            }, function(e) {
-                res.status(400).send();
+            }, function(err) {
+                res.status(400).json(err);
             });
         } else {
-            res.status(404).send();
+             res.status(404).json({"err": {"name": "user", "message": "An error occurred retrieving the user"  }});
         }
-    }, function() {
-        res.status(500).send();
+    }, function(err) {
+        res.status(500).json(err);
     });
 };
 
@@ -165,13 +165,12 @@ module.exports.usersDelete = function(req, res) {
         where: where
     }).then(function(rowsDeleted) {
         if (rowsDeleted === 0) {
-            res.status(404).send("No User Record found to delete");
+            res.status(404).json({"err": {"name": "user", "message": "No User Record found to delete"}});
         } else {
             res.status(204).send();
         }
-    }, function() {
-        //res.status(500).json(helpers.setDebugInfo(e, controller, "usersDelete", "An error occurred deleting the record"));
-        res.status(500);
+    }, function(err) {
+        res.status(500).json(err);
     });
 };
 
@@ -195,10 +194,10 @@ module.exports.userCheckExistsEmail = function(req, res) {
         if (!!user) {
             res.status(200).send();
         } else {
-            res.status(404).send();
+            res.status(404).json({"err": {"name": "user", "message": "No User Record found"}});
         }
-    }, function(e) {
-        res.status(500).send();
+    }, function(err) {
+        res.status(500).json(err);
     })
 };
 
