@@ -124,7 +124,7 @@ module.exports = function(sequelize, DataTypes) {
                         next()
                     }
                 },
-            }
+            } 
         },
         addressLine4: {
             type: DataTypes.STRING,
