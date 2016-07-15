@@ -4,6 +4,7 @@
 "use strict";
 var db = require('../../.././db.js');
 var _ = require('underscore');
+var constants = require('../../.././shared/constant.shared');
  
 module.exports = {
     
@@ -14,8 +15,10 @@ module.exports = {
     },
 
     setClauseTenantId: function (req, where) {
-
-        where.tenantId = this.modelTenantId(req);
+ 
+        if (this.modelRoleId(req) != constants.roleId_Host) {
+           where.tenantId = this.modelTenantId(req);
+        }
         return where;
 
     },
@@ -55,6 +58,12 @@ module.exports = {
     modelTenantId: function (req) {
         
         return req.user.get('tenantId');
+
+    },
+
+    modelRoleId: function (req) {
+        
+        return req.user.get('roleId');
 
     },
 

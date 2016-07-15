@@ -12,10 +12,10 @@ var constants = require('../../shared/constant.shared');
 
 module.exports = function(sequelize, DataTypes) {
     var user = sequelize.define('user', {
-        role: {
+        roleId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: constants.role_User
+            defaultValue: constants.roleId_User
         },
         email: {
             type: DataTypes.STRING,
@@ -215,11 +215,11 @@ module.exports = function(sequelize, DataTypes) {
                                 return reject();
                             }
                             // user must have a role
-                            if (user.get('role') === null) {
+                            if (user.get('roleId') === null) {
                                 return reject();
                             }
                             //  host user must not have a tenant while all other users must have a tenant
-                            if (user.get('role') === constants.role_Host) {
+                            if (user.get('roleId') === constants.roleId_Host) {
                                 if (user.get('tenantId') !== null) {
                                     return reject();
                                 }

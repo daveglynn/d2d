@@ -10,7 +10,7 @@ function define(name, value) {
     });
 }
  
-define("role_Host", 1);
-define("role_Admin", 2);
-define("role_User", 3);
+define("roleId_Host", 1);
+define("roleId_Admin", 2);
+define("roleId_User", 3);
 

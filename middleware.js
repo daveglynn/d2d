@@ -43,10 +43,10 @@ module.exports = function(db) {
         },
         requireAuthorisation: function(req, res, next) {
 
-            var role = req.user.role
+            var roleId = req.user.roleId
             var url = req.url
 
-            if (url.includes("tenants") && (role !== constants.role_Host)) {
+            if (url.includes("tenants") && (roleId !== constants.roleId_Host)) {
                 res.status(401).json({ title: "Authorisation", message: "Authorisation Denied"});
             } else
                 next();
