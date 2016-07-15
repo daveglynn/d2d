@@ -45,7 +45,7 @@ module.exports.usersLogout = function(req, res) {
     req.token.destroy().then(function() {
         res.status(204).send();
     }).catch(function(err) {
-        res.status(500).send(err);
+        res.status(500).json(err);
     });
 };
 
@@ -62,7 +62,7 @@ module.exports.usersPost = function(req, res) {
     }).catch(Sequelize.ValidationError, function(err) {
          res.status(422).send(err.errors);
     }).catch(function(err) {
-         res.status(400).send({err});
+        res.status(400).json(err);
     });
 };
 
@@ -74,6 +74,7 @@ module.exports.usersGetAll = function(req, res) {
     // builds clause 
     var where = {};
     where = common.setClauseAll(req, where);
+    where = common.setClauseTenantId(req, where);
     where = extension.setClauseQuery(req.query, where);
     var attributes = common.setAttributes();
 
@@ -108,7 +109,7 @@ module.exports.usersGetById = function(req, res) {
             res.json(user.toPublicJSON());
         } else {
             //res.status(404).send();
-            res.status(404).json({"err": {"name": "user", "message": "An error occurred retrieving the users"  }});
+            res.status(404).json({"err": {"name": "user", "message": "An error occurred retrieving the record"  }});
         }
     }, function(err) {
         res.status(500).json(err);
@@ -165,7 +166,7 @@ module.exports.usersDelete = function(req, res) {
         where: where
     }).then(function(rowsDeleted) {
         if (rowsDeleted === 0) {
-            res.status(404).json({"err": {"name": "user", "message": "No User Record found to delete"}});
+            res.status(404).json({ "err": { "name": "user", "message": "An error occurred retrieving the record"}});
         } else {
             res.status(204).send();
         }
@@ -194,7 +195,7 @@ module.exports.userCheckExistsEmail = function(req, res) {
         if (!!user) {
             res.status(200).send();
         } else {
-            res.status(404).json({"err": {"name": "user", "message": "No User Record found"}});
+            res.status(404).json({ "err": { "name": "user", "message": "An error occurred retrieving the user"}});
         }
     }, function(err) {
         res.status(500).json(err);

@@ -15,7 +15,8 @@ module.exports = {
     },
 
     setClauseTenantId: function (req, where) {
- 
+
+        // allow host role to view all users regardless of tenant
         if (this.modelRoleId(req) != constants.roleId_Host) {
            where.tenantId = this.modelTenantId(req);
         }
