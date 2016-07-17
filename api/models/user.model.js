@@ -17,6 +17,10 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true,
             defaultValue: constants.roleId_User
         },
+        profileId: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },        
         email: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -227,6 +231,9 @@ module.exports = function(sequelize, DataTypes) {
                                 if (user.get('tenantId') === null) {
                                     return reject();
                                 }
+                                if (user.get('profileId') === null) {
+                                    return reject();
+                                }                                      
                             }
                                 resolve(user);
                             }, function(err) {
@@ -262,7 +269,7 @@ module.exports = function(sequelize, DataTypes) {
             instanceMethods: {
                 toPublicJSON: function() {
                     var json = this.toJSON();
-                    return _.pick(json, 'id', 'email', 'firstName', 'lastName', 'phone', 
+                    return _.pick(json, 'id', 'roleId','profileId','email', 'firstName', 'lastName', 'phone', 
                     'addressLine1','addressLine2','addressLine3','addressLine4', 
                     'createdAt', 'updatedAt');
                 },

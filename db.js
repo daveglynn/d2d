@@ -26,6 +26,7 @@ if (env === 'production') {
 
 var db = {};
 
+db.profile = sequelize.import(__dirname + '/api/models/profile.model.js');
 db.tenant = sequelize.import(__dirname + '/api/models/tenant.model.js');
 db.order = sequelize.import(__dirname + '/api/models/order.model.js');
 db.todo = sequelize.import(__dirname + '/api/models/todo.model.js');
@@ -34,6 +35,12 @@ db.token = sequelize.import(__dirname + '/api/models/token.model.js');
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+//db.order.belongsTo(db.tenant,{constraints: true});
+//db.tenant.hasMany(db.order,{constraints: true});
+
+db.profile.belongsTo(db.tenant);
+db.tenant.hasMany(db.profile);
 
 db.order.belongsTo(db.tenant);
 db.tenant.hasMany(db.order);

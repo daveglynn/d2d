@@ -31,7 +31,7 @@ module.exports = function(db) {
                 if (!tokenInstance) {
                     throw new Error();
                 }
-
+               
                 req.token = tokenInstance;
                 return db.user.findByToken(token);
             }).then(function(user) {

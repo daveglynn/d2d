@@ -15,7 +15,7 @@ module.exports = {
         
         //clean post
         var body = _.pick(req.body, 'email', 'password', 'firstName', 'lastName', 'phone', 
-        'addressLine1', 'addressLine2','addressLine3','addressLine4','tenantId', 'roleId');
+        'addressLine1', 'addressLine2','addressLine3','addressLine4','tenantId', 'roleId, profileId');
         
         //add tenant
         body.tenantId = null;

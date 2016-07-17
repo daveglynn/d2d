@@ -68,6 +68,12 @@ module.exports = {
 
     },
 
+    modelProfileId: function (req) {
+        
+        return req.user.get('profileId');
+
+    },
+    
     setAttributes: function (req) {
     
         var attributes = {

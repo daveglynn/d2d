@@ -7,6 +7,7 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
+var ctrlProfile = require('../controllers/profile.controller.js');
 var ctrlUser = require('../controllers/user.controller.js');
 var ctrlTenant = require('../controllers/tenant.controller.js');
 var ctrlOrder = require('../controllers/order.controller.js');
@@ -33,16 +34,29 @@ router
     .route('/users/:id')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersGetById);
 router
-    .route('/users')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersPost);
-router
     .route('/users/:id')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersDelete);
 router
     .route('/users/:id')
     .put(middleware.requireAuthentication, middleware.requireAuthorisation,  ctrlUser.usersPut);
 
-
+router
+    .route('/profiles')
+    .post(middleware.requireAuthentication,  ctrlProfile.profilesPost);
+router
+    .route('/profiles/all')
+    .get(middleware.requireAuthentication,ctrlProfile.profilesGetAll);
+router
+    .route('/profiles/:id')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profilesGetById);
+router
+    .route('/profiles/:id')
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profilesDelete);
+router
+    .route('/profiles/:id')
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation,  ctrlProfile.profilesPut);
+    
+   
 router
     .route('/tenants/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantsGetAll);
@@ -80,10 +94,6 @@ router
     .put(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlTodo.todosPut);
 
 
-
-router
-    .route('/orders')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.ordersGetByUserId);
 router
     .route('/orders/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation,ctrlOrder.ordersGetAll);
