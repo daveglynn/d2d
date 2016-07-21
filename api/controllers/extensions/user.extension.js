@@ -74,6 +74,12 @@ module.exports = {
                 $like: '%' + query.q + '%'
             };
         }
+
+        if (query.hasOwnProperty('profileId') && query.profileId.length > 0) {
+            where.profileId = {
+                $eq: query.profileId 
+            };
+        }
         return where;
 
     },

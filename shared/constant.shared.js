@@ -13,4 +13,5 @@ function define(name, value) {
 define("roleId_Host", 1);
 define("roleId_Admin", 2);
 define("roleId_User", 3);
-define("roleId_Guest", 3);
+define("roleId_Guest", 4);
+define("roleId_ReadOnly", 5);
