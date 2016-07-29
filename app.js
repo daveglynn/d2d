@@ -44,7 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
 app.use('/',routes);
- 
+
 db.sequelize.sync({force: true }).then(function() {
 	app.listen(PORT, function() {
 		console.log('Express listening on port ' + PORT);
