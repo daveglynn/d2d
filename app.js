@@ -24,13 +24,10 @@ app.use(function (req, res, next) {
     else {
       next();
     }
-    
-    
-
         
 });
  
-
+ 
 // middleware to console log every request
 app.use(function(req, res, next) {
   console.log(req.method, req.url);
@@ -39,7 +36,6 @@ app.use(function(req, res, next) {
 
 // set static folder
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 app.use(bodyParser.json());
 
