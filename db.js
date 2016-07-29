@@ -27,6 +27,7 @@ if (env === 'production') {
 var db = {};
 
 db.profile = sequelize.import(__dirname + '/api/models/profile.model.js');
+db.language = sequelize.import(__dirname + '/api/models/language.model.js');
 db.tenant = sequelize.import(__dirname + '/api/models/tenant.model.js');
 db.order = sequelize.import(__dirname + '/api/models/order.model.js');
 db.todo = sequelize.import(__dirname + '/api/models/todo.model.js');
@@ -53,5 +54,11 @@ db.tenant.hasMany(db.todo);
 
 db.todo.belongsTo(db.user);
 db.user.hasMany(db.todo);
+
+db.user.belongsTo(db.profile);
+db.profile.hasMany(db.user);
+
+db.user.belongsTo(db.language);
+db.language.hasMany(db.user);
 
 module.exports = db;
