@@ -18,7 +18,8 @@ module.exports = {
         'addressLine1', 'addressLine2','addressLine3','addressLine4','tenantId', 'roleId, profileId');
         
         //add tenant
-        body.tenantId = null;
+        // this defaults to 1- demo 
+        // body.tenantId = null;
         
         //add createdBy
         if (mode == 'C') {

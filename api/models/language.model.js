@@ -20,12 +20,12 @@ module.exports = function(sequelize, DataTypes) {
         },		
         createdBy: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             defaultValue: null
         },
         updatedBy: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             defaultValue: null
         }
     });
