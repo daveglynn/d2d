@@ -14,11 +14,13 @@ module.exports = function(sequelize, DataTypes) {
     var user = sequelize.define('user', {
         tenantId: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            allowNull: true,
+            defaultValue: constants.tenantId_Demo            
         },
         languageId: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            allowNull: true,
+            defaultValue: constants.languageId_Demo               
         },          
         roleId: {
             type: DataTypes.INTEGER,
@@ -27,8 +29,14 @@ module.exports = function(sequelize, DataTypes) {
         },
         profileId: {
             type: DataTypes.INTEGER,
-            allowNull: true
-        },        
+            allowNull: true,
+            defaultValue: constants.profileId_Demo               
+        },
+        active: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+			defaultValue: true
+        },	                
         email: {
             type: DataTypes.STRING,
             allowNull: false,

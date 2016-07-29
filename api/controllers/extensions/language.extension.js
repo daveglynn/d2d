@@ -31,7 +31,9 @@ module.exports = {
         if (body.hasOwnProperty('name')) {
             attributes.name = body.name;
         }
-
+        if (body.hasOwnProperty('active')) {
+            attributes.active = body.active;
+        }   
         if (body.hasOwnProperty('createdBy')) {
             attributes.createdBy = body.createdBy;
         }

@@ -35,6 +35,9 @@ module.exports = {
         if (body.hasOwnProperty('email')) {
             attributes.email = body.email;
         }
+        if (body.hasOwnProperty('active')) {
+            attributes.active = body.active;
+        }        
         if (body.hasOwnProperty('firstName')) {
             attributes.firstName = body.firstName;
         }

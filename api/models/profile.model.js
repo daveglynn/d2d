@@ -5,6 +5,11 @@
 var _ = require('underscore');
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define('profile', {
+        tenantId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: constants.tenantId_Demo            
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
