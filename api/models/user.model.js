@@ -12,6 +12,14 @@ var constants = require('../../shared/constant.shared');
 
 module.exports = function(sequelize, DataTypes) {
     var user = sequelize.define('user', {
+        tenantId: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
+        languageId: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },          
         roleId: {
             type: DataTypes.INTEGER,
             allowNull: true,
