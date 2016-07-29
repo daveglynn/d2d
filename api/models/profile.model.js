@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         updatedBy: {
             type: DataTypes.INTEGER,
-            allowNull: true,
+            allowNull: false,
             defaultValue: null
         }
     }, {

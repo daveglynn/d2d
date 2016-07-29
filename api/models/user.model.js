@@ -189,12 +189,12 @@ module.exports = function(sequelize, DataTypes) {
         },
         createdBy: {
             type: DataTypes.INTEGER,
-            allowNull: true,
+            allowNull: false,
             defaultValue: null
         },
         updatedBy: {
             type: DataTypes.INTEGER,
-            allowNull: true,
+            allowNull: false,
             defaultValue: null
         }
     }, {
