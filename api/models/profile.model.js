@@ -3,6 +3,8 @@
 ******************************************************************************************************/
 "use strict";
 var _ = require('underscore');
+var constants = require('../../shared/constant.shared');
+
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define('profile', {
         tenantId: {
