@@ -44,7 +44,7 @@ router
 router
     .route('/profiles')
     .post(middleware.requireAuthentication,  ctrlProfile.profilesPost);
-router
+router 
     .route('/profiles/all')
     .get(middleware.requireAuthentication,ctrlProfile.profilesGetAll);
 router
