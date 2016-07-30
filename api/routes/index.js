@@ -59,19 +59,19 @@ router
 
 router
     .route('/languages')
-    .post(middleware.requireAuthentication,  ctrlProfile.languagesPost);
+    .post(middleware.requireAuthentication,  ctrlLanguage.languagesPost);
 router
     .route('/languages/all')
-    .get(middleware.requireAuthentication,ctrlProfile.languagesGetAll);
+    .get(middleware.requireAuthentication,ctrlLanguage.languagesGetAll);
 router
     .route('/languages/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.languagesGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languagesGetById);
 router
     .route('/languages/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.languagesDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languagesDelete);
 router
     .route('/languages/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation,  ctrlProfile.languagesPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation,  ctrlLanguage.languagesPut);
         
    
 router
