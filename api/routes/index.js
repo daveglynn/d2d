@@ -8,6 +8,7 @@ var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
 var ctrlProfile = require('../controllers/profile.controller.js');
+var ctrlLanguage = require('../controllers/language.controller.js');
 var ctrlUser = require('../controllers/user.controller.js');
 var ctrlTenant = require('../controllers/tenant.controller.js');
 var ctrlOrder = require('../controllers/order.controller.js');
@@ -55,7 +56,23 @@ router
 router
     .route('/profiles/:id')
     .put(middleware.requireAuthentication, middleware.requireAuthorisation,  ctrlProfile.profilesPut);
-    
+
+router
+    .route('/languages')
+    .post(middleware.requireAuthentication,  ctrlProfile.languagesPost);
+router
+    .route('/languages/all')
+    .get(middleware.requireAuthentication,ctrlProfile.languagesGetAll);
+router
+    .route('/languages/:id')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.languagesGetById);
+router
+    .route('/languages/:id')
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.languagesDelete);
+router
+    .route('/languages/:id')
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation,  ctrlProfile.languagesPut);
+        
    
 router
     .route('/tenants/all')
