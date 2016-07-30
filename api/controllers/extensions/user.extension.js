@@ -14,8 +14,8 @@ module.exports = {
     setPost: function (req, mode) {
         
         //clean post
-        var body = _.pick(req.body, 'email', 'password', 'firstName', 'lastName', 'phone', 
-        'addressLine1', 'addressLine2','addressLine3','addressLine4','tenantId', 'roleId, profileId');
+        var body = _.pick(req.body, 'email', 'password', 'firstName', 'lastName', 'roleId','profileId', 'languageId',  'phone', 
+        'addressLine1', 'addressLine2','addressLine3','addressLine4' );
         
         //add tenant
         // this defaults to 1- demo 
@@ -45,6 +45,15 @@ module.exports = {
         if (body.hasOwnProperty('lastName')) {
             attributes.lastName = body.lastName;
         }
+        if (body.hasOwnProperty('roleId')) {
+            attributes.roleId = body.roleId;
+        } 
+        if (body.hasOwnProperty('profileId')) {
+            attributes.profileId = body.profileId;
+        } 
+        if (body.hasOwnProperty('languageId')) {
+            attributes.languageId = body.languageId;
+        }                  
         if (body.hasOwnProperty('phone')) {
             attributes.phone = body.phone;
         }
@@ -84,6 +93,19 @@ module.exports = {
                 $eq: query.profileId 
             };
         }
+
+        if (query.hasOwnProperty('languageId') && query.languageId.length > 0) {
+            where.languageId = {
+                $eq: query.languageId
+            };
+        }
+
+        if (query.hasOwnProperty('roleId') && query.roleId.length > 0) {
+            where.roleId = {
+                $eq: query.roleId
+            };
+        }
+
         return where;
 
     },

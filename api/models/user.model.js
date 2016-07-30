@@ -15,35 +15,62 @@ module.exports = function(sequelize, DataTypes) {
         tenantId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: constants.tenantId_Demo            
+            defaultValue: constants.tenantId_Demo
         },
         languageId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: constants.languageId_Demo               
-        },          
+            defaultValue: constants.languageId_Demo,
+            validate: {
+                isNumeric: function (value, next) {
+                    if (v.isNumeric(v.ltrim(value)) === false) {
+                        next('Language: Must be numeric.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },
         roleId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: constants.roleId_User
+            defaultValue: constants.roleId_User,
+            validate: {
+                isNumeric: function (value, next) {
+                    if (v.isNumeric(v.ltrim(value)) === false) {
+                        next('Role: Must be numeric.')
+                    } else {
+                        next()
+                    }
+                },
+            }
         },
         profileId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: constants.profileId_Demo               
+            defaultValue: constants.profileId_Demo,
+            validate: {
+                isNumeric: function(value, next) {
+                    if (v.isNumeric(v.ltrim(value)) === false) {
+                        next('Profile: Must be numeric.')
+                    } else {
+                        next()
+                    }
+                },
+            }
         },
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-			defaultValue: true
-        },	                
+            defaultValue: true
+        },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 isEmail: function(value, next) {
                     if (v.isEmail(v.ltrim(value)) === false) {
-                        next('Email:  Is Invalid')
+                        next('Email: ' + value + ' Is Invalid')
                     } else {
                         next()
                     }
@@ -59,9 +86,9 @@ module.exports = function(sequelize, DataTypes) {
                                     next()
                                 }
                             })
-                            .catch(function (err) {
-                            return next(err);
-                        });
+                            .catch(function(err) {
+                                return next(err);
+                            });
                     } else {
                         next("Email: Must be entered");
                     }
@@ -126,7 +153,7 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
-                           next('Address Line 2: The Length is incorrect. Max 100 characters')
+                        next('Address Line 2: The Length is incorrect. Max 100 characters')
                     } else {
                         next()
                     }
@@ -139,12 +166,12 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
-                           next('Address Line 3: The Length is incorrect. Max 100 characters')
+                        next('Address Line 3: The Length is incorrect. Max 100 characters')
                     } else {
                         next()
                     }
                 },
-            } 
+            }
         },
         addressLine4: {
             type: DataTypes.STRING,
@@ -152,7 +179,7 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
-                           next('Address Line 4: The Length is incorrect. Max 100 characters')
+                        next('Address Line 4: The Length is incorrect. Max 100 characters')
                     } else {
                         next()
                     }
@@ -227,30 +254,30 @@ module.exports = function(sequelize, DataTypes) {
                             }
                             user.findOne({
                                 where: {
-                                email: body.email
+                                    email: body.email
                                 }
-                        }).then(function (user) {
-                            // password does not match
-                            if (!user || !bcrypt.compareSync(body.password, user.get('password_hash'))) {
-                                return reject();
-                            }
-                            // user must have a role
-                            if (user.get('roleId') === null) {
-                                return reject();
-                            }
-                            //  host user must not have a tenant while all other users must have a tenant
-                            if (user.get('roleId') === constants.roleId_Host) {
-                                if (user.get('tenantId') !== null) {
+                            }).then(function(user) {
+                                // password does not match
+                                if (!user || !bcrypt.compareSync(body.password, user.get('password_hash'))) {
                                     return reject();
                                 }
-                            } else {
-                                if (user.get('tenantId') === null) {
+                                // user must have a role
+                                if (user.get('roleId') === null) {
                                     return reject();
                                 }
-                                if (user.get('profileId') === null) {
-                                    return reject();
-                                }                                      
-                            }
+                                //  host user must not have a tenant while all other users must have a tenant
+                                if (user.get('roleId') === constants.roleId_Host) {
+                                    if (user.get('tenantId') !== null) {
+                                        return reject();
+                                    }
+                                } else {
+                                    if (user.get('tenantId') === null) {
+                                        return reject();
+                                    }
+                                    if (user.get('profileId') === null) {
+                                        return reject();
+                                    }
+                                }
                                 resolve(user);
                             }, function(err) {
                                 reject();
@@ -259,7 +286,7 @@ module.exports = function(sequelize, DataTypes) {
                             reject();
                         }
                     });
-                }, 
+                },
                 findByToken: function(token) {
                     return new Promise(function(resolve, reject) {
                         try {
@@ -285,9 +312,9 @@ module.exports = function(sequelize, DataTypes) {
             instanceMethods: {
                 toPublicJSON: function() {
                     var json = this.toJSON();
-                    return _.pick(json, 'id', 'roleId','languageId','profileId','email', 'firstName', 'lastName', 'phone', 
-                    'addressLine1','addressLine2','addressLine3','addressLine4', 
-                    'createdAt', 'updatedAt');
+                    return _.pick(json, 'id', 'roleId', 'languageId', 'profileId', 'email', 'firstName', 'lastName', 'phone',
+                        'addressLine1', 'addressLine2', 'addressLine3', 'addressLine4',
+                        'createdAt', 'updatedAt');
                 },
                 generateToken: function(type) {
                     if (!_.isString(type)) {
