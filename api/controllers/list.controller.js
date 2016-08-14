@@ -1,0 +1,140 @@
+﻿/******************************************************************************************************
+ controller layer
+******************************************************************************************************/
+"use strict";
+var db = require('../.././db.js');
+var _ = require('underscore');
+var constants = require('../.././shared/constant.shared');
+var common = require('./extensions/common.extension');
+var extension = require('./extensions/list.extension');
+var Sequelize = require('sequelize');
+
+/******************************************************************************************************
+ Insert a Record 
+******************************************************************************************************/
+module.exports.listsPost = function (req, res) {
+
+    // pick appropiate fields and set tenant
+    var body = extension.setPost(req, 'C');
+
+    db.list.create(body).then(function (list) {
+        res.json(list.toJSON())
+    }).catch(Sequelize.ValidationError, function (err) {
+        res.status(422).send(err.errors);
+    }).catch(function (err) {
+        res.status(400).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get All Records 
+******************************************************************************************************/
+module.exports.listsGetAll = function (req, res) {
+
+    // builds clause 
+    var where = {};
+    where = common.setClauseAll(req, where);
+    //where = common.setClauseTenantId(req, where);
+    where = extension.setClauseQuery(req.query, where);
+    var attributes = common.setAttributes();
+
+    db.list.findAll({
+        attributes: attributes,
+        where: where
+    }).then(function (lists) {
+        res.json(lists);
+    }, function (err) {
+        res.status(500).json(err);
+    })
+};
+
+
+/******************************************************************************************************
+ Get a Record created by Id  
+******************************************************************************************************/
+module.exports.listsGetById = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = common.setClauseId(req, where);
+    //where = common.setClauseTenantId(req, where);
+    var attributes = common.setAttributes();
+
+    //find and return the records 
+    db.list.findOne({
+        attributes: attributes,
+        where: where
+    }).then(function (list) {
+        if (!!list) {
+            res.json(list.toJSON());
+        } else {
+            res.status(404).json({ "err": { "name": "list", "message": "An error occurred retrieving the record" } });
+        }
+    }, function (err) {
+        res.status(500).json(err);
+    })
+};
+
+
+/******************************************************************************************************
+ Update a Record 
+******************************************************************************************************/
+module.exports.listsPut = function (req, res) {
+
+    // pick appropiate fields and set tenant
+    var body = extension.setPost(req, 'U');
+
+    // set the attributes to update
+    var attributes = extension.prepareForUpdate(body);
+
+    // builds clause
+    var where = {};
+    where = common.setClauseId(req, where);
+    //where = common.setClauseTenantId(req, where);
+
+    // find record on database, update record and return to client
+    db.list.findOne({
+        where: where
+    }).then(function (list) {
+        if (list) {
+            list.update(attributes).then(function (list) {
+                res.json(list.toJSON());
+            }, function (err) {
+                res.status(400).json(err);
+            });
+        } else {
+            res.status(404).json({ "err": { "name": "list", "message": "An error occurred retrieving the record" } });
+        }
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Delete a Record 
+******************************************************************************************************/
+module.exports.listsDelete = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = common.setClauseId(req, where);
+    //where = common.setClauseTenantId(req, where);
+
+    // delete record on database
+    db.list.destroy({
+        where: where
+    }).then(function (rowsDeleted) {
+        if (rowsDeleted === 0) {
+            res.status(404).json({ "err": { "name": "list", "message": "An error occurred retrieving the record" } });
+        } else {
+            res.status(204).send();
+        }
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+
+/******************************************************************************************************
+ EXTRA FUNCTIONS 
+******************************************************************************************************/

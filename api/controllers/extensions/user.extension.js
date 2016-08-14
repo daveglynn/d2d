@@ -83,10 +83,14 @@ module.exports = {
         
         //set query parameters   
         if (query.hasOwnProperty('q') && query.q.length > 0) {
-            where.email = {
-                $like: '%' + query.q + '%'
-            };
+            where = {
+                $or: [
+                    { email: { $like: '%' + query.q + '%' } },
+                    { firstName: { $like: '%' + query.q + '%' } }
+                ]
+            }
         }
+ 
 
         if (query.hasOwnProperty('profileId') && query.profileId.length > 0) {
             where.profileId = {

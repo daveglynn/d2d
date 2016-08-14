@@ -33,6 +33,8 @@ db.order = sequelize.import(__dirname + '/api/models/order.model.js');
 db.todo = sequelize.import(__dirname + '/api/models/todo.model.js');
 db.user = sequelize.import(__dirname + '/api/models/user.model.js');
 db.token = sequelize.import(__dirname + '/api/models/token.model.js');
+db.list = sequelize.import(__dirname + '/api/models/list.model.js');
+db.item = sequelize.import(__dirname + '/api/models/item.model.js');
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
@@ -60,5 +62,8 @@ db.profile.hasMany(db.user);
 
 db.user.belongsTo(db.language);
 db.language.hasMany(db.user);
+
+db.item.belongsTo(db.list);
+db.list.hasMany(db.item);
 
 module.exports = db;

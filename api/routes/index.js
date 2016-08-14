@@ -7,6 +7,7 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
+var ctrlList = require('../controllers/list.controller.js');
 var ctrlProfile = require('../controllers/profile.controller.js');
 var ctrlLanguage = require('../controllers/language.controller.js');
 var ctrlUser = require('../controllers/user.controller.js');
@@ -40,6 +41,23 @@ router
 router
     .route('/users/:id')
     .put(middleware.requireAuthentication, middleware.requireAuthorisation,  ctrlUser.usersPut);
+
+router
+    .route('/lists')
+    .post(middleware.requireAuthentication, ctrlList.listsPost);
+router
+    .route('/lists/all')
+    .get(middleware.requireAuthentication, ctrlList.listsGetAll);
+router
+    .route('/lists/:id')
+    .get(middleware.requireAuthentication,  ctrlList.listsGetById);
+router
+    .route('/lists/:id')
+    .delete(middleware.requireAuthentication,  ctrlList.listsDelete);
+router
+    .route('/lists/:id')
+    .put(middleware.requireAuthentication,  ctrlList.listsPut);
+
 
 router
     .route('/profiles')
