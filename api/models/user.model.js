@@ -35,15 +35,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: true,
             defaultValue: constants.roleId_User,
-            validate: {
-                isNumeric: function (value, next) {
-                    if (v.isNumeric(v.ltrim(value)) === false) {
-                        next('Role: Must be numeric.')
-                    } else {
-                        next()
-                    }
-                },
-            }
         },
         profileId: {
             type: DataTypes.INTEGER,

@@ -1,3 +1,12 @@
+                        
+/******************************************************************************************************
+ 
+ Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
+ You may NOT use, copy, distribute or modify this code unless you have written 
+ consent from the author which may be obtained from emailing dave@ocl.ie 
+
+******************************************************************************************************/
+ 
 /******************************************************************************************************
  controller layer
 ******************************************************************************************************/
@@ -10,8 +19,7 @@ var common = require('./extensions/common.extension');
 var extension = require('./extensions/user.extension');
 var controller = "user";
 var Sequelize = require('sequelize');
-
-
+ 
 /******************************************************************************************************
  Login 
 ******************************************************************************************************/
@@ -48,13 +56,13 @@ module.exports.usersLogout = function(req, res) {
         res.status(500).json(err);
     });
 };
-
+ 
 /******************************************************************************************************
  Insert a Record 
 ******************************************************************************************************/
 module.exports.usersPost = function(req, res) {
 
-    // pick appropiate fields and set tenant
+    // pick appropiate fields and set tenant   
     var body = extension.setPost(req, 'C');
                
     db.user.create(body).then(function(user) {
@@ -74,8 +82,9 @@ module.exports.usersGetAll = function(req, res) {
     // builds clause 
     var where = {};
     where = common.setClauseAll(req, where);
-    where = common.setClauseTenantId(req, where);
     where = extension.setClauseQuery(req.query, where);
+	where = common.setClauseTenantId(req, where); 
+
     var attributes = common.setAttributes();
 
     db.user.findAll({
@@ -88,16 +97,16 @@ module.exports.usersGetAll = function(req, res) {
     })
 };
 
-
 /******************************************************************************************************
- Get a Record created by Id - Filtered by TenantId
+ Get a Record by Id
 ******************************************************************************************************/
 module.exports.usersGetById = function(req, res) {
 
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    where = common.setClauseTenantId(req, where);
+	where = common.setClauseTenantId(req, where); 
+
     var attributes = common.setAttributes();
 
     //find and return the records 
@@ -108,7 +117,6 @@ module.exports.usersGetById = function(req, res) {
         if (!!user) {
             res.json(user.toPublicJSON());
         } else {
-            //res.status(404).send();
             res.status(404).json({"err": {"name": "user", "message": "An error occurred retrieving the record"  }});
         }
     }, function(err) {
@@ -116,13 +124,12 @@ module.exports.usersGetById = function(req, res) {
     })
 };
 
-
 /******************************************************************************************************
  Update a Record 
 ******************************************************************************************************/
 module.exports.usersPut = function(req, res) {
 
-    // pick appropiate fields and set tenant
+    // pick appropiate fields 
     var body = extension.setPost(req, 'U');
 
     // set the attributes to update
@@ -132,7 +139,6 @@ module.exports.usersPut = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     where = common.setClauseTenantId(req, where);
-
     // find record on database, update record and return to client
     db.user.findOne({
         where: where
@@ -144,7 +150,7 @@ module.exports.usersPut = function(req, res) {
                 res.status(400).json(err);
             });
         } else {
-             res.status(404).json({"err": {"name": "user", "message": "An error occurred retrieving the user"  }});
+             res.status(404).json({"err": {"name": "user", "message": "An error occurred retrieving the record"}});
         }
     }, function(err) {
         res.status(500).json(err);
@@ -160,7 +166,6 @@ module.exports.usersDelete = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     where = common.setClauseTenantId(req, where);
-
     // delete record on database
     db.user.destroy({
         where: where
@@ -174,32 +179,3 @@ module.exports.usersDelete = function(req, res) {
         res.status(500).json(err);
     });
 };
-
-
-/******************************************************************************************************
- EXTRA FUNCTIONS 
-******************************************************************************************************/
-
-/******************************************************************************************************
- Get a Record by email - Filtered by TenantId
-******************************************************************************************************/
-module.exports.userCheckExistsEmail = function(req, res) {
-
-    // builds clause
-    var where = { email: req.params.email };
-
-    //find and return the records 
-    db.user.findOne({
-        where: where
-    }).then(function(user) {
-        if (!!user) {
-            res.status(200).send();
-        } else {
-            res.status(404).json({ "err": { "name": "user", "message": "An error occurred retrieving the user"}});
-        }
-    }, function(err) {
-        res.status(500).json(err);
-    })
-};
-
-
