@@ -15,6 +15,8 @@ var ctrlLanguage = require('../controllers/language.controller.js');
 var ctrlTenant = require('../controllers/tenant.controller.js');
 var ctrlTodo = require('../controllers/todo.controller.js');
 var ctrlOrder = require('../controllers/order.controller.js');
+var ctrlItem = require('../controllers/item.controller.js');
+var ctrlRuleBook = require('../controllers/ruleBook.controller.js');
  
 router.use('/users', require('./user.router.js'));
 router.use('/lists', require('./list.router.js'));
@@ -23,5 +25,7 @@ router.use('/languages', require('./language.router.js'));
 router.use('/tenants', require('./tenant.router.js'));  
 router.use('/todos', require('./todo.router.js'));      
 router.use('/orders', require('./order.router.js'));    
+router.use('/items', require('./item.router.js'));  
+router.use('/ruleBooks', require('./ruleBook.router.js'));  
 
 module.exports = router;

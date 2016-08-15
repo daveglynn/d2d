@@ -54,12 +54,12 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         ruleBookId: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: true,
             validate: {
-                isLength: function (value, next) {
-                    if (v.isLength(v.ltrim(value), { min: 1, max: 10 }) === false) {
-                        next('Rule Book: Length is incorrect. Max 10 characters.')
+                isNumeric: function (value, next) {
+                    if (v.isNumeric(v.ltrim(value)) === false) {
+                        next('Rule Book: Must be numeric.')
                     } else {
                         next()
                     }

@@ -1,3 +1,12 @@
+                        
+/******************************************************************************************************
+ 
+ Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
+ You may NOT use, copy, distribute or modify this code unless you have written 
+ consent from the author which may be obtained from emailing dave@ocl.ie 
+
+******************************************************************************************************/
+ 
 /******************************************************************************************************
  database
 ******************************************************************************************************/
@@ -35,6 +44,7 @@ db.user = sequelize.import(__dirname + '/api/models/user.model.js');
 db.token = sequelize.import(__dirname + '/api/models/token.model.js');
 db.list = sequelize.import(__dirname + '/api/models/list.model.js');
 db.item = sequelize.import(__dirname + '/api/models/item.model.js');
+db.ruleBook = sequelize.import(__dirname + '/api/models/ruleBook.model.js');
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
@@ -65,5 +75,8 @@ db.language.hasMany(db.user);
 
 db.item.belongsTo(db.list);
 db.list.hasMany(db.item);
+ 
+db.item.belongsTo(db.ruleBook);
+db.ruleBook.hasMany(db.item);
 
 module.exports = db;
