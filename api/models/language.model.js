@@ -3,8 +3,11 @@
 ******************************************************************************************************/
 "use strict";
 var _ = require('underscore');
-module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('language', {
+var v = require('validator');
+var constants = require('../../shared/constant.shared');
+
+module.exports = function (sequelize, DataTypes) {
+    var language = sequelize.define('language', {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -12,12 +15,12 @@ module.exports = function(sequelize, DataTypes) {
         code: {
             type: DataTypes.STRING,
             allowNull: false,
-        },		
+        },
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-			defaultValue: true
-        },		
+            defaultValue: true
+        },
         createdBy: {
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -28,5 +31,15 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true,
             defaultValue: null
         }
-    });
-};
+    }, {
+            instanceMethods: {
+                toPublicJSON: function () {
+                    var json = this.toJSON();
+                    return _.omit(json, 'tenantId');
+                }
+            }
+
+        });
+
+    return language;
+}

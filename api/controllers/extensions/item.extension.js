@@ -1,4 +1,4 @@
-                        
+                    
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -37,7 +37,7 @@ module.exports = {
         if (mode == 'C') {
 		 body.createdBy = common.modelUserId(req);		
 		} else {
-            body.updatedBy = common.modelItemId(req);
+            body.updatedBy = common.modelUserId(req);
         }
         return body;  
 
@@ -88,7 +88,6 @@ module.exports = {
 				$or: [
   				{name: { $like: '%' + query.q + '%' }}  
 				,{code: { $like: '%' + query.q + '%' }}  
-				,{ruleBookId: { $like: '%' + query.q + '%' }}  
 		 			]
 				}
 			}
@@ -115,4 +114,4 @@ module.exports = {
 
 };
 
-
+ 

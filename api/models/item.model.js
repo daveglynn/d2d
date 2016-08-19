@@ -73,7 +73,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         parent: {
             type: DataTypes.BOOLEAN,
-            allowNull: false,
+            allowNull: true,
             defaultValue: false
         },
         parentListId: {
@@ -99,8 +99,15 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true,
             defaultValue: null
         }
+    }, {
+            instanceMethods: {
+                toPublicJSON: function () {
+                    var json = this.toJSON();
+                    return _.omit(json, 'tenantId');
+                }
+            }
 
-    });
+        });
 
     return item;
 }

@@ -42,7 +42,15 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: null
         }
 
-    });
+    }, {
+            instanceMethods: {
+                toPublicJSON: function () {
+                    var json = this.toJSON();
+                    return _.omit(json, 'tenantId');
+                }
+            }
+
+        });
 
     return ruleBook;
 }

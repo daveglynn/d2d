@@ -2,11 +2,12 @@
  model layer
 ******************************************************************************************************/
 "use strict";
-var _ = require('underscore');
+var _ = require('underscore')
+var v = require('validator');
 var constants = require('../../shared/constant.shared');
 
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('profile', {
+    var profile = sequelize.define('profile', {
         tenantId: {
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -51,4 +52,6 @@ module.exports = function(sequelize, DataTypes) {
             }
 
         });
+
+    return profile;
 };

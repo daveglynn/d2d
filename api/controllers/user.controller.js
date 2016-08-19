@@ -1,4 +1,4 @@
-                        
+                    
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -6,7 +6,7 @@
  consent from the author which may be obtained from emailing dave@ocl.ie 
 
 ******************************************************************************************************/
- 
+
 /******************************************************************************************************
  controller layer
 ******************************************************************************************************/
@@ -62,7 +62,7 @@ module.exports.usersLogout = function(req, res) {
 ******************************************************************************************************/
 module.exports.usersPost = function(req, res) {
 
-    // pick appropiate fields and set tenant   
+    // pick appropiate fields 
     var body = extension.setPost(req, 'C');
                
     db.user.create(body).then(function(user) {
@@ -83,8 +83,7 @@ module.exports.usersGetAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
-	where = common.setClauseTenantId(req, where); 
-
+	 
     var attributes = common.setAttributes();
 
     db.user.findAll({
@@ -105,8 +104,7 @@ module.exports.usersGetById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-	where = common.setClauseTenantId(req, where); 
-
+	 
     var attributes = common.setAttributes();
 
     //find and return the records 
@@ -138,7 +136,7 @@ module.exports.usersPut = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    where = common.setClauseTenantId(req, where);
+    
     // find record on database, update record and return to client
     db.user.findOne({
         where: where
@@ -165,7 +163,7 @@ module.exports.usersDelete = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    where = common.setClauseTenantId(req, where);
+    
     // delete record on database
     db.user.destroy({
         where: where

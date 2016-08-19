@@ -1,4 +1,4 @@
-                        
+                    
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -25,7 +25,7 @@ module.exports = {
         var body = _.pick(req.body
 				,'name'
 				,'active'
-				,'processflags'
+				,'processFlags'
 				,'sort'
 		 		);
 
@@ -33,7 +33,7 @@ module.exports = {
         if (mode == 'C') {
 		 body.createdBy = common.modelUserId(req);		
 		} else {
-            body.updatedBy = common.modelRulebookId(req);
+            body.updatedBy = common.modelUserId(req);
         }
         return body;  
 
@@ -48,8 +48,8 @@ module.exports = {
 		if (body.hasOwnProperty('active')) {
 			attributes.active = body.active;
 		}
-		if (body.hasOwnProperty('processflags')) {
-			attributes.processflags = body.processflags;
+		if (body.hasOwnProperty('processFlags')) {
+			attributes.processFlags = body.processFlags;
 		}
 		if (body.hasOwnProperty('createdBy')) {
 			attributes.createdBy = body.createdBy;
@@ -71,7 +71,7 @@ module.exports = {
 			 where = {
 				$or: [
   				{name: { $like: '%' + query.q + '%' }}  
-				,{processflags: { $like: '%' + query.q + '%' }}  
+				,{processFlags: { $like: '%' + query.q + '%' }}  
 		 			]
 				}
 			}
@@ -83,4 +83,4 @@ module.exports = {
 
 };
 
-
+ 

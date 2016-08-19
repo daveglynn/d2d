@@ -27,7 +27,7 @@ module.exports = {
     
     setClauseUserId: function (req, where ) {
         
-        where. userId = req.user.get('id')
+        where.userId = req.user.get('id')
         return where;
 
     },

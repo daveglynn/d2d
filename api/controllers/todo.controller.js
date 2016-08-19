@@ -1,3 +1,12 @@
+                    
+/******************************************************************************************************
+ 
+ Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
+ You may NOT use, copy, distribute or modify this code unless you have written 
+ consent from the author which may be obtained from emailing dave@ocl.ie 
+
+******************************************************************************************************/
+
 /******************************************************************************************************
  controller layer
 ******************************************************************************************************/
@@ -5,65 +14,60 @@
 var db = require('../.././db.js');
 var _ = require('underscore');
 var constants = require('../.././shared/constant.shared');
+var helpers = require('../.././shared/helpers.shared');
 var common = require('./extensions/common.extension');
 var extension = require('./extensions/todo.extension');
+var controller = "user";
+var Sequelize = require('sequelize');
+ 
+/******************************************************************************************************
+ Insert a Record 
+******************************************************************************************************/
+module.exports.todosPost = function(req, res) {
 
+    // pick appropiate fields 
+    var body = extension.setPost(req, 'C');
+               
+    db.todo.create(body).then(function(todo) {
+        res.json(todo.toPublicJSON())
+    }).catch(Sequelize.ValidationError, function(err) {
+         res.status(422).send(err.errors);
+    }).catch(function(err) {
+        res.status(400).json(err);
+    });
+};
 
 /******************************************************************************************************
- Get All Records - Filtered by TenantId
+ Get All Records 
 ******************************************************************************************************/
 module.exports.todosGetAll = function(req, res) {
 
-    // builds clause
+    // builds clause 
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
-    where = common.setClauseTenantId(req, where);
+	 
     var attributes = common.setAttributes();
 
-    //find and return the records    
     db.todo.findAll({
         attributes: attributes,
         where: where
     }).then(function(todos) {
         res.json(todos);
-    }, function(e) {
-        res.status(500).send();
+    }, function(err) {
+        res.status(500).json(err);
     })
 };
 
 /******************************************************************************************************
- Get All Records created by UserId - Filtered by TenantId
-******************************************************************************************************/
-module.exports.todosGetByUserId = function(req, res) {
-
-    // builds clause
-    var where = {};
-    where = common.setClauseUserId(req, where);
-    where = extension.setClauseQuery(req.query, where);
-    where = common.setClauseTenantId(req, where);
-    var attributes = common.setAttributes();
-
-    //find and return the records  
-    db.todo.findAll({
-        attributes: attributes,
-        where: where
-    }).then(function(todos) {
-        res.json(todos);
-    }, function(e) {
-        res.status(500).send();
-    })
-};
-
-/******************************************************************************************************
- Get a Record created by Id - Filtered by TenantId
+ Get a Record by Id
 ******************************************************************************************************/
 module.exports.todosGetById = function(req, res) {
 
     // builds clause
     var where = {};
-    where = common.setClauseIdUserId(req, where);
-    where = common.setClauseTenantId(req, where);
+    where = common.setClauseId(req, where);
+	 
     var attributes = common.setAttributes();
 
     //find and return the records 
@@ -74,31 +78,11 @@ module.exports.todosGetById = function(req, res) {
         if (!!todo) {
             res.json(todo.toPublicJSON());
         } else {
-            res.status(404).send();
+            res.status(404).json({"err": {"name": "todo", "message": "An error occurred retrieving the record"  }});
         }
-    }, function(e) {
-        res.status(500).send();
+    }, function(err) {
+        res.status(500).json(err);
     })
-};
-
-/******************************************************************************************************
- Insert a Record 
-******************************************************************************************************/
-module.exports.todosPost = function(req, res) {
-
-    // pick appropiate fields and set tenant
-    var body = extension.setPost(req, 'C');
-
-    // create record on database, refresh and return local record to client
-    db.todo.create(body).then(function(todo) {
-        req.user.addTodo(todo).then(function() {
-            return todo.reload();
-        }).then(function(todo) {
-            res.json(todo.toPublicJSON());
-        });
-    }, function(e) {
-        res.status(400).json(e);
-    });
 };
 
 /******************************************************************************************************
@@ -106,7 +90,7 @@ module.exports.todosPost = function(req, res) {
 ******************************************************************************************************/
 module.exports.todosPut = function(req, res) {
 
-    // pick appropiate fields and set tenant
+    // pick appropiate fields 
     var body = extension.setPost(req, 'U');
 
     // set the attributes to update
@@ -114,9 +98,8 @@ module.exports.todosPut = function(req, res) {
 
     // builds clause
     var where = {};
-    where = common.setClauseIdUserId(req, where);
-    where = common.setClauseTenantId(req, where);
-
+    where = common.setClauseId(req, where);
+    
     // find record on database, update record and return to client
     db.todo.findOne({
         where: where
@@ -124,14 +107,14 @@ module.exports.todosPut = function(req, res) {
         if (todo) {
             todo.update(attributes).then(function(todo) {
                 res.json(todo.toPublicJSON());
-            }, function(e) {
-                res.status(400).json(e);
+            }, function(err) {
+                res.status(400).json(err);
             });
         } else {
-            res.status(404).send();
+             res.status(404).json({"err": {"name": "todo", "message": "An error occurred retrieving the record"}});
         }
-    }, function() {
-        res.status(500).send();
+    }, function(err) {
+        res.status(500).json(err);
     });
 };
 
@@ -142,21 +125,18 @@ module.exports.todosDelete = function(req, res) {
 
     // builds clause
     var where = {};
-    where = common.setClauseIdUserId(req, where);
-    where = common.setClauseTenantId(req, where);
-
+    where = common.setClauseId(req, where);
+    
     // delete record on database
     db.todo.destroy({
         where: where
     }).then(function(rowsDeleted) {
         if (rowsDeleted === 0) {
-            res.status(404).json({
-                error: 'No record found with id'
-            });
+            res.status(404).json({ "err": { "name": "todo", "message": "An error occurred retrieving the record"}});
         } else {
             res.status(204).send();
         }
-    }, function() {
-        res.status(500).send();
+    }, function(err) {
+        res.status(500).json(err);
     });
 };

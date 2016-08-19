@@ -2,9 +2,12 @@
  model layer
 ******************************************************************************************************/
 "use strict";
-var _ = require('underscore');
+var _ = require('underscore')
+var v = require('validator');
+var constants = require('../../shared/constant.shared');
+
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('todo', {
+    var todo = sequelize.define('todo', {
         description: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -19,12 +22,12 @@ module.exports = function(sequelize, DataTypes) {
         },
         createdBy: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             defaultValue: null
         },
         updatedBy: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             defaultValue: null
         }
     }, {
@@ -36,4 +39,6 @@ module.exports = function(sequelize, DataTypes) {
             }
 
         });
+
+    return todo;
 };

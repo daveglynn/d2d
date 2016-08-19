@@ -1,4 +1,4 @@
-                        
+                    
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -6,7 +6,7 @@
  consent from the author which may be obtained from emailing dave@ocl.ie 
 
 ******************************************************************************************************/
- 
+
 /******************************************************************************************************
  controller layer
 ******************************************************************************************************/
@@ -16,7 +16,7 @@ var _ = require('underscore');
 var constants = require('../.././shared/constant.shared');
 var helpers = require('../.././shared/helpers.shared');
 var common = require('./extensions/common.extension');
-var extension = require('./extensions/user.extension');
+var extension = require('./extensions/item.extension');
 var controller = "user";
 var Sequelize = require('sequelize');
  
@@ -47,7 +47,6 @@ module.exports.itemsGetAll = function(req, res) {
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
 	 
-
     var attributes = common.setAttributes();
 
     db.item.findAll({
@@ -69,7 +68,6 @@ module.exports.itemsGetById = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
 	 
-
     var attributes = common.setAttributes();
 
     //find and return the records 

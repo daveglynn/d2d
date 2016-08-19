@@ -9,7 +9,6 @@ var jwt = require('jsonwebtoken');
 var v = require('validator');
 var constants = require('../../shared/constant.shared');
 
-
 module.exports = function(sequelize, DataTypes) {
     var user = sequelize.define('user', {
         tenantId: {
@@ -301,11 +300,9 @@ module.exports = function(sequelize, DataTypes) {
                 }
             },
             instanceMethods: {
-                toPublicJSON: function() {
+                toPublicJSON: function () {
                     var json = this.toJSON();
-                    return _.pick(json, 'id', 'roleId', 'languageId', 'profileId', 'email', 'firstName', 'lastName', 'phone',
-                        'addressLine1', 'addressLine2', 'addressLine3', 'addressLine4',
-                        'createdAt', 'updatedAt');
+                    return _.omit(json, 'tenantId');
                 },
                 generateToken: function(type) {
                     if (!_.isString(type)) {

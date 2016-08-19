@@ -2,9 +2,12 @@
  model layer
 ******************************************************************************************************/
 "use strict";
-var _ = require('underscore');
+var _ = require('underscore')
+var v = require('validator');
+var constants = require('../../shared/constant.shared');
+
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('order', {
+    var order =  sequelize.define('order', {
         orderStatusId: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -39,7 +42,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         createdBy: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             defaultValue: null
         },
         updatedBy: {
@@ -56,4 +59,6 @@ module.exports = function(sequelize, DataTypes) {
             }
 
         });
+
+    return order;
 };

@@ -2,8 +2,12 @@
  model layer
 ******************************************************************************************************/
 "use strict";
+var _ = require('underscore')
+var v = require('validator');
+var constants = require('../../shared/constant.shared');
+
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('tenant', {
+    var tenant = sequelize.define('tenant', {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -26,5 +30,15 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true,
             defaultValue: null
         },
-    });
-};
+    }, {
+            instanceMethods: {
+                toPublicJSON: function () {
+                    var json = this.toJSON();
+                    return _.omit(json, '');
+                }
+            }
+
+        });
+
+    return tenant;
+}
