@@ -1,4 +1,4 @@
-                    
+                      
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -47,7 +47,7 @@ module.exports.tenantsGetAll = function(req, res) {
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
 	 
-    var attributes = common.setAttributes();
+    var attributes = common.excludeAttributes();
 
     db.tenant.findAll({
         attributes: attributes,
@@ -68,7 +68,7 @@ module.exports.tenantsGetById = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
 	 
-    var attributes = common.setAttributes();
+    var attributes = common.excludeAttributes();
 
     //find and return the records 
     db.tenant.findOne({
@@ -140,3 +140,4 @@ module.exports.tenantsDelete = function(req, res) {
         res.status(500).json(err);
     });
 };
+

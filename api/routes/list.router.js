@@ -34,4 +34,9 @@ router
     .route('/:id')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listsDelete);
 
+router
+    .route('/items/:id')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listsItemsById);
+
+
 module.exports = router

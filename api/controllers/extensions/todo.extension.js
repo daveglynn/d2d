@@ -1,4 +1,4 @@
-                    
+                      
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -17,70 +17,75 @@ var common = require('./common.extension');
 /******************************************************************************************************
  functions
 ******************************************************************************************************/
-module.exports = {
-
-    setPost: function (req, mode) {
+module.exports.setPost = function (req, mode) {
         
-        //clean post
-        var body = _.pick(req.body
-				,'description'
-				,'completed'
-				,'userId'
-		 		);
+    //clean post
+    var body = _.pick(req.body
+		,'description'
+		,'completed'
+		,'userId'
+	 	);
 
-        //add createdBy
-        if (mode == 'C') {
-		 body.createdBy = common.modelUserId(req);		
-		} else {
-            body.updatedBy = common.modelUserId(req);
-        }
-        return body;  
+    //add createdBy
+    if (mode == 'C') {
+	 body.createdBy = common.modelUserId(req);		
+	} else {
+        body.updatedBy = common.modelUserId(req);
+    }
+    return body;  
+};
 
-    },
-    prepareForUpdate: function (body) {
+module.exports.prepareForUpdate =  function (body) {
         
-        var attributes = {};
+    var attributes = {};
 
-		if (body.hasOwnProperty('description')) {
-			attributes.description = body.description;
-		}
-		if (body.hasOwnProperty('completed')) {
-			attributes.completed = body.completed;
-		}
-		if (body.hasOwnProperty('createdBy')) {
-			attributes.createdBy = body.createdBy;
-		}
-		if (body.hasOwnProperty('updatedBy')) {
-			attributes.updatedBy = body.updatedBy;
-		}
-		if (body.hasOwnProperty('userId')) {
-			attributes.userId = body.userId;
-		}
-		 
+	if (body.hasOwnProperty('description')) {
+		attributes.description = body.description;
+	}
+	if (body.hasOwnProperty('completed')) {
+		attributes.completed = body.completed;
+	}
+	if (body.hasOwnProperty('createdBy')) {
+		attributes.createdBy = body.createdBy;
+	}
+	if (body.hasOwnProperty('updatedBy')) {
+		attributes.updatedBy = body.updatedBy;
+	}
+	if (body.hasOwnProperty('userId')) {
+		attributes.userId = body.userId;
+	}
+	 
+    return attributes;
+};
 
-        return attributes;
+module.exports.setClauseQuery =  function (query, where) {	
 
-    },
-    setClauseQuery: function (query, where) {
-
- 		if (query.hasOwnProperty('q') && query.q.length > 0) {
-			 where = {
-				$or: [
-  				{description: { $like: '%' + query.q + '%' }}  
-		 			]
-				}
+ 	if (query.hasOwnProperty('q') && query.q.length > 0) {
+		where = {
+		$or: [
+  		{description: { $like: '%' + query.q + '%' }}  
+	 			]
 			}
+		}
 
-  			if (query.hasOwnProperty('userId') && query.userId.length > 0) {
-				where.userId = {
-				$eq: query.userId
-				};
-			}
-        
-        return where;
-
-    },
-
+  	if (query.hasOwnProperty('completed') && query.completed.length > 0) {
+			where.completed = {
+			$eq: query.completed
+			};
+		}
+    
+  	if (query.hasOwnProperty('userId') && query.userId.length > 0) {
+			where.userId = {
+			$eq: query.userId
+			};
+		}
+    
+  	if (query.hasOwnProperty('userId') && query.userId.length > 0) {
+			where.userId = {
+			$eq: query.userId
+			};
+		}
+    	return where;
 };
 
  

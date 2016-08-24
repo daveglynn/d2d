@@ -1,4 +1,4 @@
-                    
+                      
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -17,71 +17,71 @@ var common = require('./common.extension');
 /******************************************************************************************************
  functions
 ******************************************************************************************************/
-module.exports = {
-
-    setPost: function (req, mode) {
+module.exports.setPost = function (req, mode) {
         
-        //clean post
-        var body = _.pick(req.body
-				,'name'
-				,'active'
-				,'description'
-				,'hideElements'
-		 		);
+    //clean post
+    var body = _.pick(req.body
+		,'name'
+		,'active'
+		,'description'
+		,'hideElements'
+	 	);
 
-        //add createdBy
-        if (mode == 'C') {
-		 body.createdBy = common.modelUserId(req);		
-		} else {
-            body.updatedBy = common.modelUserId(req);
-        }
-        return body;  
+    //add createdBy
+    if (mode == 'C') {
+	 body.createdBy = common.modelUserId(req);		
+	} else {
+        body.updatedBy = common.modelUserId(req);
+    }
+    return body;  
+};
 
-    },
-    prepareForUpdate: function (body) {
+module.exports.prepareForUpdate =  function (body) {
         
-        var attributes = {};
+    var attributes = {};
 
-		if (body.hasOwnProperty('name')) {
-			attributes.name = body.name;
-		}
-		if (body.hasOwnProperty('active')) {
-			attributes.active = body.active;
-		}
-		if (body.hasOwnProperty('description')) {
-			attributes.description = body.description;
-		}
-		if (body.hasOwnProperty('hideElements')) {
-			attributes.hideElements = body.hideElements;
-		}
-		if (body.hasOwnProperty('createdBy')) {
-			attributes.createdBy = body.createdBy;
-		}
-		if (body.hasOwnProperty('updatedBy')) {
-			attributes.updatedBy = body.updatedBy;
-		}
-		 
+	if (body.hasOwnProperty('name')) {
+		attributes.name = body.name;
+	}
+	if (body.hasOwnProperty('active')) {
+		attributes.active = body.active;
+	}
+	if (body.hasOwnProperty('description')) {
+		attributes.description = body.description;
+	}
+	if (body.hasOwnProperty('hideElements')) {
+		attributes.hideElements = body.hideElements;
+	}
+	if (body.hasOwnProperty('createdBy')) {
+		attributes.createdBy = body.createdBy;
+	}
+	if (body.hasOwnProperty('updatedBy')) {
+		attributes.updatedBy = body.updatedBy;
+	}
+	 
+    return attributes;
+};
 
-        return attributes;
+module.exports.setClauseQuery =  function (query, where) {	
 
-    },
-    setClauseQuery: function (query, where) {
-
- 		if (query.hasOwnProperty('q') && query.q.length > 0) {
-			 where = {
-				$or: [
-  				{name: { $like: '%' + query.q + '%' }}  
-				,{description: { $like: '%' + query.q + '%' }}  
-				,{hideElements: { $like: '%' + query.q + '%' }}  
-		 			]
-				}
+ 	if (query.hasOwnProperty('q') && query.q.length > 0) {
+		where = {
+		$or: [
+  		{name: { $like: '%' + query.q + '%' }}  
+		,{description: { $like: '%' + query.q + '%' }}  
+		,{hideElements: { $like: '%' + query.q + '%' }}  
+	 			]
 			}
+		}
 
-  		
-        return where;
-
-    },
-
+  	if (query.hasOwnProperty('active') && query.active.length > 0) {
+			where.active = {
+			$eq: query.active
+			};
+		}
+    
+  	
+  		return where;
 };
 
  
