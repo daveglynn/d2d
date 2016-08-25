@@ -20,18 +20,18 @@ var ctrlTenant = require('../controllers/tenant.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantsPost);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantPost);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantsGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantGetAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantsGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantGetById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantsPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantPut);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantsDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantDelete);
 
 module.exports = router

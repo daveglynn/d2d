@@ -20,18 +20,18 @@ var ctrlOrder = require('../controllers/order.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.ordersPost);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.orderPost);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.ordersGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.orderGetAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.ordersGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.orderGetById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.ordersPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.orderPut);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.ordersDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.orderDelete);
 
 module.exports = router

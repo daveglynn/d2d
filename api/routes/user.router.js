@@ -20,24 +20,24 @@ var ctrlUser = require('../controllers/user.controller.js');
 
 router
     .route('/')
-    .post(ctrlUser.usersPost);
+    .post(ctrlUser.userPost);
 router
     .route('/login')
-    .post(ctrlUser.usersLogin);
+    .post(ctrlUser.userLogin);
 router
     .route('/login')
-    .delete(middleware.requireAuthentication, ctrlUser.usersLogout);
+    .delete(middleware.requireAuthentication, ctrlUser.userLogout);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.userGetAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.userGetById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.userPut);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.usersDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.userDelete);
 
 module.exports = router

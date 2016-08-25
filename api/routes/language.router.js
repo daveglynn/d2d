@@ -20,18 +20,18 @@ var ctrlLanguage = require('../controllers/language.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languagesPost);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languagePost);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languagesGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languageGetAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languagesGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languageGetById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languagesPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languagePut);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languagesDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languageDelete);
 
 module.exports = router

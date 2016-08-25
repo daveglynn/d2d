@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 /******************************************************************************************************
  Insert a Record 
 ******************************************************************************************************/
-module.exports.listsPost = function(req, res) {
+module.exports.listPost = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'C');
@@ -40,7 +40,7 @@ module.exports.listsPost = function(req, res) {
 /******************************************************************************************************
  Get All Records 
 ******************************************************************************************************/
-module.exports.listsGetAll = function(req, res) {
+module.exports.listGetAll = function(req, res) {
 
     // builds clause 
     var where = {};
@@ -62,7 +62,7 @@ module.exports.listsGetAll = function(req, res) {
 /******************************************************************************************************
  Get a Record by Id
 ******************************************************************************************************/
-module.exports.listsGetById = function(req, res) {
+module.exports.listGetById = function(req, res) {
 
     // builds clause
     var where = {};
@@ -88,7 +88,7 @@ module.exports.listsGetById = function(req, res) {
 /******************************************************************************************************
  Update a Record 
 ******************************************************************************************************/
-module.exports.listsPut = function(req, res) {
+module.exports.listPut = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'U');
@@ -121,7 +121,7 @@ module.exports.listsPut = function(req, res) {
 /******************************************************************************************************
  Delete a Record 
 ******************************************************************************************************/
-module.exports.listsDelete = function(req, res) {
+module.exports.listDelete = function(req, res) {
 
     // builds clause
     var where = {};
@@ -144,7 +144,7 @@ module.exports.listsDelete = function(req, res) {
 /******************************************************************************************************
  Get item list records
 ******************************************************************************************************/
-module.exports.listsItemsById = function (req, res) {
+module.exports.listItemsById = function (req, res) {
 
     // build clause 
     var where = {};

@@ -20,23 +20,23 @@ var ctrlList = require('../controllers/list.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listsPost);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listPost);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listsGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listGetAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listsGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listGetById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listsPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listPut);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listsDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listDelete);
 
 router
     .route('/items/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listsItemsById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.listItemsById);
 
 
 module.exports = router

@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 /******************************************************************************************************
  Login 
 ******************************************************************************************************/
-module.exports.usersLogin = function(req, res) {
+module.exports.userLogin = function(req, res) {
     var body = _.pick(req.body, 'email', 'password');
     var userInstance;
 
@@ -49,7 +49,7 @@ module.exports.usersLogin = function(req, res) {
 /******************************************************************************************************
  Logout 
 ******************************************************************************************************/
-module.exports.usersLogout = function(req, res) {
+module.exports.userLogout = function(req, res) {
     req.token.destroy().then(function() {
         res.status(204).send();
     }).catch(function(err) {
@@ -60,7 +60,7 @@ module.exports.usersLogout = function(req, res) {
 /******************************************************************************************************
  Insert a Record 
 ******************************************************************************************************/
-module.exports.usersPost = function(req, res) {
+module.exports.userPost = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'C');
@@ -77,7 +77,7 @@ module.exports.usersPost = function(req, res) {
 /******************************************************************************************************
  Get All Records 
 ******************************************************************************************************/
-module.exports.usersGetAll = function(req, res) {
+module.exports.userGetAll = function(req, res) {
 
     // builds clause 
     var where = {};
@@ -99,7 +99,7 @@ module.exports.usersGetAll = function(req, res) {
 /******************************************************************************************************
  Get a Record by Id
 ******************************************************************************************************/
-module.exports.usersGetById = function(req, res) {
+module.exports.userGetById = function(req, res) {
 
     // builds clause
     var where = {};
@@ -125,7 +125,7 @@ module.exports.usersGetById = function(req, res) {
 /******************************************************************************************************
  Update a Record 
 ******************************************************************************************************/
-module.exports.usersPut = function(req, res) {
+module.exports.userPut = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'U');
@@ -158,7 +158,7 @@ module.exports.usersPut = function(req, res) {
 /******************************************************************************************************
  Delete a Record 
 ******************************************************************************************************/
-module.exports.usersDelete = function(req, res) {
+module.exports.userDelete = function(req, res) {
 
     // builds clause
     var where = {};

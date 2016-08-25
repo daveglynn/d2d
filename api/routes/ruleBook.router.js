@@ -20,18 +20,18 @@ var ctrlRulebook = require('../controllers/ruleBook.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.ruleBooksPost);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.ruleBookPost);
 router
     .route('/all')
-	.get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.ruleBooksGetAll);
+	.get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.ruleBookGetAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.ruleBooksGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.ruleBookGetById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.ruleBooksPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.ruleBookPut);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.ruleBooksDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.ruleBookDelete);
 
 module.exports = router

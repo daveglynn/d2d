@@ -20,18 +20,18 @@ var ctrlItem = require('../controllers/item.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemsPost);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemPost);
 router
     .route('/all')
-	.get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemsGetAll);
+	.get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemGetAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemsGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemGetById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemsPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemPut);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemsDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemDelete);
 
 module.exports = router

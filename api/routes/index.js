@@ -18,14 +18,14 @@ var ctrlOrder = require('../controllers/order.controller.js');
 var ctrlItem = require('../controllers/item.controller.js');
 var ctrlRuleBook = require('../controllers/ruleBook.controller.js');
  
-router.use('/users', require('./user.router.js'));
-router.use('/lists', require('./list.router.js'));
-router.use('/profiles', require('./profile.router.js'));
-router.use('/languages', require('./language.router.js'));
-router.use('/tenants', require('./tenant.router.js'));  
-router.use('/todos', require('./todo.router.js'));      
-router.use('/orders', require('./order.router.js'));    
-router.use('/items', require('./item.router.js'));  
-router.use('/ruleBooks', require('./ruleBook.router.js'));  
+router.use('/user', require('./user.router.js'));
+router.use('/list', require('./list.router.js'));
+router.use('/profile', require('./profile.router.js'));
+router.use('/language', require('./language.router.js'));
+router.use('/tenant', require('./tenant.router.js'));  
+router.use('/todo', require('./todo.router.js'));      
+router.use('/order', require('./order.router.js'));    
+router.use('/item', require('./item.router.js'));  
+router.use('/ruleBook', require('./ruleBook.router.js'));  
 
 module.exports = router;

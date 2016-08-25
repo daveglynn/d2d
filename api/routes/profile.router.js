@@ -20,18 +20,18 @@ var ctrlProfile = require('../controllers/profile.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profilesPost);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profilePost);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profilesGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profileGetAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profilesGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profileGetById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profilesPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profilePut);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profilesDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profileDelete);
 
 module.exports = router

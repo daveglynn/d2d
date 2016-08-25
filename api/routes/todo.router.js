@@ -20,18 +20,18 @@ var ctrlTodo = require('../controllers/todo.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todosPost);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todoPost);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todosGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todoGetAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todosGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todoGetById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todosPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todoPut);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todosDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todoDelete);
 
 module.exports = router
