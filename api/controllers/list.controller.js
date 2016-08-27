@@ -144,7 +144,7 @@ module.exports.listDelete = function(req, res) {
 /******************************************************************************************************
  Get item list records
 ******************************************************************************************************/
-module.exports.listItemsById = function (req, res) {
+module.exports.listIdItem = function (req, res) {
 
     // build clause 
     var where = {};

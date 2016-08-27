@@ -20,7 +20,7 @@ var ctrlUser = require('../controllers/user.controller.js');
 
 router
     .route('/')
-    .post(ctrlUser.userPost);
+    .post(ctrlUser.addUser);
 router
     .route('/login')
     .post(ctrlUser.userLogin);
@@ -29,15 +29,15 @@ router
     .delete(middleware.requireAuthentication, ctrlUser.userLogout);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.userGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.userGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUserById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.userPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.updateUser);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.userDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.deleteUser);
 
 module.exports = router

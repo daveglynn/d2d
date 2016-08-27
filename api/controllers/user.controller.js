@@ -60,7 +60,7 @@ module.exports.userLogout = function(req, res) {
 /******************************************************************************************************
  Insert a Record 
 ******************************************************************************************************/
-module.exports.userPost = function(req, res) {
+module.exports.addUser = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'C');
@@ -77,7 +77,7 @@ module.exports.userPost = function(req, res) {
 /******************************************************************************************************
  Get All Records 
 ******************************************************************************************************/
-module.exports.userGetAll = function(req, res) {
+module.exports.getUsersAll = function(req, res) {
 
     // builds clause 
     var where = {};
@@ -99,7 +99,7 @@ module.exports.userGetAll = function(req, res) {
 /******************************************************************************************************
  Get a Record by Id
 ******************************************************************************************************/
-module.exports.userGetById = function(req, res) {
+module.exports.getUserById = function(req, res) {
 
     // builds clause
     var where = {};
@@ -125,7 +125,7 @@ module.exports.userGetById = function(req, res) {
 /******************************************************************************************************
  Update a Record 
 ******************************************************************************************************/
-module.exports.userPut = function(req, res) {
+module.exports.updateUser = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'U');
@@ -158,7 +158,7 @@ module.exports.userPut = function(req, res) {
 /******************************************************************************************************
  Delete a Record 
 ******************************************************************************************************/
-module.exports.userDelete = function(req, res) {
+module.exports.deleteUser = function(req, res) {
 
     // builds clause
     var where = {};
