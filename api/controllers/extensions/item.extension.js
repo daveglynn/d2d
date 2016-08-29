@@ -18,7 +18,7 @@ var common = require('./common.extension');
  functions
 ******************************************************************************************************/
 module.exports.setPost = function (req, mode) {
-        
+ 
     //clean post
     var body = _.pick(req.body
 		,'listId'
@@ -120,24 +120,37 @@ module.exports.setClauseQuery =  function (query, where) {
 			$eq: query.parentListId
 			};
 		}
-    
-  	if (query.hasOwnProperty('listId') && query.listId.length > 0) {
-			where.listId = {
-			$eq: query.listId
-			};
-		}
-    if (query.hasOwnProperty('ruleBookId') && query.ruleBookId.length > 0) {
-			where.ruleBookId = {
-			$eq: query.ruleBookId
-			};
-		}
-    if (query.hasOwnProperty('parentListId') && query.parentListId.length > 0) {
-			where.parentListId = {
-			$eq: query.parentListId
-			};
-		}
     	return where;
 };
+  	
+module.exports.setClauseListId = function (req, where) {
+  
+    var listId = parseInt(req.params.listId, 10);
+    where = {
+        listId: listId
+    };
+	return where;
+};
+	
+module.exports.setClauseRuleBookId = function (req, where) {
+  
+    var ruleBookId = parseInt(req.params.ruleBookId, 10);
+    where = {
+        ruleBookId: ruleBookId
+    };
+	return where;
+};
+	
+module.exports.setClauseParentListId = function (req, where) {
+  
+    var parentListId = parseInt(req.params.parentListId, 10);
+    where = {
+        parentListId: parentListId
+    };
+	return where;
+};
+	
+
 
 module.exports.setClauseQueryView = function (query, where)
 {

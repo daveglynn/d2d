@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 /******************************************************************************************************
  Insert a Record 
 ******************************************************************************************************/
-module.exports.orderPost = function(req, res) {
+module.exports.addOrder = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'C');
@@ -40,7 +40,7 @@ module.exports.orderPost = function(req, res) {
 /******************************************************************************************************
  Get All Records 
 ******************************************************************************************************/
-module.exports.orderGetAll = function(req, res) {
+module.exports.getOrdersAll = function(req, res) {
 
     // builds clause 
     var where = {};
@@ -62,7 +62,7 @@ module.exports.orderGetAll = function(req, res) {
 /******************************************************************************************************
  Get a Record by Id
 ******************************************************************************************************/
-module.exports.orderGetById = function(req, res) {
+module.exports.getOrderById = function(req, res) {
 
     // builds clause
     var where = {};
@@ -88,7 +88,7 @@ module.exports.orderGetById = function(req, res) {
 /******************************************************************************************************
  Update a Record 
 ******************************************************************************************************/
-module.exports.orderPut = function(req, res) {
+module.exports.updateOrder = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'U');
@@ -121,7 +121,7 @@ module.exports.orderPut = function(req, res) {
 /******************************************************************************************************
  Delete a Record 
 ******************************************************************************************************/
-module.exports.orderDelete = function(req, res) {
+module.exports.deleteOrder = function(req, res) {
 
     // builds clause
     var where = {};

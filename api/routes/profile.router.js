@@ -1,4 +1,4 @@
-﻿
+                      
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -16,22 +16,23 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
-var ctrlProfile = require('../controllers/profile.controller.js');
+var ctrlProfile = require('../controllers/Profile.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profilePost);
+    .post(ctrlProfile.addProfile);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profileGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.getProfilesAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profileGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.getProfileById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profilePut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.updateProfile);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.profileDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.deleteProfile);
+
 
 module.exports = router

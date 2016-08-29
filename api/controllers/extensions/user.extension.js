@@ -18,7 +18,7 @@ var common = require('./common.extension');
  functions
 ******************************************************************************************************/
 module.exports.setPost = function (req, mode) {
-        
+ 
     //clean post
     var body = _.pick(req.body
 		,'languageId'
@@ -133,23 +133,36 @@ module.exports.setClauseQuery =  function (query, where) {
 			$eq: query.profileId
 			};
 		}
-    
-  	if (query.hasOwnProperty('languageId') && query.languageId.length > 0) {
-			where.languageId = {
-			$eq: query.languageId
-			};
-		}
-    if (query.hasOwnProperty('roleId') && query.roleId.length > 0) {
-			where.roleId = {
-			$eq: query.roleId
-			};
-		}
-    if (query.hasOwnProperty('profileId') && query.profileId.length > 0) {
-			where.profileId = {
-			$eq: query.profileId
-			};
-		}
     	return where;
 };
+  	
+module.exports.setClauseLanguageId = function (req, where) {
+  
+    var languageId = parseInt(req.params.languageId, 10);
+    where = {
+        languageId: languageId
+    };
+	return where;
+};
+	
+module.exports.setClauseRoleId = function (req, where) {
+  
+    var roleId = parseInt(req.params.roleId, 10);
+    where = {
+        roleId: roleId
+    };
+	return where;
+};
+	
+module.exports.setClauseProfileId = function (req, where) {
+  
+    var profileId = parseInt(req.params.profileId, 10);
+    where = {
+        profileId: profileId
+    };
+	return where;
+};
+	
+
 
  

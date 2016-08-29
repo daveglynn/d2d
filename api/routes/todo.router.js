@@ -1,4 +1,4 @@
-﻿
+                      
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -16,22 +16,23 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
-var ctrlTodo = require('../controllers/todo.controller.js');
+var ctrlTodo = require('../controllers/Todo.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todoPost);
+    .post(ctrlTodo.addTodo);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todoGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.getTodosAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todoGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.getTodoById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todoPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.updateTodo);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.todoDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.deleteTodo);
+
 
 module.exports = router

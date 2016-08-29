@@ -1,4 +1,4 @@
-﻿
+                      
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -16,17 +16,11 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
-var ctrlUser = require('../controllers/user.controller.js');
+var ctrlUser = require('../controllers/User.controller.js');
 
 router
     .route('/')
     .post(ctrlUser.addUser);
-router
-    .route('/login')
-    .post(ctrlUser.userLogin);
-router
-    .route('/login')
-    .delete(middleware.requireAuthentication, ctrlUser.userLogout);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersAll);
@@ -39,5 +33,12 @@ router
 router
     .route('/:id')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.deleteUser);
+
+router
+    .route('/login')
+    .post(ctrlUser.login);
+router
+    .route('/login')
+    .delete(middleware.requireAuthentication, ctrlUser.logout);
 
 module.exports = router

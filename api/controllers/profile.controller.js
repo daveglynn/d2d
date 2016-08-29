@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 /******************************************************************************************************
  Insert a Record 
 ******************************************************************************************************/
-module.exports.profilePost = function(req, res) {
+module.exports.addProfile = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'C');
@@ -40,7 +40,7 @@ module.exports.profilePost = function(req, res) {
 /******************************************************************************************************
  Get All Records 
 ******************************************************************************************************/
-module.exports.profileGetAll = function(req, res) {
+module.exports.getProfilesAll = function(req, res) {
 
     // builds clause 
     var where = {};
@@ -62,7 +62,7 @@ module.exports.profileGetAll = function(req, res) {
 /******************************************************************************************************
  Get a Record by Id
 ******************************************************************************************************/
-module.exports.profileGetById = function(req, res) {
+module.exports.getProfileById = function(req, res) {
 
     // builds clause
     var where = {};
@@ -88,7 +88,7 @@ module.exports.profileGetById = function(req, res) {
 /******************************************************************************************************
  Update a Record 
 ******************************************************************************************************/
-module.exports.profilePut = function(req, res) {
+module.exports.updateProfile = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'U');
@@ -121,7 +121,7 @@ module.exports.profilePut = function(req, res) {
 /******************************************************************************************************
  Delete a Record 
 ******************************************************************************************************/
-module.exports.profileDelete = function(req, res) {
+module.exports.deleteProfile = function(req, res) {
 
     // builds clause
     var where = {};

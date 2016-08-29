@@ -18,7 +18,7 @@ var common = require('./common.extension');
  functions
 ******************************************************************************************************/
 module.exports.setPost = function (req, mode) {
-        
+ 
     //clean post
     var body = _.pick(req.body
 		,'description'
@@ -79,13 +79,18 @@ module.exports.setClauseQuery =  function (query, where) {
 			$eq: query.userId
 			};
 		}
-    
-  	if (query.hasOwnProperty('userId') && query.userId.length > 0) {
-			where.userId = {
-			$eq: query.userId
-			};
-		}
     	return where;
 };
+  	
+module.exports.setClauseUserId = function (req, where) {
+  
+    var userId = parseInt(req.params.userId, 10);
+    where = {
+        userId: userId
+    };
+	return where;
+};
+	
+
 
  

@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 /******************************************************************************************************
  Insert a Record 
 ******************************************************************************************************/
-module.exports.tenantPost = function(req, res) {
+module.exports.addTenant = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'C');
@@ -40,7 +40,7 @@ module.exports.tenantPost = function(req, res) {
 /******************************************************************************************************
  Get All Records 
 ******************************************************************************************************/
-module.exports.tenantGetAll = function(req, res) {
+module.exports.getTenantsAll = function(req, res) {
 
     // builds clause 
     var where = {};
@@ -62,7 +62,7 @@ module.exports.tenantGetAll = function(req, res) {
 /******************************************************************************************************
  Get a Record by Id
 ******************************************************************************************************/
-module.exports.tenantGetById = function(req, res) {
+module.exports.getTenantById = function(req, res) {
 
     // builds clause
     var where = {};
@@ -88,7 +88,7 @@ module.exports.tenantGetById = function(req, res) {
 /******************************************************************************************************
  Update a Record 
 ******************************************************************************************************/
-module.exports.tenantPut = function(req, res) {
+module.exports.updateTenant = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'U');
@@ -121,7 +121,7 @@ module.exports.tenantPut = function(req, res) {
 /******************************************************************************************************
  Delete a Record 
 ******************************************************************************************************/
-module.exports.tenantDelete = function(req, res) {
+module.exports.deleteTenant = function(req, res) {
 
     // builds clause
     var where = {};

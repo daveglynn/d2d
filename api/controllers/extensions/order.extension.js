@@ -18,7 +18,7 @@ var common = require('./common.extension');
  functions
 ******************************************************************************************************/
 module.exports.setPost = function (req, mode) {
-        
+ 
     //clean post
     var body = _.pick(req.body
 		,'orderStatusId'
@@ -96,18 +96,27 @@ module.exports.setClauseQuery =  function (query, where) {
 			$eq: query.orderTypeId
 			};
 		}
-    
-  	if (query.hasOwnProperty('orderStatusId') && query.orderStatusId.length > 0) {
-			where.orderStatusId = {
-			$eq: query.orderStatusId
-			};
-		}
-    if (query.hasOwnProperty('orderTypeId') && query.orderTypeId.length > 0) {
-			where.orderTypeId = {
-			$eq: query.orderTypeId
-			};
-		}
     	return where;
 };
+  	
+module.exports.setClauseOrderStatusId = function (req, where) {
+  
+    var orderStatusId = parseInt(req.params.orderStatusId, 10);
+    where = {
+        orderStatusId: orderStatusId
+    };
+	return where;
+};
+	
+module.exports.setClauseOrderTypeId = function (req, where) {
+  
+    var orderTypeId = parseInt(req.params.orderTypeId, 10);
+    where = {
+        orderTypeId: orderTypeId
+    };
+	return where;
+};
+	
+
 
  

@@ -1,4 +1,4 @@
-                        
+                      
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -6,7 +6,7 @@
  consent from the author which may be obtained from emailing dave@ocl.ie 
 
 ******************************************************************************************************/
- 
+
 /******************************************************************************************************
  router
 ******************************************************************************************************/
@@ -16,22 +16,27 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
-var ctrlItem = require('../controllers/item.controller.js');
+var ctrlItem = require('../controllers/Item.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemPost);
+    .post(ctrlItem.addItem);
 router
     .route('/all')
-	.get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.updateItem);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.itemDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.deleteItem);
+
+router
+    .route('/list/:listId')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByListId);
+
 
 module.exports = router

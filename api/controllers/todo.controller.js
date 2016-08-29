@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 /******************************************************************************************************
  Insert a Record 
 ******************************************************************************************************/
-module.exports.todoPost = function(req, res) {
+module.exports.addTodo = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'C');
@@ -40,7 +40,7 @@ module.exports.todoPost = function(req, res) {
 /******************************************************************************************************
  Get All Records 
 ******************************************************************************************************/
-module.exports.todoGetAll = function(req, res) {
+module.exports.getTodosAll = function(req, res) {
 
     // builds clause 
     var where = {};
@@ -62,7 +62,7 @@ module.exports.todoGetAll = function(req, res) {
 /******************************************************************************************************
  Get a Record by Id
 ******************************************************************************************************/
-module.exports.todoGetById = function(req, res) {
+module.exports.getTodoById = function(req, res) {
 
     // builds clause
     var where = {};
@@ -88,7 +88,7 @@ module.exports.todoGetById = function(req, res) {
 /******************************************************************************************************
  Update a Record 
 ******************************************************************************************************/
-module.exports.todoPut = function(req, res) {
+module.exports.updateTodo = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'U');
@@ -121,7 +121,7 @@ module.exports.todoPut = function(req, res) {
 /******************************************************************************************************
  Delete a Record 
 ******************************************************************************************************/
-module.exports.todoDelete = function(req, res) {
+module.exports.deleteTodo = function(req, res) {
 
     // builds clause
     var where = {};

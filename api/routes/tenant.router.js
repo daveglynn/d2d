@@ -1,4 +1,4 @@
-﻿
+                      
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -16,22 +16,23 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
-var ctrlTenant = require('../controllers/tenant.controller.js');
+var ctrlTenant = require('../controllers/Tenant.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantPost);
+    .post(ctrlTenant.addTenant);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.getTenantsAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.getTenantById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.updateTenant);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.tenantDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.deleteTenant);
+
 
 module.exports = router

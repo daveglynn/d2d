@@ -18,7 +18,7 @@ var common = require('./common.extension');
  functions
 ******************************************************************************************************/
 module.exports.setPost = function (req, mode) {
-        
+ 
     //clean post
     var body = _.pick(req.body
 		,'name'
@@ -80,8 +80,9 @@ module.exports.setClauseQuery =  function (query, where) {
 			};
 		}
     
-  	
   		return where;
 };
+  	
+
 
  

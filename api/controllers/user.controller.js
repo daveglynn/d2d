@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 /******************************************************************************************************
  Login 
 ******************************************************************************************************/
-module.exports.userLogin = function(req, res) {
+module.exports.login = function(req, res) {
     var body = _.pick(req.body, 'email', 'password');
     var userInstance;
 
@@ -49,7 +49,7 @@ module.exports.userLogin = function(req, res) {
 /******************************************************************************************************
  Logout 
 ******************************************************************************************************/
-module.exports.userLogout = function(req, res) {
+module.exports.logout = function(req, res) {
     req.token.destroy().then(function() {
         res.status(204).send();
     }).catch(function(err) {

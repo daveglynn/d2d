@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 /******************************************************************************************************
  Insert a Record 
 ******************************************************************************************************/
-module.exports.itemPost = function(req, res) {
+module.exports.addItem = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'C');
@@ -40,7 +40,7 @@ module.exports.itemPost = function(req, res) {
 /******************************************************************************************************
  Get All Records 
 ******************************************************************************************************/
-module.exports.itemGetAll = function(req, res) {
+module.exports.getItemsAll = function(req, res) {
 
     // builds clause 
     var where = {};
@@ -62,7 +62,7 @@ module.exports.itemGetAll = function(req, res) {
 /******************************************************************************************************
  Get a Record by Id
 ******************************************************************************************************/
-module.exports.itemGetById = function(req, res) {
+module.exports.getItemById = function(req, res) {
 
     // builds clause
     var where = {};
@@ -88,7 +88,7 @@ module.exports.itemGetById = function(req, res) {
 /******************************************************************************************************
  Update a Record 
 ******************************************************************************************************/
-module.exports.itemPut = function(req, res) {
+module.exports.updateItem = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'U');
@@ -121,7 +121,7 @@ module.exports.itemPut = function(req, res) {
 /******************************************************************************************************
  Delete a Record 
 ******************************************************************************************************/
-module.exports.itemDelete = function(req, res) {
+module.exports.deleteItem = function(req, res) {
 
     // builds clause
     var where = {};
@@ -141,3 +141,25 @@ module.exports.itemDelete = function(req, res) {
     });
 };
 
+/******************************************************************************************************
+ Get item records
+******************************************************************************************************/
+module.exports.getItemsByListId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseListId(req, where);
+    where = extension.setClauseQueryView(req.query, where);
+
+    var attributes = common.excludeAttributes();
+
+    //find and return the records 
+    db.item.findAll({
+        attributes: attributes,
+        where: where
+    }).then(function (items) {
+        res.json(items);
+    }, function (err) {
+        res.status(500).json(err);
+    })
+};

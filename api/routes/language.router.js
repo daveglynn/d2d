@@ -1,4 +1,4 @@
-﻿
+                      
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -16,22 +16,23 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
-var ctrlLanguage = require('../controllers/language.controller.js');
+var ctrlLanguage = require('../controllers/Language.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languagePost);
+    .post(ctrlLanguage.addLanguage);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languageGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.getLanguagesAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languageGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.getLanguageById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languagePut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.updateLanguage);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.languageDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.deleteLanguage);
+
 
 module.exports = router

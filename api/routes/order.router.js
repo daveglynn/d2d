@@ -1,4 +1,4 @@
-﻿
+                      
 /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
@@ -16,22 +16,23 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
-var ctrlOrder = require('../controllers/order.controller.js');
+var ctrlOrder = require('../controllers/Order.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.orderPost);
+    .post(ctrlOrder.addOrder);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.orderGetAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrdersAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.orderGetById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrderById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.orderPut);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.updateOrder);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.orderDelete);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.deleteOrder);
+
 
 module.exports = router
