@@ -16,23 +16,23 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
-var ctrlRulebook = require('../controllers/Rulebook.controller.js');
+var ctrlRuleBook = require('../controllers/ruleBook.controller.js');
 
 router
     .route('/')
-    .post(ctrlRulebook.addRulebook);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRuleBook.addRuleBook);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.getRulebooksAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRuleBook.getRuleBooksAll);
 router
     .route('/:id')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.getRulebookById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRuleBook.getRuleBookById);
 router
     .route('/:id')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.updateRulebook);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRuleBook.updateRuleBook);
 router
     .route('/:id')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRulebook.deleteRulebook);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRuleBook.deleteRuleBook);
 
 
 module.exports = router

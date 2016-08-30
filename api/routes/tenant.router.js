@@ -16,11 +16,11 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
-var ctrlTenant = require('../controllers/Tenant.controller.js');
+var ctrlTenant = require('../controllers/tenant.controller.js');
 
 router
     .route('/')
-    .post(ctrlTenant.addTenant);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.addTenant);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.getTenantsAll);

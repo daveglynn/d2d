@@ -17,7 +17,6 @@ var constants = require('../.././shared/constant.shared');
 var helpers = require('../.././shared/helpers.shared');
 var common = require('./extensions/common.extension');
 var extension = require('./extensions/language.extension');
-var controller = "user";
 var Sequelize = require('sequelize');
  
 /******************************************************************************************************
@@ -140,4 +139,4 @@ module.exports.deleteLanguage = function(req, res) {
         res.status(500).json(err);
     });
 };
-
+  	

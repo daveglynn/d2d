@@ -17,13 +17,12 @@ var constants = require('../.././shared/constant.shared');
 var helpers = require('../.././shared/helpers.shared');
 var common = require('./extensions/common.extension');
 var extension = require('./extensions/ruleBook.extension');
-var controller = "user";
 var Sequelize = require('sequelize');
  
 /******************************************************************************************************
  Insert a Record 
 ******************************************************************************************************/
-module.exports.addRulebook = function(req, res) {
+module.exports.addRuleBook = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'C');
@@ -40,7 +39,7 @@ module.exports.addRulebook = function(req, res) {
 /******************************************************************************************************
  Get All Records 
 ******************************************************************************************************/
-module.exports.getRulebooksAll = function(req, res) {
+module.exports.getRuleBooksAll = function(req, res) {
 
     // builds clause 
     var where = {};
@@ -62,7 +61,7 @@ module.exports.getRulebooksAll = function(req, res) {
 /******************************************************************************************************
  Get a Record by Id
 ******************************************************************************************************/
-module.exports.getRulebookById = function(req, res) {
+module.exports.getRuleBookById = function(req, res) {
 
     // builds clause
     var where = {};
@@ -88,7 +87,7 @@ module.exports.getRulebookById = function(req, res) {
 /******************************************************************************************************
  Update a Record 
 ******************************************************************************************************/
-module.exports.updateRulebook = function(req, res) {
+module.exports.updateRuleBook = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'U');
@@ -121,7 +120,7 @@ module.exports.updateRulebook = function(req, res) {
 /******************************************************************************************************
  Delete a Record 
 ******************************************************************************************************/
-module.exports.deleteRulebook = function(req, res) {
+module.exports.deleteRuleBook = function(req, res) {
 
     // builds clause
     var where = {};
@@ -140,4 +139,4 @@ module.exports.deleteRulebook = function(req, res) {
         res.status(500).json(err);
     });
 };
-
+  	

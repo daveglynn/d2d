@@ -16,11 +16,11 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
-var ctrlLanguage = require('../controllers/Language.controller.js');
+var ctrlLanguage = require('../controllers/language.controller.js');
 
 router
     .route('/')
-    .post(ctrlLanguage.addLanguage);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.addLanguage);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.getLanguagesAll);

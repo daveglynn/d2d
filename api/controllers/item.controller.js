@@ -17,7 +17,6 @@ var constants = require('../.././shared/constant.shared');
 var helpers = require('../.././shared/helpers.shared');
 var common = require('./extensions/common.extension');
 var extension = require('./extensions/item.extension');
-var controller = "user";
 var Sequelize = require('sequelize');
  
 /******************************************************************************************************
@@ -140,9 +139,9 @@ module.exports.deleteItem = function(req, res) {
         res.status(500).json(err);
     });
 };
-
+  	
 /******************************************************************************************************
- Get item records
+ Get Item records by ListId 
 ******************************************************************************************************/
 module.exports.getItemsByListId = function (req, res) {
 
@@ -152,7 +151,7 @@ module.exports.getItemsByListId = function (req, res) {
     where = extension.setClauseQueryView(req.query, where);
 
     var attributes = common.excludeAttributes();
-
+	  
     //find and return the records 
     db.item.findAll({
         attributes: attributes,
@@ -161,5 +160,52 @@ module.exports.getItemsByListId = function (req, res) {
         res.json(items);
     }, function (err) {
         res.status(500).json(err);
-    })
+    });
 };
+
+/******************************************************************************************************
+ Get Item records by RuleBookId 
+******************************************************************************************************/
+module.exports.getItemsByRuleBookId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseRuleBookId(req, where);
+    where = extension.setClauseQueryView(req.query, where);
+
+    var attributes = common.excludeAttributes();
+	  
+    //find and return the records 
+    db.item.findAll({
+        attributes: attributes,
+        where: where
+    }).then(function (items) {
+        res.json(items);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get Item records by ParentListId 
+******************************************************************************************************/
+module.exports.getItemsByParentListId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseParentListId(req, where);
+    where = extension.setClauseQueryView(req.query, where);
+
+    var attributes = common.excludeAttributes();
+	  
+    //find and return the records 
+    db.item.findAll({
+        attributes: attributes,
+        where: where
+    }).then(function (items) {
+        res.json(items);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+

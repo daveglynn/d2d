@@ -17,7 +17,6 @@ var constants = require('../.././shared/constant.shared');
 var helpers = require('../.././shared/helpers.shared');
 var common = require('./extensions/common.extension');
 var extension = require('./extensions/user.extension');
-var controller = "user";
 var Sequelize = require('sequelize');
  
 /******************************************************************************************************
@@ -174,6 +173,75 @@ module.exports.deleteUser = function(req, res) {
             res.status(204).send();
         }
     }, function(err) {
+        res.status(500).json(err);
+    });
+};
+  	
+/******************************************************************************************************
+ Get User records by LanguageId 
+******************************************************************************************************/
+module.exports.getUsersByLanguageId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseLanguageId(req, where);
+    where = extension.setClauseQueryView(req.query, where);
+
+    var attributes = common.excludeAttributes();
+	  
+    //find and return the records 
+    db.user.findAll({
+        attributes: attributes,
+        where: where
+    }).then(function (users) {
+        res.json(users);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get User records by RoleId 
+******************************************************************************************************/
+module.exports.getUsersByRoleId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseRoleId(req, where);
+    where = extension.setClauseQueryView(req.query, where);
+
+    var attributes = common.excludeAttributes();
+	  
+    //find and return the records 
+    db.user.findAll({
+        attributes: attributes,
+        where: where
+    }).then(function (users) {
+        res.json(users);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get User records by ProfileId 
+******************************************************************************************************/
+module.exports.getUsersByProfileId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseProfileId(req, where);
+    where = extension.setClauseQueryView(req.query, where);
+
+    var attributes = common.excludeAttributes();
+	  
+    //find and return the records 
+    db.user.findAll({
+        attributes: attributes,
+        where: where
+    }).then(function (users) {
+        res.json(users);
+    }, function (err) {
         res.status(500).json(err);
     });
 };

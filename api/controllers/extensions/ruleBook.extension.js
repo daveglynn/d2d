@@ -23,8 +23,7 @@ module.exports.setPost = function (req, mode) {
     var body = _.pick(req.body
 		,'name'
 		,'active'
-		,'processFlags'
-		,'sort'
+		,'processflags'
 	 	);
 
     //add createdBy
@@ -46,17 +45,14 @@ module.exports.prepareForUpdate =  function (body) {
 	if (body.hasOwnProperty('active')) {
 		attributes.active = body.active;
 	}
-	if (body.hasOwnProperty('processFlags')) {
-		attributes.processFlags = body.processFlags;
+	if (body.hasOwnProperty('processflags')) {
+		attributes.processflags = body.processflags;
 	}
 	if (body.hasOwnProperty('createdBy')) {
 		attributes.createdBy = body.createdBy;
 	}
 	if (body.hasOwnProperty('updatedBy')) {
 		attributes.updatedBy = body.updatedBy;
-	}
-	if (body.hasOwnProperty('sort')) {
-		attributes.sort = body.sort;
 	}
 	 
     return attributes;
@@ -68,7 +64,7 @@ module.exports.setClauseQuery =  function (query, where) {
 		where = {
 		$or: [
   		{name: { $like: '%' + query.q + '%' }}  
-		,{processFlags: { $like: '%' + query.q + '%' }}  
+		,{processflags: { $like: '%' + query.q + '%' }}  
 	 			]
 			}
 		}

@@ -17,7 +17,6 @@ var constants = require('../.././shared/constant.shared');
 var helpers = require('../.././shared/helpers.shared');
 var common = require('./extensions/common.extension');
 var extension = require('./extensions/todo.extension');
-var controller = "user";
 var Sequelize = require('sequelize');
  
 /******************************************************************************************************
@@ -137,6 +136,29 @@ module.exports.deleteTodo = function(req, res) {
             res.status(204).send();
         }
     }, function(err) {
+        res.status(500).json(err);
+    });
+};
+  	
+/******************************************************************************************************
+ Get Todo records by UserId 
+******************************************************************************************************/
+module.exports.getTodosByUserId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseUserId(req, where);
+    where = extension.setClauseQueryView(req.query, where);
+
+    var attributes = common.excludeAttributes();
+	  
+    //find and return the records 
+    db.todo.findAll({
+        attributes: attributes,
+        where: where
+    }).then(function (todos) {
+        res.json(todos);
+    }, function (err) {
         res.status(500).json(err);
     });
 };

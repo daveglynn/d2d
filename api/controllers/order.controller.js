@@ -17,7 +17,6 @@ var constants = require('../.././shared/constant.shared');
 var helpers = require('../.././shared/helpers.shared');
 var common = require('./extensions/common.extension');
 var extension = require('./extensions/order.extension');
-var controller = "user";
 var Sequelize = require('sequelize');
  
 /******************************************************************************************************
@@ -137,6 +136,52 @@ module.exports.deleteOrder = function(req, res) {
             res.status(204).send();
         }
     }, function(err) {
+        res.status(500).json(err);
+    });
+};
+  	
+/******************************************************************************************************
+ Get Order records by OrderStatusId 
+******************************************************************************************************/
+module.exports.getOrdersByOrderStatusId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseOrderStatusId(req, where);
+    where = extension.setClauseQueryView(req.query, where);
+
+    var attributes = common.excludeAttributes();
+	  
+    //find and return the records 
+    db.order.findAll({
+        attributes: attributes,
+        where: where
+    }).then(function (orders) {
+        res.json(orders);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get Order records by OrderTypeId 
+******************************************************************************************************/
+module.exports.getOrdersByOrderTypeId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseOrderTypeId(req, where);
+    where = extension.setClauseQueryView(req.query, where);
+
+    var attributes = common.excludeAttributes();
+	  
+    //find and return the records 
+    db.order.findAll({
+        attributes: attributes,
+        where: where
+    }).then(function (orders) {
+        res.json(orders);
+    }, function (err) {
         res.status(500).json(err);
     });
 };

@@ -16,11 +16,11 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
-var ctrlProfile = require('../controllers/Profile.controller.js');
+var ctrlProfile = require('../controllers/profile.controller.js');
 
 router
     .route('/')
-    .post(ctrlProfile.addProfile);
+    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.addProfile);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.getProfilesAll);
