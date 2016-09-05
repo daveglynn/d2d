@@ -36,7 +36,7 @@ router
 
 	
 router
-    .route('/todo/:userId')
+    .route('/user/:userId')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.getTodosByUserId);
 
 module.exports = router

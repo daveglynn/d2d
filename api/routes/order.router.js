@@ -36,11 +36,11 @@ router
 
 	
 router
-    .route('/order/:orderStatusId')
+    .route('/orderStatus/:orderStatusId')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrdersByOrderStatusId);
 
 router
-    .route('/order/:orderTypeId')
+    .route('/orderType/:orderTypeId')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrdersByOrderTypeId);
 
 module.exports = router

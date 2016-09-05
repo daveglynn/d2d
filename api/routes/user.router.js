@@ -36,15 +36,15 @@ router
 
 	
 router
-    .route('/user/:languageId')
+    .route('/language/:languageId')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersByLanguageId);
 
 router
-    .route('/user/:roleId')
+    .route('/role/:roleId')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersByRoleId);
 
 router
-    .route('/user/:profileId')
+    .route('/profile/:profileId')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersByProfileId);
 router
     .route('/login')

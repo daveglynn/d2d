@@ -36,15 +36,15 @@ router
 
 	
 router
-    .route('/item/:listId')
+    .route('/list/:listId')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByListId);
 
 router
-    .route('/item/:ruleBookId')
+    .route('/ruleBook/:ruleBookId')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByRuleBookId);
 
 router
-    .route('/item/:parentListId')
+    .route('/parentList/:parentListId')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByParentListId);
 
 module.exports = router
