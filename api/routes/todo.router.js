@@ -34,5 +34,9 @@ router
     .route('/:id')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.deleteTodo);
 
+	
+router
+    .route('/todo/:userId')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.getTodosByUserId);
 
 module.exports = router

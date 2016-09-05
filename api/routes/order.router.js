@@ -34,5 +34,13 @@ router
     .route('/:id')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.deleteOrder);
 
+	
+router
+    .route('/order/:orderStatusId')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrdersByOrderStatusId);
+
+router
+    .route('/order/:orderTypeId')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrdersByOrderTypeId);
 
 module.exports = router

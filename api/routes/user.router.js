@@ -34,6 +34,18 @@ router
     .route('/:id')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.deleteUser);
 
+	
+router
+    .route('/user/:languageId')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersByLanguageId);
+
+router
+    .route('/user/:roleId')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersByRoleId);
+
+router
+    .route('/user/:profileId')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersByProfileId);
 router
     .route('/login')
     .post(ctrlUser.login);

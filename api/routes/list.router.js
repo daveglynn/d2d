@@ -34,5 +34,5 @@ router
     .route('/:id')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.deleteList);
 
-
+	
 module.exports = router

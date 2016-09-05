@@ -34,9 +34,17 @@ router
     .route('/:id')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.deleteItem);
 
+	
 router
-    .route('/list/:listId')
+    .route('/item/:listId')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByListId);
 
+router
+    .route('/item/:ruleBookId')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByRuleBookId);
+
+router
+    .route('/item/:parentListId')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByParentListId);
 
 module.exports = router
