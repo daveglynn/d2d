@@ -1,5 +1,4 @@
-                      
-/******************************************************************************************************
+                      /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
  You may NOT use, copy, distribute or modify this code unless you have written 
@@ -47,10 +46,13 @@ module.exports.getTodosAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 			
+	var include = [{ model: db.user,attributes: ['name']} ]; 	
+	
     db.todo.findAll({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function(todos) {
         res.json(todos);
     }, function(err) {
@@ -68,11 +70,14 @@ module.exports.getTodoById = function(req, res) {
     where = common.setClauseId(req, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 			
+	var include = [{ model: db.user,attributes: ['name']} ]; 	
+	
     //find and return the records 
     db.todo.findOne({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function(todo) {
         if (!!todo) {
             res.json(todo.toPublicJSON());
@@ -151,11 +156,14 @@ module.exports.getTodosByUserId = function (req, res) {
     where = extension.setClauseQueryView(req.query, where);
 
     var attributes = common.excludeAttributes();
-	  
+	 			
+	var include = [{ model: db.user,attributes: ['name']} ]; 	
+	
     //find and return the records 
     db.todo.findAll({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function (todos) {
         res.json(todos);
     }, function (err) {

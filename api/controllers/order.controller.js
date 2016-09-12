@@ -1,5 +1,4 @@
-                      
-/******************************************************************************************************
+                      /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
  You may NOT use, copy, distribute or modify this code unless you have written 
@@ -47,10 +46,14 @@ module.exports.getOrdersAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 			
+	var include = [{ model: db.orderStatus,attributes: ['name']} 		
+				   ,{model: db.orderType,attributes: ['name']}   ]; 	
+	
     db.order.findAll({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function(orders) {
         res.json(orders);
     }, function(err) {
@@ -68,11 +71,15 @@ module.exports.getOrderById = function(req, res) {
     where = common.setClauseId(req, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 			
+	var include = [{ model: db.orderStatus,attributes: ['name']} 		
+				   ,{model: db.orderType,attributes: ['name']}   ]; 	
+	
     //find and return the records 
     db.order.findOne({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function(order) {
         if (!!order) {
             res.json(order.toPublicJSON());
@@ -151,11 +158,15 @@ module.exports.getOrdersByOrderStatusId = function (req, res) {
     where = extension.setClauseQueryView(req.query, where);
 
     var attributes = common.excludeAttributes();
-	  
+	 			
+	var include = [{ model: db.orderStatus,attributes: ['name']} 		
+				   ,{model: db.orderType,attributes: ['name']}   ]; 	
+	
     //find and return the records 
     db.order.findAll({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function (orders) {
         res.json(orders);
     }, function (err) {
@@ -174,11 +185,15 @@ module.exports.getOrdersByOrderTypeId = function (req, res) {
     where = extension.setClauseQueryView(req.query, where);
 
     var attributes = common.excludeAttributes();
-	  
+	 			
+	var include = [{ model: db.orderStatus,attributes: ['name']} 		
+				   ,{model: db.orderType,attributes: ['name']}   ]; 	
+	
     //find and return the records 
     db.order.findAll({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function (orders) {
         res.json(orders);
     }, function (err) {

@@ -1,5 +1,4 @@
-                      
-/******************************************************************************************************
+                      /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
  You may NOT use, copy, distribute or modify this code unless you have written 
@@ -47,10 +46,10 @@ module.exports.getProfilesAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 		
     db.profile.findAll({
         attributes: attributes,
-        where: where
+        where: where 	
     }).then(function(profiles) {
         res.json(profiles);
     }, function(err) {
@@ -68,11 +67,11 @@ module.exports.getProfileById = function(req, res) {
     where = common.setClauseId(req, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 		
     //find and return the records 
     db.profile.findOne({
         attributes: attributes,
-        where: where
+        where: where 	
     }).then(function(profile) {
         if (!!profile) {
             res.json(profile.toPublicJSON());

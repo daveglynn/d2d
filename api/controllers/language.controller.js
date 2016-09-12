@@ -1,5 +1,4 @@
-                      
-/******************************************************************************************************
+                      /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
  You may NOT use, copy, distribute or modify this code unless you have written 
@@ -47,10 +46,10 @@ module.exports.getLanguagesAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 		
     db.language.findAll({
         attributes: attributes,
-        where: where
+        where: where 	
     }).then(function(languages) {
         res.json(languages);
     }, function(err) {
@@ -68,11 +67,11 @@ module.exports.getLanguageById = function(req, res) {
     where = common.setClauseId(req, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 		
     //find and return the records 
     db.language.findOne({
         attributes: attributes,
-        where: where
+        where: where 	
     }).then(function(language) {
         if (!!language) {
             res.json(language.toPublicJSON());

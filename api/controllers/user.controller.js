@@ -1,5 +1,4 @@
-                      
-/******************************************************************************************************
+                      /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
  You may NOT use, copy, distribute or modify this code unless you have written 
@@ -84,10 +83,14 @@ module.exports.getUsersAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 			
+	var include = [{ model: db.language,attributes: ['name']} 		
+				   ,{model: db.profile,attributes: ['name']}   ]; 	
+	
     db.user.findAll({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function(users) {
         res.json(users);
     }, function(err) {
@@ -105,11 +108,15 @@ module.exports.getUserById = function(req, res) {
     where = common.setClauseId(req, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 			
+	var include = [{ model: db.language,attributes: ['name']} 		
+				   ,{model: db.profile,attributes: ['name']}   ]; 	
+	
     //find and return the records 
     db.user.findOne({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function(user) {
         if (!!user) {
             res.json(user.toPublicJSON());
@@ -188,11 +195,15 @@ module.exports.getUsersByLanguageId = function (req, res) {
     where = extension.setClauseQueryView(req.query, where);
 
     var attributes = common.excludeAttributes();
-	  
+	 			
+	var include = [{ model: db.language,attributes: ['name']} 		
+				   ,{model: db.profile,attributes: ['name']}   ]; 	
+	
     //find and return the records 
     db.user.findAll({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function (users) {
         res.json(users);
     }, function (err) {
@@ -211,11 +222,15 @@ module.exports.getUsersByRoleId = function (req, res) {
     where = extension.setClauseQueryView(req.query, where);
 
     var attributes = common.excludeAttributes();
-	  
+	 			
+	var include = [{ model: db.language,attributes: ['name']} 		
+				   ,{model: db.profile,attributes: ['name']}   ]; 	
+	
     //find and return the records 
     db.user.findAll({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function (users) {
         res.json(users);
     }, function (err) {
@@ -234,11 +249,15 @@ module.exports.getUsersByProfileId = function (req, res) {
     where = extension.setClauseQueryView(req.query, where);
 
     var attributes = common.excludeAttributes();
-	  
+	 			
+	var include = [{ model: db.language,attributes: ['name']} 		
+				   ,{model: db.profile,attributes: ['name']}   ]; 	
+	
     //find and return the records 
     db.user.findAll({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function (users) {
         res.json(users);
     }, function (err) {

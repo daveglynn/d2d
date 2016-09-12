@@ -1,5 +1,4 @@
-                      
-/******************************************************************************************************
+                      /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
  You may NOT use, copy, distribute or modify this code unless you have written 
@@ -47,10 +46,10 @@ module.exports.getTenantsAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 		
     db.tenant.findAll({
         attributes: attributes,
-        where: where
+        where: where 	
     }).then(function(tenants) {
         res.json(tenants);
     }, function(err) {
@@ -68,11 +67,11 @@ module.exports.getTenantById = function(req, res) {
     where = common.setClauseId(req, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 		
     //find and return the records 
     db.tenant.findOne({
         attributes: attributes,
-        where: where
+        where: where 	
     }).then(function(tenant) {
         if (!!tenant) {
             res.json(tenant.toPublicJSON());

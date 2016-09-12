@@ -1,5 +1,4 @@
-                      
-/******************************************************************************************************
+                      /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
  You may NOT use, copy, distribute or modify this code unless you have written 
@@ -47,10 +46,14 @@ module.exports.getItemsAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 			
+	var include = [{ model: db.list,attributes: ['name']} 		
+				   ,{model: db.ruleBook,attributes: ['name']}   ]; 	
+	
     db.item.findAll({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function(items) {
         res.json(items);
     }, function(err) {
@@ -68,11 +71,15 @@ module.exports.getItemById = function(req, res) {
     where = common.setClauseId(req, where);
 	 
     var attributes = common.excludeAttributes();
-
+	 			
+	var include = [{ model: db.list,attributes: ['name']} 		
+				   ,{model: db.ruleBook,attributes: ['name']}   ]; 	
+	
     //find and return the records 
     db.item.findOne({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function(item) {
         if (!!item) {
             res.json(item.toPublicJSON());
@@ -151,11 +158,15 @@ module.exports.getItemsByListId = function (req, res) {
     where = extension.setClauseQueryView(req.query, where);
 
     var attributes = common.excludeAttributes();
-	  
+	 			
+	var include = [{ model: db.list,attributes: ['name']} 		
+				   ,{model: db.ruleBook,attributes: ['name']}   ]; 	
+	
     //find and return the records 
     db.item.findAll({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function (items) {
         res.json(items);
     }, function (err) {
@@ -174,11 +185,15 @@ module.exports.getItemsByRuleBookId = function (req, res) {
     where = extension.setClauseQueryView(req.query, where);
 
     var attributes = common.excludeAttributes();
-	  
+	 			
+	var include = [{ model: db.list,attributes: ['name']} 		
+				   ,{model: db.ruleBook,attributes: ['name']}   ]; 	
+	
     //find and return the records 
     db.item.findAll({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function (items) {
         res.json(items);
     }, function (err) {
@@ -197,11 +212,15 @@ module.exports.getItemsByParentListId = function (req, res) {
     where = extension.setClauseQueryView(req.query, where);
 
     var attributes = common.excludeAttributes();
-	  
+	 			
+	var include = [{ model: db.list,attributes: ['name']} 		
+				   ,{model: db.ruleBook,attributes: ['name']}   ]; 	
+	
     //find and return the records 
     db.item.findAll({
         attributes: attributes,
-        where: where
+        where: where ,
+		include: include 	
     }).then(function (items) {
         res.json(items);
     }, function (err) {
