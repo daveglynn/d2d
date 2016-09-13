@@ -28,13 +28,6 @@ module.exports = function(sequelize, DataTypes) {
                         next()
                     }
                 },
-                isLength: function(value, next) {
-                    if (v.isLength(v.ltrim(value), { min: 1 }) === false) {
-                        next('Language. Must be selected.')
-                    } else {
-                        next()
-                    }
-                },
             }
         },
         roleId: {
