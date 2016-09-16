@@ -33,6 +33,8 @@ module.exports.setPost = function (req, mode) {
 		,'addressLine2'
 		,'addressLine3'
 		,'addressLine4'
+		,'enabledFrom'
+		,'enabledTo'
 	 		,'password'	);
 
     //add createdBy
@@ -90,6 +92,12 @@ module.exports.prepareForUpdate =  function (body) {
 	}
 	if (body.hasOwnProperty('updatedBy')) {
 		attributes.updatedBy = body.updatedBy;
+	}
+	if (body.hasOwnProperty('enabledFrom')) {
+		attributes.enabledFrom = body.enabledFrom;
+	}
+	if (body.hasOwnProperty('enabledTo')) {
+		attributes.enabledTo = body.enabledTo;
 	}
 	 
     return attributes;

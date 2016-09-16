@@ -176,6 +176,16 @@ module.exports = function(sequelize, DataTypes) {
                 },
             }
         },
+        enabledFrom: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: null
+        },
+        enabledTo: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: null
+        },
         salt: {
             type: DataTypes.STRING
         },
