@@ -25,10 +25,10 @@ router
     .route('/all')
     .get(middleware.requireAuthentication,ctrlUser.getUsersAll);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUserById);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.updateUser);
 router
     .route('/:id(\\d+)/')
@@ -37,15 +37,15 @@ router
 
 	
 router
-    .route('/language/:languageId')
+    .route('/language/:languageId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersByLanguageId);
 
 router
-    .route('/role/:roleId')
+    .route('/role/:roleId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersByRoleId);
 
 router
-    .route('/profile/:profileId')
+    .route('/profile/:profileId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersByProfileId);
 router
     .route('/login')
