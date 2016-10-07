@@ -31,7 +31,7 @@ router
     .route('/:id')
     .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.updateUser);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.deleteUser);
 
 
