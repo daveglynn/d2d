@@ -14,15 +14,15 @@ module.exports = function(sequelize, DataTypes) {
         tenantId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: constants.tenantId_Demo
+            defaultValue: constants.tenantId_Default
         },
         languageId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: constants.languageId_Demo,
+            defaultValue: constants.languageId_Default,
             validate: {
                 isNumeric: function (value, next) {
-                    if (v.isNumeric(v.ltrim(value)) === false) {
+                    if  (v.isNumeric(v.ltrim(value)) === false) {
                         next('Language: Must be numeric.')
                     } else {
                         next()
@@ -38,7 +38,7 @@ module.exports = function(sequelize, DataTypes) {
         profileId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: constants.profileId_Demo,
+            defaultValue: constants.profileId_Default,
             validate: {
                 isNumeric: function(value, next) {
                     if (v.isNumeric(v.ltrim(value)) === false) {

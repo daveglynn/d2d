@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
         tenantId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: constants.tenantId_Demo            
+            defaultValue: constants.tenantId_Default            
         },
         name: {
             type: DataTypes.STRING,

@@ -13,6 +13,7 @@
 "use strict";
 var _ = require('underscore');
 var common = require('./common.extension');
+var constants = require('../../../shared/constant.shared');
 
 /******************************************************************************************************
  functions
@@ -39,7 +40,17 @@ module.exports.setPost = function (req, mode) {
 
     //add createdBy
     if (mode == 'C') {
-		body.createdBy = null;
+        debugger;
+        body.createdBy = null;
+        if (body.profileId == null) {
+            body.profileId = constants.profileId_Default.toString();
+        }
+        if (body.roleId == null) {
+            body.roleId = constants.roleId_Default.toString();
+        }
+        if (body.languageId == null) {
+            body.languageId = constants.languageId_Default.toString();
+        }
 			
 	} else {
         body.updatedBy = common.modelUserId(req);
