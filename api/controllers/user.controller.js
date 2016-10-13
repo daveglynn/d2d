@@ -81,7 +81,8 @@ module.exports.getUsersAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
-	 
+    where = common.setClauseTenantId(req, where);
+    	 
     var attributes = common.excludeAttributes();
 	 			
 	var include = [{ model: db.language,attributes: ['name']} 		
@@ -106,9 +107,10 @@ module.exports.getUserById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-	 
+    where = common.setClauseTenantId(req, where);
+
     var attributes = common.excludeAttributes();
-	 			
+    
 	var include = [{ model: db.language,attributes: ['name']} 		
 				   ,{model: db.profile,attributes: ['name']}   ]; 	
 	
@@ -142,7 +144,8 @@ module.exports.updateUser = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
+        
     // find record on database, update record and return to client
     db.user.findOne({
         where: where
@@ -169,7 +172,8 @@ module.exports.deleteUser = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
+        
     // delete record on database
     db.user.destroy({
         where: where
@@ -193,6 +197,7 @@ module.exports.getUsersByLanguageId = function (req, res) {
     var where = {};
     where = extension.setClauseLanguageId(req, where);
     where = extension.setClauseQueryView(req.query, where);
+    where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
 	 			
@@ -220,6 +225,7 @@ module.exports.getUsersByRoleId = function (req, res) {
     var where = {};
     where = extension.setClauseRoleId(req, where);
     where = extension.setClauseQueryView(req.query, where);
+    where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
 	 			
@@ -247,6 +253,7 @@ module.exports.getUsersByProfileId = function (req, res) {
     var where = {};
     where = extension.setClauseProfileId(req, where);
     where = extension.setClauseQueryView(req.query, where);
+    where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
 	 			
