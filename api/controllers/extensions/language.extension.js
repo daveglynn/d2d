@@ -13,6 +13,7 @@
 "use strict";
 var _ = require('underscore');
 var common = require('./common.extension');
+var constants = require('../../../shared/constant.shared');
 
 /******************************************************************************************************
  functions

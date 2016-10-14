@@ -25,26 +25,26 @@ router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsAll);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemById);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.updateItem);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.deleteItem);
 
 	
 router
-    .route('/list/:listId')
+    .route('/list/:listId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByListId);
 
 router
-    .route('/ruleBook/:ruleBookId')
+    .route('/ruleBook/:ruleBookId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByRuleBookId);
 
 router
-    .route('/parentList/:parentListId')
+    .route('/parentList/:parentListId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByParentListId);
 
 module.exports = router

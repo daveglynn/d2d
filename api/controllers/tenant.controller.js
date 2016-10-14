@@ -98,6 +98,7 @@ module.exports.updateTenant = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     
+
     // find record on database, update record and return to client
     db.tenant.findOne({
         where: where
@@ -125,6 +126,7 @@ module.exports.deleteTenant = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     
+
     // delete record on database
     db.tenant.destroy({
         where: where

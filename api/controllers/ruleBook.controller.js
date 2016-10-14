@@ -98,6 +98,7 @@ module.exports.updateRuleBook = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     
+
     // find record on database, update record and return to client
     db.ruleBook.findOne({
         where: where
@@ -125,6 +126,7 @@ module.exports.deleteRuleBook = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     
+
     // delete record on database
     db.ruleBook.destroy({
         where: where

@@ -25,22 +25,22 @@ router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrdersAll);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrderById);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.updateOrder);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.deleteOrder);
 
 	
 router
-    .route('/orderStatus/:orderStatusId')
+    .route('/orderStatus/:orderStatusId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrdersByOrderStatusId);
 
 router
-    .route('/orderType/:orderTypeId')
+    .route('/orderType/:orderTypeId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrdersByOrderTypeId);
 
 module.exports = router

@@ -40,18 +40,17 @@ module.exports.setPost = function (req, mode) {
 
     //add createdBy
     if (mode == 'C') {
-        debugger;
-        body.createdBy = null;
-        if (body.profileId == null) {
-            body.profileId = constants.profileId_Default.toString();
-        }
-        if (body.roleId == null) {
-            body.roleId = constants.roleId_Default.toString();
-        }
-        if (body.languageId == null) {
-            body.languageId = constants.languageId_Default.toString();
-        }
-			
+		body.createdBy = null;
+  		if (body.languageId == null) {
+			body.languageId = constants.languageId_Default.toString();
+		}
+    	if (body.roleId == null) {
+			body.roleId = constants.roleId_Default.toString();
+		}
+    	if (body.profileId == null) {
+			body.profileId = constants.profileId_Default.toString();
+		}
+    			
 	} else {
         body.updatedBy = common.modelUserId(req);
     }

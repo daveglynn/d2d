@@ -98,6 +98,7 @@ module.exports.updateLanguage = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     
+
     // find record on database, update record and return to client
     db.language.findOne({
         where: where
@@ -125,6 +126,7 @@ module.exports.deleteLanguage = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     
+
     // delete record on database
     db.language.destroy({
         where: where

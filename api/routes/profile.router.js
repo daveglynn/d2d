@@ -25,13 +25,13 @@ router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.getProfilesAll);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.getProfileById);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.updateProfile);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.deleteProfile);
 
 	

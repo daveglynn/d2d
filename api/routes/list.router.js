@@ -25,13 +25,13 @@ router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.getListsAll);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.getListById);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.updateList);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.deleteList);
 
 	

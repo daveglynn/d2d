@@ -25,18 +25,18 @@ router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.getTodosAll);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.getTodoById);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.updateTodo);
 router
-    .route('/:id')
+    .route('/:id(\\d+)/')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.deleteTodo);
 
 	
 router
-    .route('/user/:userId')
+    .route('/user/:userId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.getTodosByUserId);
 
 module.exports = router

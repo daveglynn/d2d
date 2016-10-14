@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 ******************************************************************************************************/
 module.exports.addOrder = function(req, res) {
 
-    // pick appropiate fields 
+    // pick appropiate fields tenant will be set to default   
     var body = extension.setPost(req, 'C');
                
     db.order.create(body).then(function(order) {
@@ -44,7 +44,7 @@ module.exports.getOrdersAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
-	 
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 	 			
 	var include = [{ model: db.orderStatus,attributes: ['name']} 		
@@ -69,7 +69,7 @@ module.exports.getOrderById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-	 
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 	 			
 	var include = [{ model: db.orderStatus,attributes: ['name']} 		
@@ -105,7 +105,8 @@ module.exports.updateOrder = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
+
     // find record on database, update record and return to client
     db.order.findOne({
         where: where
@@ -132,7 +133,8 @@ module.exports.deleteOrder = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
+
     // delete record on database
     db.order.destroy({
         where: where
@@ -156,6 +158,7 @@ module.exports.getOrdersByOrderStatusId = function (req, res) {
     var where = {};
     where = extension.setClauseOrderStatusId(req, where);
     where = extension.setClauseQueryView(req.query, where);
+    where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
 	 			
@@ -183,6 +186,7 @@ module.exports.getOrdersByOrderTypeId = function (req, res) {
     var where = {};
     where = extension.setClauseOrderTypeId(req, where);
     where = extension.setClauseQueryView(req.query, where);
+    where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
 	 			

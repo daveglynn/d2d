@@ -1,4 +1,4 @@
- /******************************************************************************************************
+                      /******************************************************************************************************
  
  Copyright 2016 Olympus Consultancy Limited - All Rights Reserved 
  You may NOT use, copy, distribute or modify this code unless you have written 
@@ -60,7 +60,7 @@ module.exports.logout = function(req, res) {
 ******************************************************************************************************/
 module.exports.addUser = function(req, res) {
 
-    // pick appropiate fields 
+    // pick appropiate fields tenant will be set to default   
     var body = extension.setPost(req, 'C');
                
     db.user.create(body).then(function(user) {
@@ -81,8 +81,7 @@ module.exports.getUsersAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
-    where = common.setClauseTenantId(req, where);
-    	 
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 	 			
 	var include = [{ model: db.language,attributes: ['name']} 		
@@ -107,10 +106,9 @@ module.exports.getUserById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    where = common.setClauseTenantId(req, where);
-
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
-    
+	 			
 	var include = [{ model: db.language,attributes: ['name']} 		
 				   ,{model: db.profile,attributes: ['name']}   ]; 	
 	
@@ -145,7 +143,7 @@ module.exports.updateUser = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     where = common.setClauseTenantId(req, where);
-        
+
     // find record on database, update record and return to client
     db.user.findOne({
         where: where
@@ -173,7 +171,7 @@ module.exports.deleteUser = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     where = common.setClauseTenantId(req, where);
-        
+
     // delete record on database
     db.user.destroy({
         where: where

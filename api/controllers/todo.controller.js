@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 ******************************************************************************************************/
 module.exports.addTodo = function(req, res) {
 
-    // pick appropiate fields 
+    // pick appropiate fields tenant will be set to default   
     var body = extension.setPost(req, 'C');
                
     db.todo.create(body).then(function(todo) {
@@ -44,7 +44,7 @@ module.exports.getTodosAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
-	 
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 	 			
 	var include = [{ model: db.user,attributes: ['name']} ]; 	
@@ -68,7 +68,7 @@ module.exports.getTodoById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-	 
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 	 			
 	var include = [{ model: db.user,attributes: ['name']} ]; 	
@@ -103,7 +103,8 @@ module.exports.updateTodo = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
+
     // find record on database, update record and return to client
     db.todo.findOne({
         where: where
@@ -130,7 +131,8 @@ module.exports.deleteTodo = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
+
     // delete record on database
     db.todo.destroy({
         where: where
@@ -154,6 +156,7 @@ module.exports.getTodosByUserId = function (req, res) {
     var where = {};
     where = extension.setClauseUserId(req, where);
     where = extension.setClauseQueryView(req.query, where);
+    where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
 	 			

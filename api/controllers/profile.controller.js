@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 ******************************************************************************************************/
 module.exports.addProfile = function(req, res) {
 
-    // pick appropiate fields 
+    // pick appropiate fields tenant will be set to default   
     var body = extension.setPost(req, 'C');
                
     db.profile.create(body).then(function(profile) {
@@ -44,7 +44,7 @@ module.exports.getProfilesAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
-	 
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 	 		
     db.profile.findAll({
@@ -65,7 +65,7 @@ module.exports.getProfileById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-	 
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 	 		
     //find and return the records 
@@ -97,7 +97,8 @@ module.exports.updateProfile = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
+
     // find record on database, update record and return to client
     db.profile.findOne({
         where: where
@@ -124,7 +125,8 @@ module.exports.deleteProfile = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
+
     // delete record on database
     db.profile.destroy({
         where: where

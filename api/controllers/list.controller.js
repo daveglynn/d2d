@@ -98,6 +98,7 @@ module.exports.updateList = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     
+
     // find record on database, update record and return to client
     db.list.findOne({
         where: where
@@ -125,6 +126,7 @@ module.exports.deleteList = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     
+
     // delete record on database
     db.list.destroy({
         where: where

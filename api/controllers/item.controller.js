@@ -106,6 +106,7 @@ module.exports.updateItem = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     
+
     // find record on database, update record and return to client
     db.item.findOne({
         where: where
@@ -133,6 +134,7 @@ module.exports.deleteItem = function(req, res) {
     var where = {};
     where = common.setClauseId(req, where);
     
+
     // delete record on database
     db.item.destroy({
         where: where
@@ -156,6 +158,7 @@ module.exports.getItemsByListId = function (req, res) {
     var where = {};
     where = extension.setClauseListId(req, where);
     where = extension.setClauseQueryView(req.query, where);
+    
 
     var attributes = common.excludeAttributes();
 	 			
@@ -183,6 +186,7 @@ module.exports.getItemsByRuleBookId = function (req, res) {
     var where = {};
     where = extension.setClauseRuleBookId(req, where);
     where = extension.setClauseQueryView(req.query, where);
+    
 
     var attributes = common.excludeAttributes();
 	 			
@@ -210,6 +214,7 @@ module.exports.getItemsByParentListId = function (req, res) {
     var where = {};
     where = extension.setClauseParentListId(req, where);
     where = extension.setClauseQueryView(req.query, where);
+    
 
     var attributes = common.excludeAttributes();
 	 			
