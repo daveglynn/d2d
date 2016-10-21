@@ -20,7 +20,7 @@ var ctrlUser = require('../controllers/user.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.addUser);
+    .post(ctrlUser.addUser);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersAll);
