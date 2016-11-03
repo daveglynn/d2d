@@ -39,7 +39,7 @@ module.exports.addTodo = function(req, res) {
  Get All Records 
 ******************************************************************************************************/
 module.exports.getTodosAll = function(req, res) {
-
+ 
     // builds clause 
     var where = {};
     where = common.setClauseAll(req, where);
