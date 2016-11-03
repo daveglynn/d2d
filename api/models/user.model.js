@@ -225,6 +225,9 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: null
         }
     }, {
+            getterMethods   : {
+                recordDescription  : function()  { return this.id + ' - (' + this.firstname + ' ' + this.lastname + ')' }
+            },
             hooks: {
                 beforeValidate: function(user, options) {
                     if (typeof user.email === 'string') {
