@@ -84,8 +84,8 @@ module.exports.getUsersAll = function(req, res) {
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 	 			
-	var include = [{ model: db.language,attributes: ['id','name','recordDescription']} 		
-				   ,{model: db.profile,attributes: ['id','name','recordDescription']}   ]; 	
+	var include = [{ model: db.language,attributes: ['id','name']} 		
+				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
 	
     db.user.findAll({
         attributes: attributes,
