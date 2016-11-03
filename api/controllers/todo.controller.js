@@ -39,7 +39,7 @@ module.exports.addTodo = function(req, res) {
  Get All Records 
 ******************************************************************************************************/
 module.exports.getTodosAll = function(req, res) {
- 
+
     // builds clause 
     var where = {};
     where = common.setClauseAll(req, where);
@@ -47,10 +47,7 @@ module.exports.getTodosAll = function(req, res) {
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 	 			
-	var include = [{ model: db.user,attributes: ['id','firstName','lastName','email', getterMethods   : {
-                recordDescription  : function()  { return '(' + this.id + '/' + this.firstName 
-                                     + ' ' + this.lastName + '/' + this.email + ')' }
-            }]} ]; 	
+	var include = [{ model: db.user,attributes: ['recordDescription']} ]; 	
 	
     db.todo.findAll({
         attributes: attributes,
