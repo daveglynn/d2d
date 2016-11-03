@@ -31,6 +31,9 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: null
         }
     }, {
+            getterMethods   : {
+                recordDescription  : function()  { return '(' + this.id + '/' + this.description + ')' }
+            },        
             instanceMethods: {
                 toPublicJSON: function() {
                     var json = this.toJSON();
