@@ -20,7 +20,7 @@ var ctrlTodo = require('../controllers/todo.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.addTodo);
+    .post( middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.addTodo);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTodo.getTodosAll);

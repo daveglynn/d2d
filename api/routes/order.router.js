@@ -20,7 +20,7 @@ var ctrlOrder = require('../controllers/order.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.addOrder);
+    .post( middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.addOrder);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrdersAll);

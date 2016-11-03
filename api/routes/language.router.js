@@ -20,7 +20,7 @@ var ctrlLanguage = require('../controllers/language.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.addLanguage);
+    .post( middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.addLanguage);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.getLanguagesAll);

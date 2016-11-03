@@ -20,7 +20,7 @@ var ctrlRuleBook = require('../controllers/ruleBook.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRuleBook.addRuleBook);
+    .post( middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRuleBook.addRuleBook);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRuleBook.getRuleBooksAll);

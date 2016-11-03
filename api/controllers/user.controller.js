@@ -43,7 +43,7 @@ module.exports.login = function(req, res) {
         res.status(400).json({"err": {"name": "authorisation", "message": "Signin UnSuccessful"  }}   );
     });
 };
- 
+
 /******************************************************************************************************
  Logout 
 ******************************************************************************************************/
@@ -83,8 +83,8 @@ module.exports.getUsersAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.language,attributes: ['id','name']} 		
+	 			 	
+	var include = [{ model: db.language,attributes: ['id','name']} 		 	
 				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
 	
     db.user.findAll({
@@ -108,9 +108,9 @@ module.exports.getUserById = function(req, res) {
     where = common.setClauseId(req, where);
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.language,attributes: ['name']} 		
-				   ,{model: db.profile,attributes: ['name']}   ]; 	
+	 			 	
+	var include = [{ model: db.language,attributes: ['id','name']} 		 	
+				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
     db.user.findOne({
@@ -198,9 +198,9 @@ module.exports.getUsersByLanguageId = function (req, res) {
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.language,attributes: ['name']} 		
-				   ,{model: db.profile,attributes: ['name']}   ]; 	
+	 			 	
+	var include = [{ model: db.language,attributes: ['id','name']} 		 	
+				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
     db.user.findAll({
@@ -226,9 +226,9 @@ module.exports.getUsersByRoleId = function (req, res) {
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.language,attributes: ['name']} 		
-				   ,{model: db.profile,attributes: ['name']}   ]; 	
+	 			 	
+	var include = [{ model: db.language,attributes: ['id','name']} 		 	
+				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
     db.user.findAll({
@@ -254,9 +254,9 @@ module.exports.getUsersByProfileId = function (req, res) {
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.language,attributes: ['name']} 		
-				   ,{model: db.profile,attributes: ['name']}   ]; 	
+	 			 	
+	var include = [{ model: db.language,attributes: ['id','name']} 		 	
+				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
     db.user.findAll({

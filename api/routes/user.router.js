@@ -20,7 +20,7 @@ var ctrlUser = require('../controllers/user.controller.js');
 
 router
     .route('/')
-    .post(ctrlUser.addUser);
+    .post( ctrlUser.addUser);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersAll);
@@ -46,7 +46,7 @@ router
 router
     .route('/profile/:profileId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersByProfileId);
-router
+    router
     .route('/login')
     .post(ctrlUser.login);
 router

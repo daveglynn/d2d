@@ -20,7 +20,7 @@ var ctrlItem = require('../controllers/item.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.addItem);
+    .post( middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.addItem);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsAll);

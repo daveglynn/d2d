@@ -46,8 +46,8 @@ module.exports.getTodosAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.user,attributes: ['name']} ]; 	
+	 			 	
+	var include = [{ model: db.user,attributes: ['id','firstName','lastName','email']} ]; 	
 	
     db.todo.findAll({
         attributes: attributes,
@@ -70,8 +70,8 @@ module.exports.getTodoById = function(req, res) {
     where = common.setClauseId(req, where);
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.user,attributes: ['name']} ]; 	
+	 			 	
+	var include = [{ model: db.user,attributes: ['id','firstName','lastName','email']} ]; 	
 	
     //find and return the records 
     db.todo.findOne({
@@ -159,8 +159,8 @@ module.exports.getTodosByUserId = function (req, res) {
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.user,attributes: ['name']} ]; 	
+	 			 	
+	var include = [{ model: db.user,attributes: ['id','firstName','lastName','email']} ]; 	
 	
     //find and return the records 
     db.todo.findAll({

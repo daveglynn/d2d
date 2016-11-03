@@ -20,7 +20,7 @@ var ctrlList = require('../controllers/list.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.addList);
+    .post( middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.addList);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlList.getListsAll);

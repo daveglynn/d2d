@@ -46,9 +46,9 @@ module.exports.getItemsAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.list,attributes: ['name']} 		
-				   ,{model: db.ruleBook,attributes: ['name']}   ]; 	
+	 			 	
+	var include = [{ model: db.list,attributes: ['id','name']} 		 	
+				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
 	
     db.item.findAll({
         attributes: attributes,
@@ -71,9 +71,9 @@ module.exports.getItemById = function(req, res) {
     where = common.setClauseId(req, where);
 	 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.list,attributes: ['name']} 		
-				   ,{model: db.ruleBook,attributes: ['name']}   ]; 	
+	 			 	
+	var include = [{ model: db.list,attributes: ['id','name']} 		 	
+				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
     db.item.findOne({
@@ -161,9 +161,9 @@ module.exports.getItemsByListId = function (req, res) {
     
 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.list,attributes: ['name']} 		
-				   ,{model: db.ruleBook,attributes: ['name']}   ]; 	
+	 			 	
+	var include = [{ model: db.list,attributes: ['id','name']} 		 	
+				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
     db.item.findAll({
@@ -189,9 +189,9 @@ module.exports.getItemsByRuleBookId = function (req, res) {
     
 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.list,attributes: ['name']} 		
-				   ,{model: db.ruleBook,attributes: ['name']}   ]; 	
+	 			 	
+	var include = [{ model: db.list,attributes: ['id','name']} 		 	
+				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
     db.item.findAll({
@@ -217,9 +217,9 @@ module.exports.getItemsByParentListId = function (req, res) {
     
 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.list,attributes: ['name']} 		
-				   ,{model: db.ruleBook,attributes: ['name']}   ]; 	
+	 			 	
+	var include = [{ model: db.list,attributes: ['id','name']} 		 	
+				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
     db.item.findAll({

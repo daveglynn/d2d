@@ -46,9 +46,9 @@ module.exports.getOrdersAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.orderStatus,attributes: ['name']} 		
-				   ,{model: db.orderType,attributes: ['name']}   ]; 	
+	 			 	
+	var include = [{ model: db.orderStatus,attributes: ['id','name']} 		 	
+				   ,{model: db.orderType,attributes: ['id','name']}   ]; 	
 	
     db.order.findAll({
         attributes: attributes,
@@ -71,9 +71,9 @@ module.exports.getOrderById = function(req, res) {
     where = common.setClauseId(req, where);
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.orderStatus,attributes: ['name']} 		
-				   ,{model: db.orderType,attributes: ['name']}   ]; 	
+	 			 	
+	var include = [{ model: db.orderStatus,attributes: ['id','name']} 		 	
+				   ,{model: db.orderType,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
     db.order.findOne({
@@ -161,9 +161,9 @@ module.exports.getOrdersByOrderStatusId = function (req, res) {
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.orderStatus,attributes: ['name']} 		
-				   ,{model: db.orderType,attributes: ['name']}   ]; 	
+	 			 	
+	var include = [{ model: db.orderStatus,attributes: ['id','name']} 		 	
+				   ,{model: db.orderType,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
     db.order.findAll({
@@ -189,9 +189,9 @@ module.exports.getOrdersByOrderTypeId = function (req, res) {
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
-	 			
-	var include = [{ model: db.orderStatus,attributes: ['name']} 		
-				   ,{model: db.orderType,attributes: ['name']}   ]; 	
+	 			 	
+	var include = [{ model: db.orderStatus,attributes: ['id','name']} 		 	
+				   ,{model: db.orderType,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
     db.order.findAll({

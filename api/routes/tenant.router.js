@@ -20,7 +20,7 @@ var ctrlTenant = require('../controllers/tenant.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.addTenant);
+    .post( middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.addTenant);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.getTenantsAll);

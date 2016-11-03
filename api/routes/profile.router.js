@@ -20,7 +20,7 @@ var ctrlProfile = require('../controllers/profile.controller.js');
 
 router
     .route('/')
-    .post(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.addProfile);
+    .post( middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.addProfile);
 router
     .route('/all')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.getProfilesAll);
