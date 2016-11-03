@@ -47,7 +47,10 @@ module.exports.getTodosAll = function(req, res) {
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 	 			
-	var include = [{ model: db.user,attributes: ['id','firstName','lastName','email','recordDescription']} ]; 	
+	var include = [{ model: db.user,attributes: ['id','firstName','lastName','email', getterMethods   : {
+                recordDescription  : function()  { return '(' + this.id + '/' + this.firstName 
+                                     + ' ' + this.lastName + '/' + this.email + ')' }
+            }]} ]; 	
 	
     db.todo.findAll({
         attributes: attributes,
