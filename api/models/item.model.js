@@ -87,7 +87,7 @@ module.exports = function (sequelize, DataTypes) {
                         next()
                     }
                 },
-            }
+            } 
         },
         createdBy: {
             type: DataTypes.INTEGER,

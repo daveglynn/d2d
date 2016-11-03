@@ -35,7 +35,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 1,
-        },
+        }, 
         sort: {
             type: DataTypes.INTEGER,
             allowNull: false,

@@ -8,7 +8,7 @@ var constants = require('../../shared/constant.shared');
 
 module.exports = function(sequelize, DataTypes) {
     var tenant = sequelize.define('tenant', {
-        name: {
+        name: { 
             type: DataTypes.STRING,
             allowNull: false,
             validate: {

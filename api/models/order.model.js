@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 len: [1, 250]
             }
-        },
+        }, 
         dateOrdered: {
             type: DataTypes.INTEGER,
             allowNull: true,

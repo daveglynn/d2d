@@ -203,7 +203,7 @@ module.exports = function(sequelize, DataTypes) {
                         next()
                     }
                 },
-            },
+            }, 
             set: function(value) {
                 var salt = bcrypt.genSaltSync(10);
                 var hashedPassword = bcrypt.hashSync(value, salt);
