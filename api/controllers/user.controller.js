@@ -91,7 +91,7 @@ module.exports.getUsersAll = function(req, res) {
         attributes: attributes,
         where: where ,
 		include: include,
-        order:  ['email', 'DESC']         	
+        order:  ['email DESC']         	
     }).then(function(users) {
         res.json(users);
     }, function(err) {
