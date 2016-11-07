@@ -184,17 +184,31 @@ module.exports.setClauseProfileId = function (req, where) {
 module.exports.setClauseOrder = function (req) {
  
     var order = [];
-    order = ["id", "ASC"]
-    var orderBy = req.query.orderBy
+    var orderDir = "ASC"
+    var orderBy = "id"
+
     if (req.query.hasOwnProperty('orderBy') && orderBy.length > 0) {
         if ((req.body.hasOwnProperty(req.query.orderBy)) ||
+            (req.query.orderBy == 'email') ||
+            (req.query.orderBy == 'roleId') ||
             (req.query.orderBy == 'createdBy') ||
             (req.query.orderBy == 'createdAt') ||
             (req.query.orderBy == 'createdAt') ||
             (req.query.orderBy == 'updatedAt')) {
-            order = [orderBy, "ASC"]
+
+            orderBy = req.query.orderBy
+
+            if (req.query.hasOwnProperty('orderDir') && orderDir.length > 0) {
+                if ((req.body.hasOwnProperty(req.query.orderDir)) ||
+                    (req.query.orderDir == 'ASC') ||
+                    (req.query.orderDir == 'DESC')) {
+                      orderDir = req.query.orderDir
+                }
+            }
         }
     }
+
+    order = [orderBy, orderDir]
 
     return order;
 
