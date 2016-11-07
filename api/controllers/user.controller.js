@@ -83,15 +83,19 @@ module.exports.getUsersAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
-	 			 	
+
+    //var order = {};
+    debugger;
+    var order = extension.setClauseOrder(req); 	
+ 	 	
 	var include = [{ model: db.language,attributes: ['id','name']} 		 	
 				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
-	
+
     db.user.findAll({
         attributes: attributes,
-        where: where ,
-		include: include,
-        order:  ['email DESC']         	
+        where: where,
+        include: include,
+        order: [order]
     }).then(function(users) {
         res.json(users);
     }, function(err) {

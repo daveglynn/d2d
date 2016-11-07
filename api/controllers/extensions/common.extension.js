@@ -50,6 +50,7 @@ module.exports = {
 
     },
 
+
     modelUserId: function (req) {
 
         return req.user.get('id');
