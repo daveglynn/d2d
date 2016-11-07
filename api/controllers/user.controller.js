@@ -90,7 +90,8 @@ module.exports.getUsersAll = function(req, res) {
     db.user.findAll({
         attributes: attributes,
         where: where ,
-		include: include 	
+		include: include,
+        order:  ['email', 'DESC']         	
     }).then(function(users) {
         res.json(users);
     }, function(err) {
