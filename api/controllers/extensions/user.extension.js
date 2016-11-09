@@ -181,20 +181,41 @@ module.exports.setClauseProfileId = function (req, where) {
     return where;
 };
 
+
 module.exports.setClauseOrder = function (req) {
- 
+    //order = ["email", "DESC"],
+    //    ["languageId", "ASC"]
+
     var order = [];
     var orderDir = "ASC"
     var orderBy = "id"
 
     if (req.query.hasOwnProperty('orderBy') && orderBy.length > 0) {
-        if ((req.body.hasOwnProperty(req.query.orderBy)) ||
-            (req.query.orderBy == 'email') ||
-            (req.query.orderBy == 'roleId') ||
-            (req.query.orderBy == 'createdBy') ||
-            (req.query.orderBy == 'createdAt') ||
-            (req.query.orderBy == 'createdAt') ||
-            (req.query.orderBy == 'updatedAt')) {
+        if ((req.body.hasOwnProperty(req.query.orderBy))
+            || (req.query.orderBy == 'id')
+            || (req.query.orderBy == 'tenantId')
+            || (req.query.orderBy == 'languageId')
+            || (req.query.orderBy == 'roleId')
+            || (req.query.orderBy == 'profileId')
+            || (req.query.orderBy == 'active')
+            || (req.query.orderBy == 'email')
+            || (req.query.orderBy == 'firstName')
+            || (req.query.orderBy == 'lastName')
+            || (req.query.orderBy == 'phone')
+            || (req.query.orderBy == 'addressLine1')
+            || (req.query.orderBy == 'addressLine2')
+            || (req.query.orderBy == 'addressLine3')
+            || (req.query.orderBy == 'addressLine4')
+            || (req.query.orderBy == 'salt')
+            || (req.query.orderBy == 'password_hash')
+            || (req.query.orderBy == 'createdBy')
+            || (req.query.orderBy == 'updatedBy')
+            || (req.query.orderBy == 'createdAt')
+            || (req.query.orderBy == 'updatedAt')
+            || (req.query.orderBy == 'enabledFrom')
+            || (req.query.orderBy == 'enabledTo')
+
+        ) {
 
             orderBy = req.query.orderBy
 
@@ -202,7 +223,7 @@ module.exports.setClauseOrder = function (req) {
                 if ((req.body.hasOwnProperty(req.query.orderDir)) ||
                     (req.query.orderDir == 'ASC') ||
                     (req.query.orderDir == 'DESC')) {
-                      orderDir = req.query.orderDir
+                    orderDir = req.query.orderDir
                 }
             }
         }
