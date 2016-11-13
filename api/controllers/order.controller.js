@@ -46,6 +46,9 @@ module.exports.getOrdersAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
+
+    var order = extension.setClauseOrder(req); 	
+
 	 			 	
 	var include = [{ model: db.orderStatus,attributes: ['id','name']} 		 	
 				   ,{model: db.orderType,attributes: ['id','name']}   ]; 	
@@ -53,6 +56,7 @@ module.exports.getOrdersAll = function(req, res) {
     db.order.findAll({
         attributes: attributes,
         where: where ,
+		order: [order],
 		include: include 	
     }).then(function(orders) {
         res.json(orders);
@@ -161,6 +165,9 @@ module.exports.getOrdersByOrderStatusId = function (req, res) {
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
 	 			 	
 	var include = [{ model: db.orderStatus,attributes: ['id','name']} 		 	
 				   ,{model: db.orderType,attributes: ['id','name']}   ]; 	
@@ -168,7 +175,8 @@ module.exports.getOrdersByOrderStatusId = function (req, res) {
     //find and return the records 
     db.order.findAll({
         attributes: attributes,
-        where: where ,
+        where: where,
+		order: [order],
 		include: include 	
     }).then(function (orders) {
         res.json(orders);
@@ -189,6 +197,9 @@ module.exports.getOrdersByOrderTypeId = function (req, res) {
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
 	 			 	
 	var include = [{ model: db.orderStatus,attributes: ['id','name']} 		 	
 				   ,{model: db.orderType,attributes: ['id','name']}   ]; 	
@@ -196,7 +207,8 @@ module.exports.getOrdersByOrderTypeId = function (req, res) {
     //find and return the records 
     db.order.findAll({
         attributes: attributes,
-        where: where ,
+        where: where,
+		order: [order],
 		include: include 	
     }).then(function (orders) {
         res.json(orders);

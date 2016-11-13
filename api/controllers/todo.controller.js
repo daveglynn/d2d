@@ -46,12 +46,16 @@ module.exports.getTodosAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
+
+    var order = extension.setClauseOrder(req); 	
+
 	 			 	
 	var include = [{ model: db.user,attributes: ['id','firstName','lastName','email']} ]; 	
 	
     db.todo.findAll({
         attributes: attributes,
         where: where ,
+		order: [order],
 		include: include 	
     }).then(function(todos) {
         res.json(todos);
@@ -159,13 +163,17 @@ module.exports.getTodosByUserId = function (req, res) {
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
 	 			 	
 	var include = [{ model: db.user,attributes: ['id','firstName','lastName','email']} ]; 	
 	
     //find and return the records 
     db.todo.findAll({
         attributes: attributes,
-        where: where ,
+        where: where,
+		order: [order],
 		include: include 	
     }).then(function (todos) {
         res.json(todos);

@@ -84,18 +84,17 @@ module.exports.getUsersAll = function(req, res) {
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 
-    //var order = {};
-    debugger;
     var order = extension.setClauseOrder(req); 	
- 	 	
+
+	 			 	
 	var include = [{ model: db.language,attributes: ['id','name']} 		 	
 				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
-
+	
     db.user.findAll({
         attributes: attributes,
-        where: where,
-        include: include,
-        order: [order]
+        where: where ,
+		order: [order],
+		include: include 	
     }).then(function(users) {
         res.json(users);
     }, function(err) {
@@ -203,6 +202,9 @@ module.exports.getUsersByLanguageId = function (req, res) {
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
 	 			 	
 	var include = [{ model: db.language,attributes: ['id','name']} 		 	
 				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
@@ -210,7 +212,8 @@ module.exports.getUsersByLanguageId = function (req, res) {
     //find and return the records 
     db.user.findAll({
         attributes: attributes,
-        where: where ,
+        where: where,
+		order: [order],
 		include: include 	
     }).then(function (users) {
         res.json(users);
@@ -231,6 +234,9 @@ module.exports.getUsersByRoleId = function (req, res) {
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
 	 			 	
 	var include = [{ model: db.language,attributes: ['id','name']} 		 	
 				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
@@ -238,7 +244,8 @@ module.exports.getUsersByRoleId = function (req, res) {
     //find and return the records 
     db.user.findAll({
         attributes: attributes,
-        where: where ,
+        where: where,
+		order: [order],
 		include: include 	
     }).then(function (users) {
         res.json(users);
@@ -259,6 +266,9 @@ module.exports.getUsersByProfileId = function (req, res) {
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
 	 			 	
 	var include = [{ model: db.language,attributes: ['id','name']} 		 	
 				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
@@ -266,7 +276,8 @@ module.exports.getUsersByProfileId = function (req, res) {
     //find and return the records 
     db.user.findAll({
         attributes: attributes,
-        where: where ,
+        where: where,
+		order: [order],
 		include: include 	
     }).then(function (users) {
         res.json(users);

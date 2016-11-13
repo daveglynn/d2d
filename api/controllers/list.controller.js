@@ -46,10 +46,14 @@ module.exports.getListsAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	 
     var attributes = common.excludeAttributes();
+
+    var order = extension.setClauseOrder(req); 	
+
 	 		
     db.list.findAll({
         attributes: attributes,
-        where: where 	
+        where: where ,
+		order: [order]	
     }).then(function(lists) {
         res.json(lists);
     }, function(err) {
@@ -141,3 +145,34 @@ module.exports.deleteList = function(req, res) {
     });
 };
   	
+
+/******************************************************************************************************
+ Get a Record by Id
+******************************************************************************************************/
+module.exports.getListByIdItems = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = common.setClauseId(req, where);
+
+
+    var include = [{
+        model: db.item, attributes: ['id', 'listId', 'parentListId', 'name', 'code', 'ruleBookId']
+    }];
+
+
+    //find and return the records 
+    db.list.findOne({
+        attributes: ['id', 'name'],
+        where: where,
+        include: include
+    }).then(function (list) {
+        if (!!list) {
+            res.json(list.toPublicJSON());
+        } else {
+            res.status(404).json({ "err": { "name": "list", "message": "An error occurred retrieving the record" } });
+        }
+    }, function (err) {
+        res.status(500).json(err);
+    })
+};

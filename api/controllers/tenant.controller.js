@@ -46,10 +46,14 @@ module.exports.getTenantsAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	 
     var attributes = common.excludeAttributes();
+
+    var order = extension.setClauseOrder(req); 	
+
 	 		
     db.tenant.findAll({
         attributes: attributes,
-        where: where 	
+        where: where ,
+		order: [order]	
     }).then(function(tenants) {
         res.json(tenants);
     }, function(err) {

@@ -85,5 +85,48 @@ module.exports.setClauseQuery =  function (query, where) {
 };
   	
 
+module.exports.setClauseOrder = function (req) {
+ 
+	// for multi columns
+    // order = ["col1", "DESC"],
+    //		   ["col2", "ASC"]
+
+    var order = [];
+    var orderDir = "ASC"
+    var orderBy = "id"
+
+    if (req.query.hasOwnProperty('orderBy') && orderBy.length > 0) {
+        if ((req.body.hasOwnProperty(req.query.orderBy)) 
+					|| (req.query.orderBy == 'id')
+					|| (req.query.orderBy == 'tenantId')
+					|| (req.query.orderBy == 'name')
+					|| (req.query.orderBy == 'active')
+					|| (req.query.orderBy == 'description')
+					|| (req.query.orderBy == 'hideElements')
+					|| (req.query.orderBy == 'createdBy')
+					|| (req.query.orderBy == 'updatedBy')
+					|| (req.query.orderBy == 'createdAt')
+					|| (req.query.orderBy == 'updatedAt')
+		 
+		){
+
+            orderBy = req.query.orderBy
+
+            if (req.query.hasOwnProperty('orderDir') && orderDir.length > 0) {
+                if ((req.body.hasOwnProperty(req.query.orderDir)) ||
+                    (req.query.orderDir == 'ASC') ||
+                    (req.query.orderDir == 'DESC')) {
+                      orderDir = req.query.orderDir
+                }
+            }
+        }
+    }
+
+    order = [orderBy, orderDir]
+
+    return order;
+
+};
+
 
  

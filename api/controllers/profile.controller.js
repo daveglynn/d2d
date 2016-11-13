@@ -46,10 +46,14 @@ module.exports.getProfilesAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
+
+    var order = extension.setClauseOrder(req); 	
+
 	 		
     db.profile.findAll({
         attributes: attributes,
-        where: where 	
+        where: where ,
+		order: [order]	
     }).then(function(profiles) {
         res.json(profiles);
     }, function(err) {

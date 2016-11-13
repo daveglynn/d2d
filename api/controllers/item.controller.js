@@ -46,6 +46,9 @@ module.exports.getItemsAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	 
     var attributes = common.excludeAttributes();
+
+    var order = extension.setClauseOrder(req); 	
+
 	 			 	
 	var include = [{ model: db.list,attributes: ['id','name']} 		 	
 				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
@@ -53,6 +56,7 @@ module.exports.getItemsAll = function(req, res) {
     db.item.findAll({
         attributes: attributes,
         where: where ,
+		order: [order],
 		include: include 	
     }).then(function(items) {
         res.json(items);
@@ -161,6 +165,9 @@ module.exports.getItemsByListId = function (req, res) {
     
 
     var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
 	 			 	
 	var include = [{ model: db.list,attributes: ['id','name']} 		 	
 				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
@@ -168,7 +175,8 @@ module.exports.getItemsByListId = function (req, res) {
     //find and return the records 
     db.item.findAll({
         attributes: attributes,
-        where: where ,
+        where: where,
+		order: [order],
 		include: include 	
     }).then(function (items) {
         res.json(items);
@@ -189,6 +197,9 @@ module.exports.getItemsByRuleBookId = function (req, res) {
     
 
     var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
 	 			 	
 	var include = [{ model: db.list,attributes: ['id','name']} 		 	
 				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
@@ -196,7 +207,8 @@ module.exports.getItemsByRuleBookId = function (req, res) {
     //find and return the records 
     db.item.findAll({
         attributes: attributes,
-        where: where ,
+        where: where,
+		order: [order],
 		include: include 	
     }).then(function (items) {
         res.json(items);
@@ -217,6 +229,9 @@ module.exports.getItemsByParentListId = function (req, res) {
     
 
     var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
 	 			 	
 	var include = [{ model: db.list,attributes: ['id','name']} 		 	
 				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
@@ -224,7 +239,8 @@ module.exports.getItemsByParentListId = function (req, res) {
     //find and return the records 
     db.item.findAll({
         attributes: attributes,
-        where: where ,
+        where: where,
+		order: [order],
 		include: include 	
     }).then(function (items) {
         res.json(items);

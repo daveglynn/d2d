@@ -46,10 +46,14 @@ module.exports.getRuleBooksAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	 
     var attributes = common.excludeAttributes();
+
+    var order = extension.setClauseOrder(req); 	
+
 	 		
     db.ruleBook.findAll({
         attributes: attributes,
-        where: where 	
+        where: where ,
+		order: [order]	
     }).then(function(ruleBooks) {
         res.json(ruleBooks);
     }, function(err) {
