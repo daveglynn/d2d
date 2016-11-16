@@ -35,4 +35,12 @@ router
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.deleteLanguage);
 
 	
+router
+    .route('/ruleBook/:ruleBookId(\\d+)/')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.getLanguagesByRuleBookId);
+
+router
+    .route('/parentList/:parentListId(\\d+)/')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.getLanguagesByParentListId);
+
 module.exports = router

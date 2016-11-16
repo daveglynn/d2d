@@ -42,7 +42,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         code: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             validate: {
                 isLength: function (value, next) {
                     if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {

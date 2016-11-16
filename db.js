@@ -14,7 +14,7 @@
 var Sequelize = require('sequelize');
 var env = process.env.NODE_ENV || 'development';
 var sequelize;
-
+ 
 if (env === 'production') {
 	sequelize = new Sequelize(process.env.DATABASE_URL, {
 		dialect: 'postgres'
@@ -78,5 +78,11 @@ db.list.hasMany(db.item);
  
 db.item.belongsTo(db.ruleBook);
 db.ruleBook.hasMany(db.item);
+
+db.profile.belongsTo(db.ruleBook);
+db.ruleBook.hasMany(db.profile);
+
+db.language.belongsTo(db.ruleBook);
+db.ruleBook.hasMany(db.language);
 
 module.exports = db;

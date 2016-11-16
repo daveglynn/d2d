@@ -35,4 +35,12 @@ router
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.deleteProfile);
 
 	
+router
+    .route('/ruleBook/:ruleBookId(\\d+)/')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.getProfilesByRuleBookId);
+
+router
+    .route('/parentList/:parentListId(\\d+)/')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.getProfilesByParentListId);
+
 module.exports = router

@@ -49,11 +49,14 @@ module.exports.getProfilesAll = function(req, res) {
 
     var order = extension.setClauseOrder(req); 	
 
-	 		
+	 			 	
+	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	
     db.profile.findAll({
         attributes: attributes,
         where: where ,
-		order: [order]	
+		order: [order],
+		include: include 	
     }).then(function(profiles) {
         res.json(profiles);
     }, function(err) {
@@ -71,11 +74,14 @@ module.exports.getProfileById = function(req, res) {
     where = common.setClauseId(req, where);
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
-	 		
+	 			 	
+	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	
     //find and return the records 
     db.profile.findOne({
         attributes: attributes,
-        where: where 	
+        where: where ,
+		include: include 	
     }).then(function(profile) {
         if (!!profile) {
             res.json(profile.toPublicJSON());
@@ -145,3 +151,65 @@ module.exports.deleteProfile = function(req, res) {
     });
 };
   	
+/******************************************************************************************************
+ Get Profile records by RuleBookId 
+******************************************************************************************************/
+module.exports.getProfilesByRuleBookId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseRuleBookId(req, where);
+    where = extension.setClauseQueryView(req.query, where);
+    where = common.setClauseTenantId(req, where);
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 			 	
+	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	
+    //find and return the records 
+    db.profile.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (profiles) {
+        res.json(profiles);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get Profile records by ParentListId 
+******************************************************************************************************/
+module.exports.getProfilesByParentListId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseParentListId(req, where);
+    where = extension.setClauseQueryView(req.query, where);
+    where = common.setClauseTenantId(req, where);
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 			 	
+	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	
+    //find and return the records 
+    db.profile.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (profiles) {
+        res.json(profiles);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+

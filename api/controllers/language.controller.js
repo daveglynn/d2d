@@ -49,11 +49,14 @@ module.exports.getLanguagesAll = function(req, res) {
 
     var order = extension.setClauseOrder(req); 	
 
-	 		
+	 			 	
+	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	
     db.language.findAll({
         attributes: attributes,
         where: where ,
-		order: [order]	
+		order: [order],
+		include: include 	
     }).then(function(languages) {
         res.json(languages);
     }, function(err) {
@@ -71,11 +74,14 @@ module.exports.getLanguageById = function(req, res) {
     where = common.setClauseId(req, where);
 	 
     var attributes = common.excludeAttributes();
-	 		
+	 			 	
+	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	
     //find and return the records 
     db.language.findOne({
         attributes: attributes,
-        where: where 	
+        where: where ,
+		include: include 	
     }).then(function(language) {
         if (!!language) {
             res.json(language.toPublicJSON());
@@ -145,3 +151,65 @@ module.exports.deleteLanguage = function(req, res) {
     });
 };
   	
+/******************************************************************************************************
+ Get Language records by RuleBookId 
+******************************************************************************************************/
+module.exports.getLanguagesByRuleBookId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseRuleBookId(req, where);
+    where = extension.setClauseQueryView(req.query, where);
+    
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 			 	
+	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	
+    //find and return the records 
+    db.language.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (languages) {
+        res.json(languages);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get Language records by ParentListId 
+******************************************************************************************************/
+module.exports.getLanguagesByParentListId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseParentListId(req, where);
+    where = extension.setClauseQueryView(req.query, where);
+    
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 			 	
+	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	
+    //find and return the records 
+    db.language.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (languages) {
+        res.json(languages);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
