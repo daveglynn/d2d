@@ -43,4 +43,8 @@ router
     .route('/parentList/:parentListId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.getProfilesByParentListId);
 
+router
+    .route('/dropdown')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlProfile.getProfilesDropdown);
+
 module.exports = router
