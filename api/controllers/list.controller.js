@@ -157,7 +157,7 @@ module.exports.getListByIdItems = function (req, res) {
 
 
     var include = [{
-        model: db.item, attributes: ['id', 'listId', 'parentListId', 'name', 'code', 'ruleBookId']
+        model: db.item, attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId']
     }];
 
 
