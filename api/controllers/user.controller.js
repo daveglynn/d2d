@@ -88,6 +88,7 @@ module.exports.getUsersAll = function(req, res) {
 
 	 			 	
 	var include = [{ model: db.language,attributes: ['id','name']} 		 	
+				   ,{model: db.role,attributes: ['id','name']}   		 	
 				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
 	
     db.user.findAll({
@@ -114,6 +115,7 @@ module.exports.getUserById = function(req, res) {
     var attributes = common.excludeAttributes();
 	 			 	
 	var include = [{ model: db.language,attributes: ['id','name']} 		 	
+				   ,{model: db.role,attributes: ['id','name']}   		 	
 				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
@@ -207,6 +209,7 @@ module.exports.getUsersByLanguageId = function (req, res) {
 
 	 			 	
 	var include = [{ model: db.language,attributes: ['id','name']} 		 	
+				   ,{model: db.role,attributes: ['id','name']}   		 	
 				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
@@ -239,6 +242,7 @@ module.exports.getUsersByRoleId = function (req, res) {
 
 	 			 	
 	var include = [{ model: db.language,attributes: ['id','name']} 		 	
+				   ,{model: db.role,attributes: ['id','name']}   		 	
 				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 
@@ -271,6 +275,7 @@ module.exports.getUsersByProfileId = function (req, res) {
 
 	 			 	
 	var include = [{ model: db.language,attributes: ['id','name']} 		 	
+				   ,{model: db.role,attributes: ['id','name']}   		 	
 				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
 	
     //find and return the records 

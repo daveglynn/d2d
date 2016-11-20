@@ -45,6 +45,7 @@ db.token = sequelize.import(__dirname + '/api/models/token.model.js');
 db.list = sequelize.import(__dirname + '/api/models/list.model.js');
 db.item = sequelize.import(__dirname + '/api/models/item.model.js');
 db.ruleBook = sequelize.import(__dirname + '/api/models/ruleBook.model.js');
+db.role = sequelize.import(__dirname + '/api/models/role.model.js');
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
@@ -66,6 +67,9 @@ db.tenant.hasMany(db.todo);
 
 db.todo.belongsTo(db.user);
 db.user.hasMany(db.todo);
+
+db.user.belongsTo(db.role);
+db.role.hasMany(db.user);
 
 db.user.belongsTo(db.profile);
 db.profile.hasMany(db.user);

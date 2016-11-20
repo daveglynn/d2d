@@ -1,23 +1,18 @@
-/******************************************************************************************************
+﻿/******************************************************************************************************
  model layer
 ******************************************************************************************************/
 "use strict";
-var _ = require('underscore')
+var _ = require('underscore');
 var v = require('validator');
 var constants = require('../../shared/constant.shared');
 
-module.exports = function(sequelize, DataTypes) {
-    var profile = sequelize.define('profile', {
-        tenantId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: constants.tenantId_Default            
-        },
+module.exports = function (sequelize, DataTypes) {
+    var role = sequelize.define('role', {
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
-        },	
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -33,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
                         next()
                     }
                 },
-            },
+            }
         },
         ruleBookId: {
             type: DataTypes.INTEGER,
@@ -71,17 +66,6 @@ module.exports = function(sequelize, DataTypes) {
                 },
             }
         },
-        description: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            validate: {
-                len: [1, 250]
-            }
-        },
-		hideElements: {
-            type: DataTypes.JSON,
-            allowNull: true,
-        },			
         createdBy: {
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -94,7 +78,7 @@ module.exports = function(sequelize, DataTypes) {
         }
     }, {
             instanceMethods: {
-                toPublicJSON: function() {
+                toPublicJSON: function () {
                     var json = this.toJSON();
                     return _.omit(json, 'tenantId');
                 }
@@ -102,5 +86,5 @@ module.exports = function(sequelize, DataTypes) {
 
         });
 
-    return profile;
-};
+    return role;
+}
