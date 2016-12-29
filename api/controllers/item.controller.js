@@ -44,6 +44,8 @@ module.exports.getItemsAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
+	where = extension.setClauseActive(req.query, where);
+	where = extension.setClauseExpired(req.query, where); 
 	 
     var attributes = common.excludeAttributes();
 
@@ -73,6 +75,8 @@ module.exports.getItemById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
+	where = extension.setClauseActive(req.query, where);
+	where = extension.setClauseExpired(req.query, where); 
 	 
     var attributes = common.excludeAttributes();
 	 			 	
@@ -161,7 +165,9 @@ module.exports.getItemsByListId = function (req, res) {
     // builds clause
     var where = {};
     where = extension.setClauseListId(req, where);
-    where = extension.setClauseQueryView(req.query, where);
+	where = extension.setClauseActive(req.query, where);
+	where = extension.setClauseExpired(req.query, where); 
+
     
 
     var attributes = common.excludeAttributes();
@@ -193,7 +199,9 @@ module.exports.getItemsByRuleBookId = function (req, res) {
     // builds clause
     var where = {};
     where = extension.setClauseRuleBookId(req, where);
-    where = extension.setClauseQueryView(req.query, where);
+	where = extension.setClauseActive(req.query, where);
+	where = extension.setClauseExpired(req.query, where); 
+
     
 
     var attributes = common.excludeAttributes();
@@ -225,7 +233,9 @@ module.exports.getItemsByParentListId = function (req, res) {
     // builds clause
     var where = {};
     where = extension.setClauseParentListId(req, where);
-    where = extension.setClauseQueryView(req.query, where);
+	where = extension.setClauseActive(req.query, where);
+	where = extension.setClauseExpired(req.query, where); 
+
     
 
     var attributes = common.excludeAttributes();

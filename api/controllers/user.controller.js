@@ -81,6 +81,8 @@ module.exports.getUsersAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
+	where = extension.setClauseActive(req.query, where);
+	 
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 
@@ -111,6 +113,8 @@ module.exports.getUserById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
+	where = extension.setClauseActive(req.query, where);
+	 
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 	 			 	
@@ -200,7 +204,9 @@ module.exports.getUsersByLanguageId = function (req, res) {
     // builds clause
     var where = {};
     where = extension.setClauseLanguageId(req, where);
-    where = extension.setClauseQueryView(req.query, where);
+	where = extension.setClauseActive(req.query, where);
+	 
+
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
@@ -233,7 +239,9 @@ module.exports.getUsersByRoleId = function (req, res) {
     // builds clause
     var where = {};
     where = extension.setClauseRoleId(req, where);
-    where = extension.setClauseQueryView(req.query, where);
+	where = extension.setClauseActive(req.query, where);
+	 
+
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
@@ -266,7 +274,9 @@ module.exports.getUsersByProfileId = function (req, res) {
     // builds clause
     var where = {};
     where = extension.setClauseProfileId(req, where);
-    where = extension.setClauseQueryView(req.query, where);
+	where = extension.setClauseActive(req.query, where);
+	 
+
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();

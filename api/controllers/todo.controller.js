@@ -44,6 +44,8 @@ module.exports.getTodosAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
+	where = extension.setClauseActive(req.query, where);
+	 
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 
@@ -72,6 +74,8 @@ module.exports.getTodoById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
+	where = extension.setClauseActive(req.query, where);
+	 
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 	 			 	
@@ -159,7 +163,9 @@ module.exports.getTodosByUserId = function (req, res) {
     // builds clause
     var where = {};
     where = extension.setClauseUserId(req, where);
-    where = extension.setClauseQueryView(req.query, where);
+	where = extension.setClauseActive(req.query, where);
+	 
+
     where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();

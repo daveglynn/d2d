@@ -44,6 +44,8 @@ module.exports.getTenantsAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
+	where = extension.setClauseActive(req.query, where);
+	 
 	 
     var attributes = common.excludeAttributes();
 
@@ -69,6 +71,8 @@ module.exports.getTenantById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
+	where = extension.setClauseActive(req.query, where);
+	 
 	 
     var attributes = common.excludeAttributes();
 	 		

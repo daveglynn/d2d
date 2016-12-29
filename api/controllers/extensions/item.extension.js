@@ -198,22 +198,22 @@ module.exports.setClauseOrder = function (req) {
 
 };
 
-
-module.exports.setClauseQueryView = function (query, where)
+module.exports.setClauseActive = function (query, where)
 {
 
-    if (query.hasOwnProperty('view') && query.view.length > 0)
+    where.active = {
+        $eq: true
+	};
+
+    if (query.hasOwnProperty('active') && query.active.length > 0)
     {
-        if (query.view == "view1")
+        if (query.active == "false")
         {
             where.active = {
-                $eq: true
-            };
-            where.expired = {
                 $eq: false
             };
         }
-        if (query.view == "view2") {
+        if (query.active == "true") {
             where.active = {
                 $eq: true
             };
@@ -224,4 +224,28 @@ module.exports.setClauseQueryView = function (query, where)
 
 };
 
+module.exports.setClauseExpired = function (query, where)
+{
+
+
+    if (query.hasOwnProperty('expired') && query.expired.length > 0)
+    {
+        if (query.expired == "false")
+        {
+            where.expired = {
+                $eq: false
+            };
+        }
+        if (query.expired == "true") {
+            where.expired = {
+                $eq: true
+            };
+        }
+    }
+
+    return where;
+
+};
+
+ 
  
