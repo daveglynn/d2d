@@ -20,15 +20,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: true,
             defaultValue: constants.languageId_Default,
-            validate: {
-                isNumeric: function (value, next) {
-                    if  (v.isNumeric(v.ltrim(value)) === false) {
-                        next('Language: Must be numeric.')
-                    } else {
-                        next()
-                    }
-                },
-            }
         },
         roleId: {
             type: DataTypes.INTEGER,
@@ -39,15 +30,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: true,
             defaultValue: constants.profileId_Default,
-            validate: {
-                isNumeric: function(value, next) {
-                    if (v.isNumeric(v.ltrim(value)) === false) {
-                        next('Profile: Must be numeric.')
-                    } else {
-                        next()
-                    }
-                },
-            }
         },
         active: {
             type: DataTypes.BOOLEAN,
