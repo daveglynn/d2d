@@ -221,7 +221,6 @@ module.exports.getLanguagesByParentListId = function (req, res) {
     });
 };
 
-
 /******************************************************************************************************
  Get a Record for Dropdown
 ******************************************************************************************************/
@@ -229,6 +228,8 @@ module.exports.getLanguagesDropdown = function (req, res) {
 
     // builds clause
     var where = {};
+    where = extension.setClauseActive(req.query, where);
+    where = extension.setClauseExpired(req.query, where);
 
     //find and return the records 
     db.language.findAll({
@@ -243,4 +244,6 @@ module.exports.getLanguagesDropdown = function (req, res) {
     }, function (err) {
         res.status(500).json(err);
     })
-};
+};	
+ 
+

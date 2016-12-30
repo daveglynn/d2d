@@ -221,14 +221,15 @@ module.exports.getProfilesByParentListId = function (req, res) {
     });
 };
 
-
 /******************************************************************************************************
-Get a Record for Dropdown
+ Get a Record for Dropdown
 ******************************************************************************************************/
 module.exports.getProfilesDropdown = function (req, res) {
 
     // builds clause
     var where = {};
+    where = extension.setClauseActive(req.query, where);
+    where = extension.setClauseExpired(req.query, where);
 
     //find and return the records 
     db.profile.findAll({
@@ -243,4 +244,6 @@ module.exports.getProfilesDropdown = function (req, res) {
     }, function (err) {
         res.status(500).json(err);
     })
-};
+};	
+ 
+

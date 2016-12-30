@@ -208,7 +208,6 @@ module.exports.setClauseActive = function (query, where)
 module.exports.setClauseExpired = function (query, where)
 {
 
-
     if (query.hasOwnProperty('expired') && query.expired.length > 0)
     {
         if (query.expired == "false")
