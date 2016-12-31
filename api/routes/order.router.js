@@ -42,5 +42,6 @@ router
 router
     .route('/orderType/:orderTypeId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrdersByOrderTypeId);
+ 
 
 module.exports = router

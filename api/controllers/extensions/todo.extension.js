@@ -86,9 +86,10 @@ module.exports.setClauseQuery =  function (query, where) {
 module.exports.setClauseUserId = function (req, where) {
   
     var userId = parseInt(req.params.userId, 10);
-    where = {
-        userId: userId
+    where.userId = {
+         $eq: userId
     };
+
 	return where;
 };
 	

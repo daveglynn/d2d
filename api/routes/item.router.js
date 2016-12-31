@@ -46,5 +46,10 @@ router
 router
     .route('/parentList/:parentListId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByParentListId);
+ 
+router
+    .route('/list/:listId(\\d+)/dropdown/')
+	.get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsDropdown);
+ 
 
 module.exports = router

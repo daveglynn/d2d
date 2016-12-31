@@ -157,27 +157,30 @@ module.exports.setClauseQuery =  function (query, where) {
 module.exports.setClauseLanguageId = function (req, where) {
   
     var languageId = parseInt(req.params.languageId, 10);
-    where = {
-        languageId: languageId
+    where.languageId = {
+         $eq: languageId
     };
+
 	return where;
 };
 	
 module.exports.setClauseRoleId = function (req, where) {
   
     var roleId = parseInt(req.params.roleId, 10);
-    where = {
-        roleId: roleId
+    where.roleId = {
+         $eq: roleId
     };
+
 	return where;
 };
 	
 module.exports.setClauseProfileId = function (req, where) {
   
     var profileId = parseInt(req.params.profileId, 10);
-    where = {
-        profileId: profileId
+    where.profileId = {
+         $eq: profileId
     };
+
 	return where;
 };
 	

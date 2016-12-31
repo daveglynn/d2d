@@ -46,6 +46,7 @@ router
 router
     .route('/profile/:profileId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlUser.getUsersByProfileId);
+ 
     router
     .route('/login')
     .post(ctrlUser.login);

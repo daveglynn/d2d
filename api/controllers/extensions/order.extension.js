@@ -103,18 +103,20 @@ module.exports.setClauseQuery =  function (query, where) {
 module.exports.setClauseOrderStatusId = function (req, where) {
   
     var orderStatusId = parseInt(req.params.orderStatusId, 10);
-    where = {
-        orderStatusId: orderStatusId
+    where.orderStatusId = {
+         $eq: orderStatusId
     };
+
 	return where;
 };
 	
 module.exports.setClauseOrderTypeId = function (req, where) {
   
     var orderTypeId = parseInt(req.params.orderTypeId, 10);
-    where = {
-        orderTypeId: orderTypeId
+    where.orderTypeId = {
+         $eq: orderTypeId
     };
+
 	return where;
 };
 	

@@ -42,9 +42,10 @@ router
 router
     .route('/parentList/:parentListId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.getLanguagesByParentListId);
-
 router
     .route('/dropdown')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.getLanguagesDropdown);
+	.get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlLanguage.getLanguagesDropdown);
+ 
+ 
 
 module.exports = router

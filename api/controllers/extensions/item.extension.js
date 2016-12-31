@@ -127,27 +127,30 @@ module.exports.setClauseQuery =  function (query, where) {
 module.exports.setClauseListId = function (req, where) {
   
     var listId = parseInt(req.params.listId, 10);
-    where = {
-        listId: listId
+    where.listId = {
+         $eq: listId
     };
+
 	return where;
 };
 	
 module.exports.setClauseRuleBookId = function (req, where) {
   
     var ruleBookId = parseInt(req.params.ruleBookId, 10);
-    where = {
-        ruleBookId: ruleBookId
+    where.ruleBookId = {
+         $eq: ruleBookId
     };
+
 	return where;
 };
 	
 module.exports.setClauseParentListId = function (req, where) {
   
     var parentListId = parseInt(req.params.parentListId, 10);
-    where = {
-        parentListId: parentListId
+    where.parentListId = {
+         $eq: parentListId
     };
+
 	return where;
 };
 	

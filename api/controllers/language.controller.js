@@ -230,7 +230,7 @@ module.exports.getLanguagesDropdown = function (req, res) {
     var where = {};
     where = extension.setClauseActive(req.query, where);
     where = extension.setClauseExpired(req.query, where);
-
+	 
     //find and return the records 
     db.language.findAll({
         attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId'],

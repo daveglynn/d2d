@@ -34,5 +34,6 @@ router
     .route('/:id(\\d+)/')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRuleBook.deleteRuleBook);
 
-	
+	 
+
 module.exports = router
