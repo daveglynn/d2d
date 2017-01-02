@@ -44,7 +44,7 @@ module.exports.getListsAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
-	where = common.setClauseActive(req.query, where);
+	where = common.setClauseActive(req, where);
 	 
 	 
     var attributes = common.excludeAttributes();
@@ -71,7 +71,7 @@ module.exports.getListById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-	where = common.setClauseActive(req.query, where);
+	where = common.setClauseActive(req, where);
 	 
 	 
     var attributes = common.excludeAttributes();

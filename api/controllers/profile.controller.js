@@ -44,7 +44,7 @@ module.exports.getProfilesAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
-	where = common.setClauseActive(req.query, where);
+	where = common.setClauseActive(req, where);
 	where = common.setClauseExpired(req.query, where); 
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
@@ -74,7 +74,7 @@ module.exports.getProfileById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-	where = common.setClauseActive(req.query, where);
+	where = common.setClauseActive(req, where);
 	where = common.setClauseExpired(req.query, where); 
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
@@ -163,7 +163,7 @@ module.exports.getProfilesByRuleBookId = function (req, res) {
     // builds clause
     var where = {};
     where = extension.setClauseRuleBookId(req, where);
-	where = common.setClauseActive(req.query, where);
+	where = common.setClauseActive(req, where);
 	where = common.setClauseExpired(req.query, where); 
 
     where = common.setClauseTenantId(req, where);
@@ -196,7 +196,7 @@ module.exports.getProfilesByParentListId = function (req, res) {
     // builds clause
     var where = {};
     where = extension.setClauseParentListId(req, where);
-	where = common.setClauseActive(req.query, where);
+	where = common.setClauseActive(req, where);
 	where = common.setClauseExpired(req.query, where); 
 
     where = common.setClauseTenantId(req, where);
@@ -228,7 +228,7 @@ module.exports.getProfilesDropdown = function (req, res) {
 
     // builds clause
     var where = {};
-    where = common.setClauseActive(req.query, where);
+    where = common.setClauseActive(req, where);
     where = common.setClauseExpired(req.query, where);
 	 
     //find and return the records 

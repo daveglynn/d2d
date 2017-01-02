@@ -44,7 +44,7 @@ module.exports.getOrdersAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
-	where = common.setClauseActive(req.query, where);
+	where = common.setClauseActive(req, where);
 	 
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
@@ -75,7 +75,7 @@ module.exports.getOrderById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-	where = common.setClauseActive(req.query, where);
+	where = common.setClauseActive(req, where);
 	 
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
@@ -165,7 +165,7 @@ module.exports.getOrdersByOrderStatusId = function (req, res) {
     // builds clause
     var where = {};
     where = extension.setClauseOrderStatusId(req, where);
-	where = common.setClauseActive(req.query, where);
+	where = common.setClauseActive(req, where);
 	 
 
     where = common.setClauseTenantId(req, where);
@@ -199,7 +199,7 @@ module.exports.getOrdersByOrderTypeId = function (req, res) {
     // builds clause
     var where = {};
     where = extension.setClauseOrderTypeId(req, where);
-	where = common.setClauseActive(req.query, where);
+	where = common.setClauseActive(req, where);
 	 
 
     where = common.setClauseTenantId(req, where);
