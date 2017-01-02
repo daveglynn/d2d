@@ -44,7 +44,7 @@ module.exports.getListsAll = function(req, res) {
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
-	where = extension.setClauseActive(req.query, where);
+	where = common.setClauseActive(req.query, where);
 	 
 	 
     var attributes = common.excludeAttributes();
@@ -71,7 +71,7 @@ module.exports.getListById = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-	where = extension.setClauseActive(req.query, where);
+	where = common.setClauseActive(req.query, where);
 	 
 	 
     var attributes = common.excludeAttributes();
@@ -151,35 +151,3 @@ module.exports.deleteList = function(req, res) {
   	
  
 
-
-/******************************************************************************************************
- Get a Record by Id
-******************************************************************************************************/
-module.exports.getListByIdItems = function (req, res) {
-
-    // builds clause
-    var where = {};
-    where = common.setClauseId(req, where);
-	where = extension.setClauseActive(req.query, where);
-	where = extension.setClauseExpired(req.query, where); 
-
-    var include = [{
-        model: db.item, attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId']
-    }];
-
-
-    //find and return the records 
-    db.list.findOne({
-        attributes: ['id', 'name'],
-        where: where,
-        include: include
-    }).then(function (list) {
-        if (!!list) {
-            res.json(list.toPublicJSON());
-        } else {
-            res.status(404).json({ "err": { "name": "list", "message": "An error occurred retrieving the record" } });
-        }
-    }, function (err) {
-        res.status(500).json(err);
-    })
-};

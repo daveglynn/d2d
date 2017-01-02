@@ -50,6 +50,62 @@ module.exports = {
 
     },
 
+    setClauseActive: function (query, where) {
+
+        // allow host role to view all users regardless of tenant
+        if (this.modelRoleId(req) != constants.roleId_Host) {
+            where.active = {
+                $eq: true
+            };
+        }
+
+        if (query.hasOwnProperty('active') && query.active.length > 0) {
+            if (query.active == "false") {
+                where.active = {
+                    $eq: false
+                };
+            }
+            if (query.active == "true") {
+                where.active = {
+                    $eq: true
+                };
+            }
+        }
+
+        return where;
+
+    },
+
+    setClauseExpired: function (query, where) {
+
+        if (query.hasOwnProperty('expired') && query.expired.length > 0) {
+            if (query.expired == "false") {
+                where.expired = {
+                    $eq: false
+                };
+            }
+            if (query.expired == "true") {
+                where.expired = {
+                    $eq: true
+                };
+            }
+        }
+
+        return where;
+
+    },
+
+    setClauseChildActive: function (query, where) {
+
+        if (query.hasOwnProperty('childactive') && query.childactive.length > 0) {
+            where.active = {
+                $eq: query.active
+            };
+        }
+
+        return where;
+
+    },
 
     modelUserId: function (req) {
 
@@ -83,19 +139,8 @@ module.exports = {
 
         return attributes;
 
-    },
+    }
 
-    setClauseChildActive: function (query, where) {
-
-        if (query.hasOwnProperty('childactive') && query.childactive.length > 0) {
-            where.active = {
-                $eq: query.active
-            };
-        }
-
-        return where;
-
-    } 
 
 
 };

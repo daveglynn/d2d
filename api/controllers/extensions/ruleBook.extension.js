@@ -121,32 +121,5 @@ module.exports.setClauseOrder = function (req) {
 
 };
 
-module.exports.setClauseActive = function (query, where)
-{
-
-    where.active = {
-        $eq: true
-	};
-
-    if (query.hasOwnProperty('active') && query.active.length > 0)
-    {
-        if (query.active == "false")
-        {
-            where.active = {
-                $eq: false
-            };
-        }
-        if (query.active == "true") {
-            where.active = {
-                $eq: true
-            };
-        }
-    }
-
-    return where;
-
-};
-
- 
 
  
