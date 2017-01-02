@@ -53,7 +53,7 @@ module.exports = {
     setClauseActive: function (req, where) {
 
         // allow host role to view all users regardless of tenant
-        if (this.modelRoleId(req) != constants.roleId_Host) {
+        if (this.modelRoleId(req) > constants.roleId_Admin) {
             where.active = {
                 $eq: true
             };
