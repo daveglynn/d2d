@@ -50,7 +50,7 @@ module.exports = {
 
     },
 
-    setClauseActive: function (query, where) {
+    setClauseActive: function (req, where) {
 
         // allow host role to view all users regardless of tenant
         if (this.modelRoleId(req) != constants.roleId_Host) {
@@ -59,13 +59,13 @@ module.exports = {
             };
         }
 
-        if (query.hasOwnProperty('active') && query.active.length > 0) {
-            if (query.active == "false") {
+        if (req.query.hasOwnProperty('active') && req.query.active.length > 0) {
+            if (req.query.active == "false") {
                 where.active = {
                     $eq: false
                 };
             }
-            if (query.active == "true") {
+            if (req.query.active == "true") {
                 where.active = {
                     $eq: true
                 };
