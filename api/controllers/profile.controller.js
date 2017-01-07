@@ -230,6 +230,8 @@ module.exports.getProfilesDropdown = function (req, res) {
     var where = {};
     where = common.setClauseActive(req, where);
     where = common.setClauseExpired(req.query, where);
+	where = common.setClauseTenantId(req, where); 
+
 	 
     //find and return the records 
     db.profile.findAll({

@@ -231,6 +231,8 @@ module.exports.getLanguagesDropdown = function (req, res) {
     where = common.setClauseActive(req, where);
     where = common.setClauseExpired(req.query, where);
 	 
+
+	 
     //find and return the records 
     db.language.findAll({
         attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId'],

@@ -268,6 +268,8 @@ module.exports.getItemsDropdown = function (req, res) {
     var where = {};
     where = common.setClauseActive(req, where);
     where = common.setClauseExpired(req.query, where);
+	 
+
 	where = extension.setClauseListId(req, where);
 	 
     //find and return the records 
