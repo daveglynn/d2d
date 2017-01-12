@@ -24,17 +24,17 @@ var opts = {
 
 if (env === 'production') {
 	sequelize = new Sequelize(process.env.DATABASE_URL, {
-		dialect: 'postgres'
-    },
-    opts);
+		dialect: 'postgres',
+    	opts
+    });
 } else {
 	var Sequelize = require("sequelize");
 	var sequelize = new Sequelize('d2d', 'postgres', 'Houses22', {
 		host: "localhost",
 		port: 5432,
-		dialect: 'postgres'
-    },
-    opts);
+		dialect: 'postgres',
+	    opts
+    });
 	//
 	//sequelize = new Sequelize(undefined, undefined, undefined, {
 	//	'dialect': 'sqlite',
