@@ -22,12 +22,14 @@ module.exports.setPost = function (req, mode) {
  
     //clean post
     var body = _.pick(req.body
-		,'orderStatusId'
-		,'orderTypeId'
-		,'deleted'
+		,'active'
+		,'name'
+		,'code'
+		,'ruleBookId'
+		,'expired'
+		,'parent'
+		,'parentListId'
 		,'description'
-		,'dateOrdered'
-		,'dateCompleted'
 	 	);
 
     //add createdBy
@@ -43,23 +45,29 @@ module.exports.prepareForUpdate =  function (body) {
         
     var attributes = {};
 
-	if (body.hasOwnProperty('orderStatusId')) {
-		attributes.orderStatusId = body.orderStatusId;
+	if (body.hasOwnProperty('active')) {
+		attributes.active = body.active;
 	}
-	if (body.hasOwnProperty('orderTypeId')) {
-		attributes.orderTypeId = body.orderTypeId;
+	if (body.hasOwnProperty('name')) {
+		attributes.name = body.name;
 	}
-	if (body.hasOwnProperty('deleted')) {
-		attributes.deleted = body.deleted;
+	if (body.hasOwnProperty('code')) {
+		attributes.code = body.code;
+	}
+	if (body.hasOwnProperty('ruleBookId')) {
+		attributes.ruleBookId = body.ruleBookId;
+	}
+	if (body.hasOwnProperty('expired')) {
+		attributes.expired = body.expired;
+	}
+	if (body.hasOwnProperty('parent')) {
+		attributes.parent = body.parent;
+	}
+	if (body.hasOwnProperty('parentListId')) {
+		attributes.parentListId = body.parentListId;
 	}
 	if (body.hasOwnProperty('description')) {
 		attributes.description = body.description;
-	}
-	if (body.hasOwnProperty('dateOrdered')) {
-		attributes.dateOrdered = body.dateOrdered;
-	}
-	if (body.hasOwnProperty('dateCompleted')) {
-		attributes.dateCompleted = body.dateCompleted;
 	}
 	if (body.hasOwnProperty('createdBy')) {
 		attributes.createdBy = body.createdBy;
@@ -76,45 +84,57 @@ module.exports.setClauseQuery =  function (query, where) {
  	if (query.hasOwnProperty('q') && query.q.length > 0) {
 		where = {
 		$or: [
-  		{description: { $like: '%' + query.q + '%' }}  
+  		{name: { $like: '%' + query.q + '%' }}  
+		,{code: { $like: '%' + query.q + '%' }}  
+		,{description: { $like: '%' + query.q + '%' }}  
 	 			]
 			}
 		}
 
-  	if (query.hasOwnProperty('deleted') && query.deleted.length > 0) {
-			where.deleted = {
-			$eq: query.deleted
+  	if (query.hasOwnProperty('active') && query.active.length > 0) {
+			where.active = {
+			$eq: query.active
+			};
+		}
+    if (query.hasOwnProperty('expired') && query.expired.length > 0) {
+			where.expired = {
+			$eq: query.expired
+			};
+		}
+    if (query.hasOwnProperty('parent') && query.parent.length > 0) {
+			where.parent = {
+			$eq: query.parent
 			};
 		}
     
-  	if (query.hasOwnProperty('orderStatusId') && query.orderStatusId.length > 0) {
-			where.orderStatusId = {
-			$eq: query.orderStatusId
+  	if (query.hasOwnProperty('ruleBookId') && query.ruleBookId.length > 0) {
+			where.ruleBookId = {
+			$eq: query.ruleBookId
 			};
 		}
-    if (query.hasOwnProperty('orderTypeId') && query.orderTypeId.length > 0) {
-			where.orderTypeId = {
-			$eq: query.orderTypeId
+    if (query.hasOwnProperty('parentListId') && query.parentListId.length > 0) {
+			where.parentListId = {
+			$eq: query.parentListId
 			};
 		}
     	return where;
 };
   	
-module.exports.setClauseOrderStatusId = function (req, where) {
+module.exports.setClauseRuleBookId = function (req, where) {
   
-    var orderStatusId = parseInt(req.params.orderStatusId, 10);
-    where.orderStatusId = {
-         $eq: orderStatusId
+    var ruleBookId = parseInt(req.params.ruleBookId, 10);
+    where.ruleBookId = {
+         $eq: ruleBookId
     };
 
 	return where;
 };
 	
-module.exports.setClauseOrderTypeId = function (req, where) {
+module.exports.setClauseParentListId = function (req, where) {
   
-    var orderTypeId = parseInt(req.params.orderTypeId, 10);
-    where.orderTypeId = {
-         $eq: orderTypeId
+    var parentListId = parseInt(req.params.parentListId, 10);
+    where.parentListId = {
+         $eq: parentListId
     };
 
 	return where;
@@ -134,17 +154,19 @@ module.exports.setClauseOrder = function (req) {
     if (req.query.hasOwnProperty('orderBy') && orderBy.length > 0) {
         if ((req.body.hasOwnProperty(req.query.orderBy)) 
 					|| (req.query.orderBy == 'id')
-					|| (req.query.orderBy == 'orderStatusId')
-					|| (req.query.orderBy == 'orderTypeId')
-					|| (req.query.orderBy == 'deleted')
+					|| (req.query.orderBy == 'tenantId')
+					|| (req.query.orderBy == 'active')
+					|| (req.query.orderBy == 'name')
+					|| (req.query.orderBy == 'code')
+					|| (req.query.orderBy == 'ruleBookId')
+					|| (req.query.orderBy == 'expired')
+					|| (req.query.orderBy == 'parent')
+					|| (req.query.orderBy == 'parentListId')
 					|| (req.query.orderBy == 'description')
-					|| (req.query.orderBy == 'dateOrdered')
-					|| (req.query.orderBy == 'dateCompleted')
 					|| (req.query.orderBy == 'createdBy')
 					|| (req.query.orderBy == 'updatedBy')
 					|| (req.query.orderBy == 'createdAt')
 					|| (req.query.orderBy == 'updatedAt')
-					|| (req.query.orderBy == 'tenantId')
 		 
 		){
 

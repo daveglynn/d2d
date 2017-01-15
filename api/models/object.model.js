@@ -6,18 +6,33 @@ var _ = require('underscore')
 var v = require('validator');
 var constants = require('../../shared/constant.shared');
 
-module.exports = function(sequelize, DataTypes) {
-    var profile = sequelize.define('profile', {
-        tenantId: {
+module.exports = function (sequelize, DataTypes) {
+    var object = sequelize.define('object', {
+        companyId: {
             type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: constants.tenantId_Default            
+            allowNull: false,
+            defaultValue: null
         },
+        divisionId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: null
+        },		
+        objectId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: null
+        },
+        profileId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: null
+        },			
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
-        },	
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -90,7 +105,7 @@ module.exports = function(sequelize, DataTypes) {
         }
     }, {
             instanceMethods: {
-                toPublicJSON: function() {
+                toPublicJSON: function () {
                     var json = this.toJSON();
                     return _.omit(json, 'tenantId');
                 }
@@ -98,5 +113,5 @@ module.exports = function(sequelize, DataTypes) {
 
         });
 
-    return profile;
+    return object;
 };

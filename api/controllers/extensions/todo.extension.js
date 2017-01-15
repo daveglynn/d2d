@@ -22,9 +22,9 @@ module.exports.setPost = function (req, mode) {
  
     //clean post
     var body = _.pick(req.body
+		,'userId'
 		,'description'
 		,'completed'
-		,'userId'
 	 	);
 
     //add createdBy
@@ -40,6 +40,9 @@ module.exports.prepareForUpdate =  function (body) {
         
     var attributes = {};
 
+	if (body.hasOwnProperty('userId')) {
+		attributes.userId = body.userId;
+	}
 	if (body.hasOwnProperty('description')) {
 		attributes.description = body.description;
 	}
@@ -51,9 +54,6 @@ module.exports.prepareForUpdate =  function (body) {
 	}
 	if (body.hasOwnProperty('updatedBy')) {
 		attributes.updatedBy = body.updatedBy;
-	}
-	if (body.hasOwnProperty('userId')) {
-		attributes.userId = body.userId;
 	}
 	 
     return attributes;
@@ -107,6 +107,7 @@ module.exports.setClauseOrder = function (req) {
     if (req.query.hasOwnProperty('orderBy') && orderBy.length > 0) {
         if ((req.body.hasOwnProperty(req.query.orderBy)) 
 					|| (req.query.orderBy == 'id')
+					|| (req.query.orderBy == 'userId')
 					|| (req.query.orderBy == 'description')
 					|| (req.query.orderBy == 'completed')
 					|| (req.query.orderBy == 'createdBy')
@@ -114,7 +115,6 @@ module.exports.setClauseOrder = function (req) {
 					|| (req.query.orderBy == 'createdAt')
 					|| (req.query.orderBy == 'updatedAt')
 					|| (req.query.orderBy == 'tenantId')
-					|| (req.query.orderBy == 'userId')
 		 
 		){
 

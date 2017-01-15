@@ -25,9 +25,16 @@ define("roleId_User", 3);
 define("roleId_Guest", 4);
 define("roleId_ReadOnly", 5);
 
+define("userId_Default", 0);
 define("tenantId_Default", 1);
 define("profileId_Default", 1);
 define("languageId_Default", 1);
 define("roleId_Default", 3);
+
+define("companyId_Default", 0);
+define("divisionId_Default", 0);
+define("objectId_Default", 0);
+
+
 
 

@@ -8,6 +8,11 @@ var constants = require('../../shared/constant.shared');
 
 module.exports = function(sequelize, DataTypes) {
     var todo = sequelize.define('todo', {
+       userId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: constants.userId_Default            
+        },
         description: {
             type: DataTypes.STRING,
             allowNull: false,

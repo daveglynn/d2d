@@ -7,12 +7,32 @@ var v = require('validator');
 var constants = require('../../shared/constant.shared');
 
 module.exports = function(sequelize, DataTypes) {
-    var profile = sequelize.define('profile', {
+    var access = sequelize.define('access', {
         tenantId: {
             type: DataTypes.INTEGER,
             allowNull: true,
             defaultValue: constants.tenantId_Default            
         },
+        profileId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: constants.profileId_Default            
+        },         
+        companyId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: constants.companyId_Default            
+        }, 
+        divisionId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: constants.divisionId_Default            
+        },
+        objectId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: constants.objectId_Default            
+        },                        
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
@@ -78,6 +98,46 @@ module.exports = function(sequelize, DataTypes) {
                 len: [1, 250]
             }
         },
+        canAdd: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: true
+        }, 
+        canView: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: true
+        },         
+        canEdit: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: true
+        },   
+        canDelete: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: true
+        },                       
+		setAllModeElements: {
+            type: DataTypes.JSON,
+            allowNull: true,
+        }, 
+		setAddModeElements: {
+            type: DataTypes.JSON,
+            allowNull: true,
+        }, 
+		setViewModeElements: {
+            type: DataTypes.JSON,
+            allowNull: true,
+        },     
+		setEditModeElements: {
+            type: DataTypes.JSON,
+            allowNull: true,
+        }, 
+		setDeleteModeElements: {
+            type: DataTypes.JSON,
+            allowNull: true,
+        },                                    
         createdBy: {
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -98,5 +158,5 @@ module.exports = function(sequelize, DataTypes) {
 
         });
 
-    return profile;
+    return access;
 };

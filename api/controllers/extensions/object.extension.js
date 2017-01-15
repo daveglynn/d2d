@@ -22,35 +22,23 @@ module.exports.setPost = function (req, mode) {
  
     //clean post
     var body = _.pick(req.body
-		,'languageId'
-		,'roleId'
+		,'companyId'
+		,'divisionId'
+		,'objectId'
 		,'profileId'
 		,'active'
-		,'email'
-		,'firstName'
-		,'lastName'
-		,'phone'
-		,'addressLine1'
-		,'addressLine2'
-		,'addressLine3'
-		,'addressLine4'
-		,'enabledFrom'
-		,'enabledTo'
-	 		,'password'	);
+		,'name'
+		,'code'
+		,'ruleBookId'
+		,'expired'
+		,'parent'
+		,'parentListId'
+		,'description'
+	 	);
 
     //add createdBy
     if (mode == 'C') {
-		body.createdBy = null;
-  		if (body.languageId == null) {
-			body.languageId = constants.languageId_Default.toString();
-		}
-    	if (body.roleId == null) {
-			body.roleId = constants.roleId_Default.toString();
-		}
-    	if (body.profileId == null) {
-			body.profileId = constants.profileId_Default.toString();
-		}
-    			
+	 body.createdBy = common.modelUserId(req);		
 	} else {
         body.updatedBy = common.modelUserId(req);
     }
@@ -61,11 +49,14 @@ module.exports.prepareForUpdate =  function (body) {
         
     var attributes = {};
 
-	if (body.hasOwnProperty('languageId')) {
-		attributes.languageId = body.languageId;
+	if (body.hasOwnProperty('companyId')) {
+		attributes.companyId = body.companyId;
 	}
-	if (body.hasOwnProperty('roleId')) {
-		attributes.roleId = body.roleId;
+	if (body.hasOwnProperty('divisionId')) {
+		attributes.divisionId = body.divisionId;
+	}
+	if (body.hasOwnProperty('objectId')) {
+		attributes.objectId = body.objectId;
 	}
 	if (body.hasOwnProperty('profileId')) {
 		attributes.profileId = body.profileId;
@@ -73,35 +64,26 @@ module.exports.prepareForUpdate =  function (body) {
 	if (body.hasOwnProperty('active')) {
 		attributes.active = body.active;
 	}
-	if (body.hasOwnProperty('email')) {
-		attributes.email = body.email;
+	if (body.hasOwnProperty('name')) {
+		attributes.name = body.name;
 	}
-	if (body.hasOwnProperty('firstName')) {
-		attributes.firstName = body.firstName;
+	if (body.hasOwnProperty('code')) {
+		attributes.code = body.code;
 	}
-	if (body.hasOwnProperty('lastName')) {
-		attributes.lastName = body.lastName;
+	if (body.hasOwnProperty('ruleBookId')) {
+		attributes.ruleBookId = body.ruleBookId;
 	}
-	if (body.hasOwnProperty('phone')) {
-		attributes.phone = body.phone;
+	if (body.hasOwnProperty('expired')) {
+		attributes.expired = body.expired;
 	}
-	if (body.hasOwnProperty('addressLine1')) {
-		attributes.addressLine1 = body.addressLine1;
+	if (body.hasOwnProperty('parent')) {
+		attributes.parent = body.parent;
 	}
-	if (body.hasOwnProperty('addressLine2')) {
-		attributes.addressLine2 = body.addressLine2;
+	if (body.hasOwnProperty('parentListId')) {
+		attributes.parentListId = body.parentListId;
 	}
-	if (body.hasOwnProperty('addressLine3')) {
-		attributes.addressLine3 = body.addressLine3;
-	}
-	if (body.hasOwnProperty('addressLine4')) {
-		attributes.addressLine4 = body.addressLine4;
-	}
-	if (body.hasOwnProperty('enabledFrom')) {
-		attributes.enabledFrom = body.enabledFrom;
-	}
-	if (body.hasOwnProperty('enabledTo')) {
-		attributes.enabledTo = body.enabledTo;
+	if (body.hasOwnProperty('description')) {
+		attributes.description = body.description;
 	}
 	if (body.hasOwnProperty('createdBy')) {
 		attributes.createdBy = body.createdBy;
@@ -118,14 +100,9 @@ module.exports.setClauseQuery =  function (query, where) {
  	if (query.hasOwnProperty('q') && query.q.length > 0) {
 		where = {
 		$or: [
-  		{email: { $like: '%' + query.q + '%' }}  
-		,{firstName: { $like: '%' + query.q + '%' }}  
-		,{lastName: { $like: '%' + query.q + '%' }}  
-		,{phone: { $like: '%' + query.q + '%' }}  
-		,{addressLine1: { $like: '%' + query.q + '%' }}  
-		,{addressLine2: { $like: '%' + query.q + '%' }}  
-		,{addressLine3: { $like: '%' + query.q + '%' }}  
-		,{addressLine4: { $like: '%' + query.q + '%' }}  
+  		{name: { $like: '%' + query.q + '%' }}  
+		,{code: { $like: '%' + query.q + '%' }}  
+		,{description: { $like: '%' + query.q + '%' }}  
 	 			]
 			}
 		}
@@ -135,15 +112,30 @@ module.exports.setClauseQuery =  function (query, where) {
 			$eq: query.active
 			};
 		}
-    
-  	if (query.hasOwnProperty('languageId') && query.languageId.length > 0) {
-			where.languageId = {
-			$eq: query.languageId
+    if (query.hasOwnProperty('expired') && query.expired.length > 0) {
+			where.expired = {
+			$eq: query.expired
 			};
 		}
-    if (query.hasOwnProperty('roleId') && query.roleId.length > 0) {
-			where.roleId = {
-			$eq: query.roleId
+    if (query.hasOwnProperty('parent') && query.parent.length > 0) {
+			where.parent = {
+			$eq: query.parent
+			};
+		}
+    
+  	if (query.hasOwnProperty('companyId') && query.companyId.length > 0) {
+			where.companyId = {
+			$eq: query.companyId
+			};
+		}
+    if (query.hasOwnProperty('divisionId') && query.divisionId.length > 0) {
+			where.divisionId = {
+			$eq: query.divisionId
+			};
+		}
+    if (query.hasOwnProperty('objectId') && query.objectId.length > 0) {
+			where.objectId = {
+			$eq: query.objectId
 			};
 		}
     if (query.hasOwnProperty('profileId') && query.profileId.length > 0) {
@@ -151,24 +143,44 @@ module.exports.setClauseQuery =  function (query, where) {
 			$eq: query.profileId
 			};
 		}
+    if (query.hasOwnProperty('ruleBookId') && query.ruleBookId.length > 0) {
+			where.ruleBookId = {
+			$eq: query.ruleBookId
+			};
+		}
+    if (query.hasOwnProperty('parentListId') && query.parentListId.length > 0) {
+			where.parentListId = {
+			$eq: query.parentListId
+			};
+		}
     	return where;
 };
   	
-module.exports.setClauseLanguageId = function (req, where) {
+module.exports.setClauseCompanyId = function (req, where) {
   
-    var languageId = parseInt(req.params.languageId, 10);
-    where.languageId = {
-         $eq: languageId
+    var companyId = parseInt(req.params.companyId, 10);
+    where.companyId = {
+         $eq: companyId
     };
 
 	return where;
 };
 	
-module.exports.setClauseRoleId = function (req, where) {
+module.exports.setClauseDivisionId = function (req, where) {
   
-    var roleId = parseInt(req.params.roleId, 10);
-    where.roleId = {
-         $eq: roleId
+    var divisionId = parseInt(req.params.divisionId, 10);
+    where.divisionId = {
+         $eq: divisionId
+    };
+
+	return where;
+};
+	
+module.exports.setClauseObjectId = function (req, where) {
+  
+    var objectId = parseInt(req.params.objectId, 10);
+    where.objectId = {
+         $eq: objectId
     };
 
 	return where;
@@ -179,6 +191,26 @@ module.exports.setClauseProfileId = function (req, where) {
     var profileId = parseInt(req.params.profileId, 10);
     where.profileId = {
          $eq: profileId
+    };
+
+	return where;
+};
+	
+module.exports.setClauseRuleBookId = function (req, where) {
+  
+    var ruleBookId = parseInt(req.params.ruleBookId, 10);
+    where.ruleBookId = {
+         $eq: ruleBookId
+    };
+
+	return where;
+};
+	
+module.exports.setClauseParentListId = function (req, where) {
+  
+    var parentListId = parseInt(req.params.parentListId, 10);
+    where.parentListId = {
+         $eq: parentListId
     };
 
 	return where;
@@ -198,23 +230,18 @@ module.exports.setClauseOrder = function (req) {
     if (req.query.hasOwnProperty('orderBy') && orderBy.length > 0) {
         if ((req.body.hasOwnProperty(req.query.orderBy)) 
 					|| (req.query.orderBy == 'id')
-					|| (req.query.orderBy == 'tenantId')
-					|| (req.query.orderBy == 'languageId')
-					|| (req.query.orderBy == 'roleId')
+					|| (req.query.orderBy == 'companyId')
+					|| (req.query.orderBy == 'divisionId')
+					|| (req.query.orderBy == 'objectId')
 					|| (req.query.orderBy == 'profileId')
 					|| (req.query.orderBy == 'active')
-					|| (req.query.orderBy == 'email')
-					|| (req.query.orderBy == 'firstName')
-					|| (req.query.orderBy == 'lastName')
-					|| (req.query.orderBy == 'phone')
-					|| (req.query.orderBy == 'addressLine1')
-					|| (req.query.orderBy == 'addressLine2')
-					|| (req.query.orderBy == 'addressLine3')
-					|| (req.query.orderBy == 'addressLine4')
-					|| (req.query.orderBy == 'enabledFrom')
-					|| (req.query.orderBy == 'enabledTo')
-					|| (req.query.orderBy == 'salt')
-					|| (req.query.orderBy == 'password_hash')
+					|| (req.query.orderBy == 'name')
+					|| (req.query.orderBy == 'code')
+					|| (req.query.orderBy == 'ruleBookId')
+					|| (req.query.orderBy == 'expired')
+					|| (req.query.orderBy == 'parent')
+					|| (req.query.orderBy == 'parentListId')
+					|| (req.query.orderBy == 'description')
 					|| (req.query.orderBy == 'createdBy')
 					|| (req.query.orderBy == 'updatedBy')
 					|| (req.query.orderBy == 'createdAt')

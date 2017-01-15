@@ -16,32 +16,36 @@ var router = express.Router();
 var _ = require('underscore');
 var db = require('../.././db.js');
 var middleware = require('../.././middleware.js')(db);
-var ctrlOrder = require('../controllers/order.controller.js');
+var ctrlCompany = require('../controllers/company.controller.js');
 
 router
     .route('/')
-    .post( middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.addOrder);
+    .post( middleware.requireAuthentication, middleware.requireAuthorisation, ctrlCompany.addCompany);
 router
     .route('/all')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrdersAll);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlCompany.getCompaniesAll);
 router
     .route('/:id(\\d+)/')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrderById);
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlCompany.getCompanyById);
 router
     .route('/:id(\\d+)/')
-    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.updateOrder);
+    .put(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlCompany.updateCompany);
 router
     .route('/:id(\\d+)/')
-    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.deleteOrder);
+    .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlCompany.deleteCompany);
 
 	
 router
-    .route('/orderStatus/:orderStatusId(\\d+)/')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrdersByOrderStatusId);
+    .route('/ruleBook/:ruleBookId(\\d+)/')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlCompany.getCompaniesByRuleBookId);
 
 router
-    .route('/orderType/:orderTypeId(\\d+)/')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlOrder.getOrdersByOrderTypeId);
+    .route('/parentList/:parentListId(\\d+)/')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlCompany.getCompaniesByParentListId);
+router
+    .route('/dropdown')
+	.get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlCompany.getCompaniesDropdown);
+ 
  
 
 module.exports = router

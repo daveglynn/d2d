@@ -15,19 +15,19 @@ var _ = require('underscore');
 var constants = require('../.././shared/constant.shared');
 var helpers = require('../.././shared/helpers.shared');
 var common = require('./extensions/common.extension');
-var extension = require('./extensions/order.extension');
+var extension = require('./extensions/division.extension');
 var Sequelize = require('sequelize');
  
 /******************************************************************************************************
  Insert a Record 
 ******************************************************************************************************/
-module.exports.addOrder = function(req, res) {
+module.exports.addDivision = function(req, res) {
 
     // pick appropiate fields tenant will be set to default   
     var body = extension.setPost(req, 'C');
                
-    db.order.create(body).then(function(order) {
-        res.json(order.toPublicJSON())
+    db.division.create(body).then(function(division) {
+        res.json(division.toPublicJSON())
     }).catch(Sequelize.ValidationError, function(err) {
          res.status(422).send(err.errors);
     }).catch(function(err) {
@@ -38,30 +38,29 @@ module.exports.addOrder = function(req, res) {
 /******************************************************************************************************
  Get All Records 
 ******************************************************************************************************/
-module.exports.getOrdersAll = function(req, res) {
+module.exports.getDivisionsAll = function(req, res) {
 
     // builds clause 
     var where = {};
     where = common.setClauseAll(req, where);
     where = extension.setClauseQuery(req.query, where);
 	where = common.setClauseActive(req, where);
-	 
+	where = common.setClauseExpired(req.query, where); 
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 
     var order = extension.setClauseOrder(req); 	
 
 	 			 	
-	var include = [{ model: db.orderStatus,attributes: ['id','name']} 		 	
-				   ,{model: db.orderType,attributes: ['id','name']}   ]; 	
+	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
 	
-    db.order.findAll({
+    db.division.findAll({
         attributes: attributes,
         where: where ,
 		order: [order],
 		include: include 	
-    }).then(function(orders) {
-        res.json(orders);
+    }).then(function(divisions) {
+        res.json(divisions);
     }, function(err) {
         res.status(500).json(err);
     })
@@ -70,29 +69,28 @@ module.exports.getOrdersAll = function(req, res) {
 /******************************************************************************************************
  Get a Record by Id
 ******************************************************************************************************/
-module.exports.getOrderById = function(req, res) {
+module.exports.getDivisionById = function(req, res) {
 
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
 	where = common.setClauseActive(req, where);
-	 
+	where = common.setClauseExpired(req.query, where); 
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 	 			 	
-	var include = [{ model: db.orderStatus,attributes: ['id','name']} 		 	
-				   ,{model: db.orderType,attributes: ['id','name']}   ]; 	
+	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
 	
     //find and return the records 
-    db.order.findOne({
+    db.division.findOne({
         attributes: attributes,
         where: where ,
 		include: include 	
-    }).then(function(order) {
-        if (!!order) {
-            res.json(order.toPublicJSON());
+    }).then(function(division) {
+        if (!!division) {
+            res.json(division.toPublicJSON());
         } else {
-            res.status(404).json({"err": {"name": "order", "message": "An error occurred retrieving the record"  }});
+            res.status(404).json({"err": {"name": "division", "message": "An error occurred retrieving the record"  }});
         }
     }, function(err) {
         res.status(500).json(err);
@@ -102,7 +100,7 @@ module.exports.getOrderById = function(req, res) {
 /******************************************************************************************************
  Update a Record 
 ******************************************************************************************************/
-module.exports.updateOrder = function(req, res) {
+module.exports.updateDivision = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'U');
@@ -116,17 +114,17 @@ module.exports.updateOrder = function(req, res) {
     where = common.setClauseTenantId(req, where);
 
     // find record on database, update record and return to client
-    db.order.findOne({
+    db.division.findOne({
         where: where
-    }).then(function(order) {
-        if (order) {
-            order.update(attributes).then(function(order) {
-                res.json(order.toPublicJSON());
+    }).then(function(division) {
+        if (division) {
+            division.update(attributes).then(function(division) {
+                res.json(division.toPublicJSON());
             }, function(err) {
                 res.status(400).json(err);
             });
         } else {
-             res.status(404).json({"err": {"name": "order", "message": "An error occurred retrieving the record"}});
+             res.status(404).json({"err": {"name": "division", "message": "An error occurred retrieving the record"}});
         }
     }, function(err) {
         res.status(500).json(err);
@@ -136,7 +134,7 @@ module.exports.updateOrder = function(req, res) {
 /******************************************************************************************************
  Delete a Record 
 ******************************************************************************************************/
-module.exports.deleteOrder = function(req, res) {
+module.exports.deleteDivision = function(req, res) {
 
     // builds clause
     var where = {};
@@ -144,11 +142,11 @@ module.exports.deleteOrder = function(req, res) {
     where = common.setClauseTenantId(req, where);
 
     // delete record on database
-    db.order.destroy({
+    db.division.destroy({
         where: where
     }).then(function(rowsDeleted) {
         if (rowsDeleted === 0) {
-            res.status(404).json({ "err": { "name": "order", "message": "An error occurred retrieving the record"}});
+            res.status(404).json({ "err": { "name": "division", "message": "An error occurred retrieving the record"}});
         } else {
             res.status(204).send();
         }
@@ -158,15 +156,15 @@ module.exports.deleteOrder = function(req, res) {
 };
   	
 /******************************************************************************************************
- Get Order records by OrderStatusId 
+ Get Division records by RuleBookId 
 ******************************************************************************************************/
-module.exports.getOrdersByOrderStatusId = function (req, res) {
+module.exports.getDivisionsByRuleBookId = function (req, res) {
 
     // builds clause
     var where = {};
-    where = extension.setClauseOrderStatusId(req, where);
+    where = extension.setClauseRuleBookId(req, where);
 	where = common.setClauseActive(req, where);
-	 
+	where = common.setClauseExpired(req.query, where); 
 
     where = common.setClauseTenantId(req, where);
 
@@ -175,32 +173,31 @@ module.exports.getOrdersByOrderStatusId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 			 	
-	var include = [{ model: db.orderStatus,attributes: ['id','name']} 		 	
-				   ,{model: db.orderType,attributes: ['id','name']}   ]; 	
+	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
 	
     //find and return the records 
-    db.order.findAll({
+    db.division.findAll({
         attributes: attributes,
         where: where,
 		order: [order],
 		include: include 	
-    }).then(function (orders) {
-        res.json(orders);
+    }).then(function (divisions) {
+        res.json(divisions);
     }, function (err) {
         res.status(500).json(err);
     });
 };
 
 /******************************************************************************************************
- Get Order records by OrderTypeId 
+ Get Division records by ParentListId 
 ******************************************************************************************************/
-module.exports.getOrdersByOrderTypeId = function (req, res) {
+module.exports.getDivisionsByParentListId = function (req, res) {
 
     // builds clause
     var where = {};
-    where = extension.setClauseOrderTypeId(req, where);
+    where = extension.setClauseParentListId(req, where);
 	where = common.setClauseActive(req, where);
-	 
+	where = common.setClauseExpired(req.query, where); 
 
     where = common.setClauseTenantId(req, where);
 
@@ -209,21 +206,46 @@ module.exports.getOrdersByOrderTypeId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 			 	
-	var include = [{ model: db.orderStatus,attributes: ['id','name']} 		 	
-				   ,{model: db.orderType,attributes: ['id','name']}   ]; 	
+	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
 	
     //find and return the records 
-    db.order.findAll({
+    db.division.findAll({
         attributes: attributes,
         where: where,
 		order: [order],
 		include: include 	
-    }).then(function (orders) {
-        res.json(orders);
+    }).then(function (divisions) {
+        res.json(divisions);
     }, function (err) {
         res.status(500).json(err);
     });
 };
 
+/******************************************************************************************************
+ Get a Record for Dropdown
+******************************************************************************************************/
+module.exports.getDivisionsDropdown = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = common.setClauseActive(req, where);
+    where = common.setClauseExpired(req.query, where);
+	where = common.setClauseTenantId(req, where); 
+
+	 
+    //find and return the records 
+    db.division.findAll({
+        attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId'],
+        where: where
+    }).then(function (divisions) {
+        if (!!divisions) {
+            res.json(divisions);
+        } else {
+            res.status(404).json({ "err": { "name": "division", "message": "An error occurred retrieving the record" } });
+        }
+    }, function (err) {
+        res.status(500).json(err);
+    })
+};	
  
 
