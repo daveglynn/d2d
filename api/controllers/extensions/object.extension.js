@@ -22,10 +22,6 @@ module.exports.setPost = function (req, mode) {
  
     //clean post
     var body = _.pick(req.body
-		,'companyId'
-		,'divisionId'
-		,'objectId'
-		,'profileId'
 		,'active'
 		,'name'
 		,'code'
@@ -49,18 +45,6 @@ module.exports.prepareForUpdate =  function (body) {
         
     var attributes = {};
 
-	if (body.hasOwnProperty('companyId')) {
-		attributes.companyId = body.companyId;
-	}
-	if (body.hasOwnProperty('divisionId')) {
-		attributes.divisionId = body.divisionId;
-	}
-	if (body.hasOwnProperty('objectId')) {
-		attributes.objectId = body.objectId;
-	}
-	if (body.hasOwnProperty('profileId')) {
-		attributes.profileId = body.profileId;
-	}
 	if (body.hasOwnProperty('active')) {
 		attributes.active = body.active;
 	}
@@ -123,27 +107,7 @@ module.exports.setClauseQuery =  function (query, where) {
 			};
 		}
     
-  	if (query.hasOwnProperty('companyId') && query.companyId.length > 0) {
-			where.companyId = {
-			$eq: query.companyId
-			};
-		}
-    if (query.hasOwnProperty('divisionId') && query.divisionId.length > 0) {
-			where.divisionId = {
-			$eq: query.divisionId
-			};
-		}
-    if (query.hasOwnProperty('objectId') && query.objectId.length > 0) {
-			where.objectId = {
-			$eq: query.objectId
-			};
-		}
-    if (query.hasOwnProperty('profileId') && query.profileId.length > 0) {
-			where.profileId = {
-			$eq: query.profileId
-			};
-		}
-    if (query.hasOwnProperty('ruleBookId') && query.ruleBookId.length > 0) {
+  	if (query.hasOwnProperty('ruleBookId') && query.ruleBookId.length > 0) {
 			where.ruleBookId = {
 			$eq: query.ruleBookId
 			};
@@ -156,46 +120,6 @@ module.exports.setClauseQuery =  function (query, where) {
     	return where;
 };
   	
-module.exports.setClauseCompanyId = function (req, where) {
-  
-    var companyId = parseInt(req.params.companyId, 10);
-    where.companyId = {
-         $eq: companyId
-    };
-
-	return where;
-};
-	
-module.exports.setClauseDivisionId = function (req, where) {
-  
-    var divisionId = parseInt(req.params.divisionId, 10);
-    where.divisionId = {
-         $eq: divisionId
-    };
-
-	return where;
-};
-	
-module.exports.setClauseObjectId = function (req, where) {
-  
-    var objectId = parseInt(req.params.objectId, 10);
-    where.objectId = {
-         $eq: objectId
-    };
-
-	return where;
-};
-	
-module.exports.setClauseProfileId = function (req, where) {
-  
-    var profileId = parseInt(req.params.profileId, 10);
-    where.profileId = {
-         $eq: profileId
-    };
-
-	return where;
-};
-	
 module.exports.setClauseRuleBookId = function (req, where) {
   
     var ruleBookId = parseInt(req.params.ruleBookId, 10);
@@ -230,10 +154,6 @@ module.exports.setClauseOrder = function (req) {
     if (req.query.hasOwnProperty('orderBy') && orderBy.length > 0) {
         if ((req.body.hasOwnProperty(req.query.orderBy)) 
 					|| (req.query.orderBy == 'id')
-					|| (req.query.orderBy == 'companyId')
-					|| (req.query.orderBy == 'divisionId')
-					|| (req.query.orderBy == 'objectId')
-					|| (req.query.orderBy == 'profileId')
 					|| (req.query.orderBy == 'active')
 					|| (req.query.orderBy == 'name')
 					|| (req.query.orderBy == 'code')

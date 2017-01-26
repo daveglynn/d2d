@@ -31,8 +31,9 @@ define("profileId_Default", 1);
 define("languageId_Default", 1);
 define("roleId_Default", 3);
 
-define("companyId_Default", 0);
-define("divisionId_Default", 0);
+
+define("companyId_Default", 1);
+define("divisionId_Default", 1);
 define("objectId_Default", 0);
 
 

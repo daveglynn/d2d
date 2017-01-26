@@ -69,60 +69,65 @@ db.user = sequelize.import(__dirname + '/api/models/user.model.js');
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
- 
-db.tenant.hasMany(db.user);
+
+
+
+db.company.hasMany(db.access);
+db.division.hasMany(db.access);
+db.list.hasMany(db.item);
+db.language.hasMany(db.user);
+db.object.hasMany(db.access);
+db.profile.hasMany(db.user);
+db.profile.hasMany(db.access);
+db.role.hasMany(db.user);
+db.ruleBook.hasMany(db.access);
+db.ruleBook.hasMany(db.company);
+db.ruleBook.hasMany(db.division);
+db.role.hasMany(db.object);
+db.ruleBook.hasMany(db.profile);
+db.ruleBook.hasMany(db.language);
+db.ruleBook.hasMany(db.item);
+db.ruleBook.hasMany(db.role);
 db.tenant.hasMany(db.access);
 db.tenant.hasMany(db.company);
 db.tenant.hasMany(db.division);
 db.tenant.hasMany(db.profile);
 db.tenant.hasMany(db.todo);
+db.tenant.hasMany(db.user);
+db.user.hasMany(db.todo);
 
-db.object.hasMany(db.access);
-
-db.access.belongsTo(db.tenant);
+db.access.belongsTo(db.company);
+db.access.belongsTo(db.division);
+db.access.belongsTo(db.object);
 db.access.belongsTo(db.profile);
+db.access.belongsTo(db.tenant);
+db.access.belongsTo(db.ruleBook);
 
 db.company.belongsTo(db.tenant);
-db.company.hasMany(db.access);
+db.company.belongsTo(db.ruleBook);
 
 db.division.belongsTo(db.tenant);
-db.division.hasMany(db.access);
+db.division.belongsTo(db.ruleBook);
 
 db.user.belongsTo(db.tenant);
 db.user.belongsTo(db.role);
 db.user.belongsTo(db.profile);
 db.user.belongsTo(db.language);
-db.user.hasMany(db.todo);
 
-db.role.hasMany(db.user);
-
-db.profile.hasMany(db.user);
-db.profile.hasMany(db.access);
 db.profile.belongsTo(db.tenant);
+db.profile.belongsTo(db.ruleBook);
 
-db.ruleBook.hasMany(db.company);
-db.ruleBook.hasMany(db.division);
-db.ruleBook.hasMany(db.profile);
-db.ruleBook.hasMany(db.item);
-
-db.language.hasMany(db.user);
-
-db.list.hasMany(db.item);
+db.language.belongsTo(db.ruleBook);
 
 db.item.belongsTo(db.list);
- 
+db.item.belongsTo(db.ruleBook);
+
+db.object.belongsTo(db.ruleBook);
+
+db.role.belongsTo(db.ruleBook);
+
 db.todo.belongsTo(db.tenant);
 db.todo.belongsTo(db.user);
 
-
-
-
-
-
-
-
-
-db.language.belongsTo(db.ruleBook);
-db.ruleBook.hasMany(db.language);
 
 module.exports = db;

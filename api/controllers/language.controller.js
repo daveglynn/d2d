@@ -51,8 +51,8 @@ module.exports.getLanguagesAll = function(req, res) {
 
     var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
 	
     db.language.findAll({
         attributes: attributes,
@@ -78,8 +78,9 @@ module.exports.getLanguageById = function(req, res) {
 	where = common.setClauseExpired(req.query, where); 
 	 
     var attributes = common.excludeAttributes();
-	 			 	
-	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
 	
     //find and return the records 
     db.language.findOne({
@@ -172,8 +173,8 @@ module.exports.getLanguagesByRuleBookId = function (req, res) {
 
 	var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
 	
     //find and return the records 
     db.language.findAll({
@@ -205,8 +206,8 @@ module.exports.getLanguagesByParentListId = function (req, res) {
 
 	var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
 	
     //find and return the records 
     db.language.findAll({

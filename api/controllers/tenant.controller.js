@@ -75,6 +75,7 @@ module.exports.getTenantById = function(req, res) {
 	 
 	 
     var attributes = common.excludeAttributes();
+
 	 		
     //find and return the records 
     db.tenant.findOne({

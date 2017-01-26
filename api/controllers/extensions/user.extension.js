@@ -40,7 +40,8 @@ module.exports.setPost = function (req, mode) {
 
     //add createdBy
     if (mode == 'C') {
-		body.createdBy = null;
+		body.createdBy = null; 
+	body.tenantId = null;
   		if (body.languageId == null) {
 			body.languageId = constants.languageId_Default.toString();
 		}

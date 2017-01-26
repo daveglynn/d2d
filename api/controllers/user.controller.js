@@ -88,10 +88,10 @@ module.exports.getUsersAll = function(req, res) {
 
     var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.language,attributes: ['id','name']} 		 	
-				   ,{model: db.role,attributes: ['id','name']}   		 	
-				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
+	 						
+	var include = [{ model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 									   
+				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   									   
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     db.user.findAll({
         attributes: attributes,
@@ -117,10 +117,11 @@ module.exports.getUserById = function(req, res) {
 	 
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
-	 			 	
-	var include = [{ model: db.language,attributes: ['id','name']} 		 	
-				   ,{model: db.role,attributes: ['id','name']}   		 	
-				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
+
+	 						
+	var include = [{ model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
     db.user.findOne({
@@ -213,10 +214,10 @@ module.exports.getUsersByLanguageId = function (req, res) {
 
 	var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.language,attributes: ['id','name']} 		 	
-				   ,{model: db.role,attributes: ['id','name']}   		 	
-				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
+	 						
+	var include = [{ model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
     db.user.findAll({
@@ -248,10 +249,10 @@ module.exports.getUsersByRoleId = function (req, res) {
 
 	var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.language,attributes: ['id','name']} 		 	
-				   ,{model: db.role,attributes: ['id','name']}   		 	
-				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
+	 						
+	var include = [{ model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
     db.user.findAll({
@@ -283,10 +284,10 @@ module.exports.getUsersByProfileId = function (req, res) {
 
 	var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.language,attributes: ['id','name']} 		 	
-				   ,{model: db.role,attributes: ['id','name']}   		 	
-				   ,{model: db.profile,attributes: ['id','name']}   ]; 	
+	 						
+	var include = [{ model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
     db.user.findAll({

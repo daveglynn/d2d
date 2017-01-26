@@ -51,8 +51,8 @@ module.exports.getTodosAll = function(req, res) {
 
     var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.user,attributes: ['id','firstName','lastName','email']} ]; 	
+	 						
+	var include = [{ model: db.user,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
 	
     db.todo.findAll({
         attributes: attributes,
@@ -78,8 +78,9 @@ module.exports.getTodoById = function(req, res) {
 	 
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
-	 			 	
-	var include = [{ model: db.user,attributes: ['id','firstName','lastName','email']} ]; 	
+
+	 						
+	var include = [{ model: db.user,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
 	
     //find and return the records 
     db.todo.findOne({
@@ -172,8 +173,8 @@ module.exports.getTodosByUserId = function (req, res) {
 
 	var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.user,attributes: ['id','firstName','lastName','email']} ]; 	
+	 						
+	var include = [{ model: db.user,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
 	
     //find and return the records 
     db.todo.findAll({

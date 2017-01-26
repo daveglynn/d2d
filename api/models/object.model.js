@@ -8,26 +8,6 @@ var constants = require('../../shared/constant.shared');
 
 module.exports = function (sequelize, DataTypes) {
     var object = sequelize.define('object', {
-        companyId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: null
-        },
-        divisionId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: null
-        },		
-        objectId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: null
-        },
-        profileId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: null
-        },			
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,

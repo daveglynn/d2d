@@ -75,6 +75,7 @@ module.exports.getRuleBookById = function(req, res) {
 	 
 	 
     var attributes = common.excludeAttributes();
+
 	 		
     //find and return the records 
     db.ruleBook.findOne({

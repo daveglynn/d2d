@@ -51,9 +51,9 @@ module.exports.getItemsAll = function(req, res) {
 
     var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.list,attributes: ['id','name']} 		 	
-				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
+	 						
+	var include = [{ model: db.list,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 									   
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
 	
     db.item.findAll({
         attributes: attributes,
@@ -79,9 +79,10 @@ module.exports.getItemById = function(req, res) {
 	where = common.setClauseExpired(req.query, where); 
 	 
     var attributes = common.excludeAttributes();
-	 			 	
-	var include = [{ model: db.list,attributes: ['id','name']} 		 	
-				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
+
+	 						
+	var include = [{ model: db.list,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
     db.item.findOne({
@@ -174,9 +175,9 @@ module.exports.getItemsByListId = function (req, res) {
 
 	var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.list,attributes: ['id','name']} 		 	
-				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
+	 						
+	var include = [{ model: db.list,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
     db.item.findAll({
@@ -208,9 +209,9 @@ module.exports.getItemsByRuleBookId = function (req, res) {
 
 	var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.list,attributes: ['id','name']} 		 	
-				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
+	 						
+	var include = [{ model: db.list,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
     db.item.findAll({
@@ -242,9 +243,9 @@ module.exports.getItemsByParentListId = function (req, res) {
 
 	var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.list,attributes: ['id','name']} 		 	
-				   ,{model: db.ruleBook,attributes: ['id','name']}   ]; 	
+	 						
+	var include = [{ model: db.list,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
     db.item.findAll({

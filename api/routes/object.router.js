@@ -36,22 +36,6 @@ router
 
 	
 router
-    .route('/company/:companyId(\\d+)/')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlObject.getObjectsByCompanyId);
-
-router
-    .route('/division/:divisionId(\\d+)/')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlObject.getObjectsByDivisionId);
-
-router
-    .route('/object/:objectId(\\d+)/')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlObject.getObjectsByObjectId);
-
-router
-    .route('/profile/:profileId(\\d+)/')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlObject.getObjectsByProfileId);
-
-router
     .route('/ruleBook/:ruleBookId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlObject.getObjectsByRuleBookId);
 

@@ -75,6 +75,7 @@ module.exports.getListById = function(req, res) {
 	 
 	 
     var attributes = common.excludeAttributes();
+
 	 		
     //find and return the records 
     db.list.findOne({

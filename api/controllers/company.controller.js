@@ -51,8 +51,8 @@ module.exports.getCompaniesAll = function(req, res) {
 
     var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
 	
     db.company.findAll({
         attributes: attributes,
@@ -78,8 +78,9 @@ module.exports.getCompanyById = function(req, res) {
 	where = common.setClauseExpired(req.query, where); 
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
-	 			 	
-	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
 	
     //find and return the records 
     db.company.findOne({
@@ -172,8 +173,8 @@ module.exports.getCompaniesByRuleBookId = function (req, res) {
 
 	var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
 	
     //find and return the records 
     db.company.findAll({
@@ -205,8 +206,8 @@ module.exports.getCompaniesByParentListId = function (req, res) {
 
 	var order = extension.setClauseOrder(req); 	
 
-	 			 	
-	var include = [{ model: db.ruleBook,attributes: ['id','name']} ]; 	
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
 	
     //find and return the records 
     db.company.findAll({
