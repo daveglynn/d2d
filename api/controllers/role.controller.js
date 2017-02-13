@@ -15,19 +15,19 @@ var _ = require('underscore');
 var constants = require('../.././shared/constant.shared');
 var helpers = require('../.././shared/helpers.shared');
 var common = require('./extensions/common.extension');
-var extension = require('./extensions/profile.extension');
+var extension = require('./extensions/role.extension');
 var Sequelize = require('sequelize');
  
 /******************************************************************************************************
  Insert a Record 
 ******************************************************************************************************/
-module.exports.addProfile = function(req, res) {
+module.exports.addRole = function(req, res) {
 
-    // pick appropiate fields tenant will be set to default   
+    // pick appropiate fields 
     var body = extension.setPost(req, 'C');
                
-    db.profile.create(body).then(function(profile) {
-        res.json(profile.toPublicJSON())
+    db.role.create(body).then(function(role) {
+        res.json(role.toPublicJSON())
     }).catch(Sequelize.ValidationError, function(err) {
          res.status(422).send(err.errors);
     }).catch(function(err) {
@@ -38,7 +38,7 @@ module.exports.addProfile = function(req, res) {
 /******************************************************************************************************
  Get All Records 
 ******************************************************************************************************/
-module.exports.getProfilesAll = function(req, res) {
+module.exports.getRolesAll = function(req, res) {
 
     // builds clause 
     var where = {};
@@ -46,7 +46,7 @@ module.exports.getProfilesAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	where = common.setClauseActive(req, where);
 	where = common.setClauseExpired(req.query, where); 
-	where = common.setClauseTenantId(req, where); 
+	 
     var attributes = common.excludeAttributes();
 
     var order = extension.setClauseOrder(req); 	
@@ -54,13 +54,13 @@ module.exports.getProfilesAll = function(req, res) {
 	 						
 	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
 	
-    db.profile.findAll({
+    db.role.findAll({
         attributes: attributes,
         where: where ,
 		order: [order],
 		include: include 	
-    }).then(function(profiles) {
-        res.json(profiles);
+    }).then(function(roles) {
+        res.json(roles);
     }, function(err) {
         res.status(500).json(err);
     })
@@ -69,29 +69,29 @@ module.exports.getProfilesAll = function(req, res) {
 /******************************************************************************************************
  Get a Record by Id
 ******************************************************************************************************/
-module.exports.getProfileById = function(req, res) {
+module.exports.getRoleById = function(req, res) {
 
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
 	where = common.setClauseActive(req, where);
 	where = common.setClauseExpired(req.query, where); 
-	where = common.setClauseTenantId(req, where); 
+	 
     var attributes = common.excludeAttributes();
 
 	 						
 	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
 	
     //find and return the records 
-    db.profile.findOne({
+    db.role.findOne({
         attributes: attributes,
         where: where ,
 		include: include 	
-    }).then(function(profile) {
-        if (!!profile) {
-            res.json(profile.toPublicJSON());
+    }).then(function(role) {
+        if (!!role) {
+            res.json(role.toPublicJSON());
         } else {
-            res.status(404).json({"err": {"name": "profile", "message": "An error occurred retrieving the record"  }});
+            res.status(404).json({"err": {"name": "role", "message": "An error occurred retrieving the record"  }});
         }
     }, function(err) {
         res.status(500).json(err);
@@ -101,7 +101,7 @@ module.exports.getProfileById = function(req, res) {
 /******************************************************************************************************
  Update a Record 
 ******************************************************************************************************/
-module.exports.updateProfile = function(req, res) {
+module.exports.updateRole = function(req, res) {
 
     // pick appropiate fields 
     var body = extension.setPost(req, 'U');
@@ -112,20 +112,20 @@ module.exports.updateProfile = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    where = common.setClauseTenantId(req, where);
+    
 
     // find record on database, update record and return to client
-    db.profile.findOne({
+    db.role.findOne({
         where: where
-    }).then(function(profile) {
-        if (profile) {
-            profile.update(attributes).then(function(profile) {
-                res.json(profile.toPublicJSON());
+    }).then(function(role) {
+        if (role) {
+            role.update(attributes).then(function(role) {
+                res.json(role.toPublicJSON());
             }, function(err) {
                 res.status(400).json(err);
             });
         } else {
-             res.status(404).json({"err": {"name": "profile", "message": "An error occurred retrieving the record"}});
+             res.status(404).json({"err": {"name": "role", "message": "An error occurred retrieving the record"}});
         }
     }, function(err) {
         res.status(500).json(err);
@@ -135,19 +135,19 @@ module.exports.updateProfile = function(req, res) {
 /******************************************************************************************************
  Delete a Record 
 ******************************************************************************************************/
-module.exports.deleteProfile = function(req, res) {
+module.exports.deleteRole = function(req, res) {
 
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    where = common.setClauseTenantId(req, where);
+    
 
     // delete record on database
-    db.profile.destroy({
+    db.role.destroy({
         where: where
     }).then(function(rowsDeleted) {
         if (rowsDeleted === 0) {
-            res.status(404).json({ "err": { "name": "profile", "message": "An error occurred retrieving the record"}});
+            res.status(404).json({ "err": { "name": "role", "message": "An error occurred retrieving the record"}});
         } else {
             res.status(204).send();
         }
@@ -157,9 +157,9 @@ module.exports.deleteProfile = function(req, res) {
 };
   	
 /******************************************************************************************************
- Get Profile records by RuleBookId 
+ Get Role records by RuleBookId 
 ******************************************************************************************************/
-module.exports.getProfilesByRuleBookId = function (req, res) {
+module.exports.getRolesByRuleBookId = function (req, res) {
 
     // builds clause
     var where = {};
@@ -167,7 +167,7 @@ module.exports.getProfilesByRuleBookId = function (req, res) {
 	where = common.setClauseActive(req, where);
 	where = common.setClauseExpired(req.query, where); 
 
-    where = common.setClauseTenantId(req, where);
+    
 
     var attributes = common.excludeAttributes();
 
@@ -177,22 +177,22 @@ module.exports.getProfilesByRuleBookId = function (req, res) {
 	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
 	
     //find and return the records 
-    db.profile.findAll({
+    db.role.findAll({
         attributes: attributes,
         where: where,
 		order: [order],
 		include: include 	
-    }).then(function (profiles) {
-        res.json(profiles);
+    }).then(function (roles) {
+        res.json(roles);
     }, function (err) {
         res.status(500).json(err);
     });
 };
 
 /******************************************************************************************************
- Get Profile records by ParentListId 
+ Get Role records by ParentListId 
 ******************************************************************************************************/
-module.exports.getProfilesByParentListId = function (req, res) {
+module.exports.getRolesByParentListId = function (req, res) {
 
     // builds clause
     var where = {};
@@ -200,7 +200,7 @@ module.exports.getProfilesByParentListId = function (req, res) {
 	where = common.setClauseActive(req, where);
 	where = common.setClauseExpired(req.query, where); 
 
-    where = common.setClauseTenantId(req, where);
+    
 
     var attributes = common.excludeAttributes();
 
@@ -210,13 +210,13 @@ module.exports.getProfilesByParentListId = function (req, res) {
 	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
 	
     //find and return the records 
-    db.profile.findAll({
+    db.role.findAll({
         attributes: attributes,
         where: where,
 		order: [order],
 		include: include 	
-    }).then(function (profiles) {
-        res.json(profiles);
+    }).then(function (roles) {
+        res.json(roles);
     }, function (err) {
         res.status(500).json(err);
     });
@@ -225,26 +225,26 @@ module.exports.getProfilesByParentListId = function (req, res) {
 /******************************************************************************************************
  Get a Record for Dropdown
 ******************************************************************************************************/
-module.exports.getProfilesDropdown = function (req, res) {
+module.exports.getRolesDropdown = function (req, res) {
 
     // builds clause
     var where = {};
     where = common.setClauseActive(req, where);
     where = common.setClauseExpired(req.query, where);
-	where = common.setClauseTenantId(req, where); 
+	 
 	 
     var order = extension.setClauseOrder(req); 	
 	
 	//find and return the records 
-    db.profile.findAll({
+    db.role.findAll({
         attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId'],
         where: where,
         order: [order]
-    }).then(function (profiles) {
-        if (!!profiles) {
-            res.json(profiles);
+    }).then(function (roles) {
+        if (!!roles) {
+            res.json(roles);
         } else {
-            res.status(404).json({ "err": { "name": "profile", "message": "An error occurred retrieving the record" } });
+            res.status(404).json({ "err": { "name": "role", "message": "An error occurred retrieving the record" } });
         }
     }, function (err) {
         res.status(500).json(err);
@@ -254,28 +254,28 @@ module.exports.getProfilesDropdown = function (req, res) {
 /******************************************************************************************************
  Get a Record for Dropdown By Id
 ******************************************************************************************************/
-module.exports.getProfilesDropdownById = function (req, res) {
+module.exports.getRolesDropdownById = function (req, res) {
 
     // builds clause
     var where = {};
     where = common.setClauseActive(req, where);
     where = common.setClauseExpired(req.query, where);
-	where = common.setClauseTenantId(req, where); 
+	 
 	 
     var order = extension.setClauseOrder(req); 	
     var include = [{ model: db.ruleBook, attributes: ['id', 'active', 'name', 'processflags']}]; 	
 	
 	//find and return the records 
-    db.profile.findAll({
+    db.role.findAll({
         attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId'],
         where: where,
         order: [order],
         include: include 
-    }).then(function (profiles) {
-        if (!!profiles) {
-            res.json(profiles);
+    }).then(function (roles) {
+        if (!!roles) {
+            res.json(roles);
         } else {
-            res.status(404).json({ "err": { "name": "profile", "message": "An error occurred retrieving the record" } });
+            res.status(404).json({ "err": { "name": "role", "message": "An error occurred retrieving the record" } });
         }
     }, function (err) {
         res.status(500).json(err);

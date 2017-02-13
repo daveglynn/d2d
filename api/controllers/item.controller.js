@@ -82,7 +82,7 @@ module.exports.getItemById = function(req, res) {
 
 	 						
 	var include = [{ model: db.list,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
 	
     //find and return the records 
     db.item.findOne({
@@ -177,7 +177,7 @@ module.exports.getItemsByListId = function (req, res) {
 
 	 						
 	var include = [{ model: db.list,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
 	
     //find and return the records 
     db.item.findAll({
@@ -211,7 +211,7 @@ module.exports.getItemsByRuleBookId = function (req, res) {
 
 	 						
 	var include = [{ model: db.list,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
 	
     //find and return the records 
     db.item.findAll({
@@ -245,7 +245,7 @@ module.exports.getItemsByParentListId = function (req, res) {
 
 	 						
 	var include = [{ model: db.list,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
 	
     //find and return the records 
     db.item.findAll({
@@ -270,13 +270,47 @@ module.exports.getItemsDropdown = function (req, res) {
     where = common.setClauseActive(req, where);
     where = common.setClauseExpired(req.query, where);
 	 
-
 	where = extension.setClauseListId(req, where);
 	 
-    //find and return the records 
+    var order = extension.setClauseOrder(req); 	
+	
+	//find and return the records 
     db.item.findAll({
         attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId'],
-        where: where
+        where: where,
+        order: [order]
+    }).then(function (items) {
+        if (!!items) {
+            res.json(items);
+        } else {
+            res.status(404).json({ "err": { "name": "item", "message": "An error occurred retrieving the record" } });
+        }
+    }, function (err) {
+        res.status(500).json(err);
+    })
+};
+
+/******************************************************************************************************
+ Get a Record for Dropdown By Id
+******************************************************************************************************/
+module.exports.getItemsDropdownById = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = common.setClauseActive(req, where);
+    where = common.setClauseExpired(req.query, where);
+	 
+	where = extension.setClauseListId(req, where);
+	 
+    var order = extension.setClauseOrder(req); 	
+    var include = [{ model: db.ruleBook, attributes: ['id', 'active', 'name', 'processflags']}]; 	
+	
+	//find and return the records 
+    db.item.findAll({
+        attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId'],
+        where: where,
+        order: [order],
+        include: include 
     }).then(function (items) {
         if (!!items) {
             res.json(items);

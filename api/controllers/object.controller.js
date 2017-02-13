@@ -80,7 +80,7 @@ module.exports.getObjectById = function(req, res) {
     var attributes = common.excludeAttributes();
 
 	 						
-	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
 	
     //find and return the records 
     db.object.findOne({
@@ -174,7 +174,7 @@ module.exports.getObjectsByRuleBookId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
 	
     //find and return the records 
     db.object.findAll({
@@ -207,7 +207,7 @@ module.exports.getObjectsByParentListId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
 	
     //find and return the records 
     db.object.findAll({
@@ -232,12 +232,45 @@ module.exports.getObjectsDropdown = function (req, res) {
     where = common.setClauseActive(req, where);
     where = common.setClauseExpired(req.query, where);
 	 
-
 	 
-    //find and return the records 
+    var order = extension.setClauseOrder(req); 	
+	
+	//find and return the records 
     db.object.findAll({
         attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId'],
-        where: where
+        where: where,
+        order: [order]
+    }).then(function (objects) {
+        if (!!objects) {
+            res.json(objects);
+        } else {
+            res.status(404).json({ "err": { "name": "object", "message": "An error occurred retrieving the record" } });
+        }
+    }, function (err) {
+        res.status(500).json(err);
+    })
+};
+
+/******************************************************************************************************
+ Get a Record for Dropdown By Id
+******************************************************************************************************/
+module.exports.getObjectsDropdownById = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = common.setClauseActive(req, where);
+    where = common.setClauseExpired(req.query, where);
+	 
+	 
+    var order = extension.setClauseOrder(req); 	
+    var include = [{ model: db.ruleBook, attributes: ['id', 'active', 'name', 'processflags']}]; 	
+	
+	//find and return the records 
+    db.object.findAll({
+        attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId'],
+        where: where,
+        order: [order],
+        include: include 
     }).then(function (objects) {
         if (!!objects) {
             res.json(objects);

@@ -88,7 +88,7 @@ module.exports.getAccessById = function(req, res) {
 				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
 	
     //find and return the records 
     db.access.findOne({
@@ -186,7 +186,7 @@ module.exports.getAccessByProfileId = function (req, res) {
 				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
 	
     //find and return the records 
     db.access.findAll({
@@ -223,7 +223,7 @@ module.exports.getAccessByCompanyId = function (req, res) {
 				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
 	
     //find and return the records 
     db.access.findAll({
@@ -260,7 +260,7 @@ module.exports.getAccessByDivisionId = function (req, res) {
 				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
 	
     //find and return the records 
     db.access.findAll({
@@ -297,7 +297,7 @@ module.exports.getAccessByObjectId = function (req, res) {
 				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
 	
     //find and return the records 
     db.access.findAll({
@@ -334,7 +334,7 @@ module.exports.getAccessByRuleBookId = function (req, res) {
 				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
 	
     //find and return the records 
     db.access.findAll({
@@ -371,7 +371,7 @@ module.exports.getAccessByParentListId = function (req, res) {
 				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
 	
     //find and return the records 
     db.access.findAll({
@@ -396,12 +396,45 @@ module.exports.getAccessDropdown = function (req, res) {
     where = common.setClauseActive(req, where);
     where = common.setClauseExpired(req.query, where);
 	where = common.setClauseTenantId(req, where); 
-
 	 
-    //find and return the records 
+    var order = extension.setClauseOrder(req); 	
+	
+	//find and return the records 
     db.access.findAll({
         attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId'],
-        where: where
+        where: where,
+        order: [order]
+    }).then(function (access) {
+        if (!!access) {
+            res.json(access);
+        } else {
+            res.status(404).json({ "err": { "name": "access", "message": "An error occurred retrieving the record" } });
+        }
+    }, function (err) {
+        res.status(500).json(err);
+    })
+};
+
+/******************************************************************************************************
+ Get a Record for Dropdown By Id
+******************************************************************************************************/
+module.exports.getAccessDropdownById = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = common.setClauseActive(req, where);
+    where = common.setClauseExpired(req.query, where);
+	where = common.setClauseTenantId(req, where); 
+	 
+    var order = extension.setClauseOrder(req); 	
+    var include = [{ model: db.ruleBook, attributes: ['id', 'active', 'name', 'processflags']}]; 	
+	
+	//find and return the records 
+    db.access.findAll({
+        attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId'],
+        where: where,
+        order: [order],
+        include: include 
     }).then(function (access) {
         if (!!access) {
             res.json(access);

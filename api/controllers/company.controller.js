@@ -80,7 +80,7 @@ module.exports.getCompanyById = function(req, res) {
     var attributes = common.excludeAttributes();
 
 	 						
-	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
 	
     //find and return the records 
     db.company.findOne({
@@ -174,7 +174,7 @@ module.exports.getCompaniesByRuleBookId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
 	
     //find and return the records 
     db.company.findAll({
@@ -207,7 +207,7 @@ module.exports.getCompaniesByParentListId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
 	
     //find and return the records 
     db.company.findAll({
@@ -232,12 +232,45 @@ module.exports.getCompaniesDropdown = function (req, res) {
     where = common.setClauseActive(req, where);
     where = common.setClauseExpired(req.query, where);
 	where = common.setClauseTenantId(req, where); 
-
 	 
-    //find and return the records 
+    var order = extension.setClauseOrder(req); 	
+	
+	//find and return the records 
     db.company.findAll({
         attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId'],
-        where: where
+        where: where,
+        order: [order]
+    }).then(function (companies) {
+        if (!!companies) {
+            res.json(companies);
+        } else {
+            res.status(404).json({ "err": { "name": "company", "message": "An error occurred retrieving the record" } });
+        }
+    }, function (err) {
+        res.status(500).json(err);
+    })
+};
+
+/******************************************************************************************************
+ Get a Record for Dropdown By Id
+******************************************************************************************************/
+module.exports.getCompaniesDropdownById = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = common.setClauseActive(req, where);
+    where = common.setClauseExpired(req.query, where);
+	where = common.setClauseTenantId(req, where); 
+	 
+    var order = extension.setClauseOrder(req); 	
+    var include = [{ model: db.ruleBook, attributes: ['id', 'active', 'name', 'processflags']}]; 	
+	
+	//find and return the records 
+    db.company.findAll({
+        attributes: ['id', 'parentListId', 'name', 'code', 'ruleBookId'],
+        where: where,
+        order: [order],
+        include: include 
     }).then(function (companies) {
         if (!!companies) {
             res.json(companies);

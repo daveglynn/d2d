@@ -84,6 +84,11 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: null
         }
     }, {
+        getterMethods: {
+            idCode: function () {
+                return this.id + '-' + this.code
+            }
+        },
             instanceMethods: {
                 toPublicJSON: function () {
                     var json = this.toJSON();
