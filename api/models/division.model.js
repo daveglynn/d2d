@@ -91,7 +91,7 @@ module.exports = function (sequelize, DataTypes) {
     }, {
         getterMethods: {
             idCode: function () {
-                return this.id + '-' + this.code
+                return this.id + ':' + this.code
             }
         },
             instanceMethods: {
