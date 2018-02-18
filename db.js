@@ -29,9 +29,12 @@ if (env === 'azure') {
 					charset: 'utf8',
 					collate: 'utf8_general_ci'
 				},
-		dialectOptions: {
-				encrypt : false   // This is important if you are using Azure.
-		}		
+				dialectOptions: {
+					encrypt: true,
+					ssl : {
+					  rejectUnauthorized: false
+					}
+				  }	
     });
 }	else if (env === 'production') {
 	sequelize = new Sequelize("process.env.DATABASE_URL", {
