@@ -25,7 +25,10 @@ if (env === 'azure') {
 					freezeTableName: true,
 					charset: 'utf8',
 					collate: 'utf8_general_ci'
-				},		
+				},
+		dialectOptions: {
+				encrypt : true   // This is important if you are using Azure.
+		}		
     });
 }	else if (env === 'production') {
 	sequelize = new Sequelize("process.env.DATABASE_URL", {
