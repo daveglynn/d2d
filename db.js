@@ -30,7 +30,7 @@ if (env === 'azure') {
 					collate: 'utf8_general_ci'
 				},
 		dialectOptions: {
-				encrypt : true   // This is important if you are using Azure.
+				encrypt : false   // This is important if you are using Azure.
 		}		
     });
 }	else if (env === 'production') {
