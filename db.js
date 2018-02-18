@@ -17,8 +17,11 @@ var sequelize;
 
 var env   = 'azure';
 
+
 if (env === 'azure') {
-	sequelize = new Sequelize('d2d-demo-postgresqldbserver.postgres.database.azure.com/postgresqldatabase46947', 'postgresqldbuser@d2d-demo-postgresqldbserver', 'd2d-demo', {
+	sequelize = new Sequelize('postgresqldatabase46947','postgresqldbuser@d2d-demo-postgresqldbserver', 'd2d-demo', {
+		host: "d2d-demo-postgresqldbserver.postgres.database.azure.com",
+		port: 5432,
 		dialect: 'postgres',
 		define: {
 					underscored: false,
