@@ -13,6 +13,7 @@
 "use strict";
 var Sequelize = require('sequelize');
 var env = process.env.NODE_ENV || 'development';
+var env ='azure';
 var sequelize;
 
 
