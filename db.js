@@ -19,14 +19,18 @@ var sequelize;
 
 
  if (env === 'production') {
-	sequelize = new Sequelize("process.env.DATABASE_URL", {
+	sequelize = new Sequelize('postgresqldatabase46947', 'postgresqldbuser', 'd2d-demo', {
+		host: 'd2d-demo-postgresqldbserver.postgres.database.azure.com',
 		dialect: 'postgres',
 		define: {
 					underscored: false,
 					freezeTableName: true,
 					charset: 'utf8',
 					collate: 'utf8_general_ci'
-				},		
+				},	
+		dialectOptions: {
+							encrypt: true
+				  		}							
     });
 } else {
 	var Sequelize = require("sequelize");
