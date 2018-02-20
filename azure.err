@@ -1,0 +1,12 @@
+Tue Feb 20 2018 13:25:02 GMT+0000 (GMT Standard Time):
+{ [Error: No account information found. Please import credentials using "azure account import <file>".]
+  stack: [Getter/Setter],
+  __frame: undefined,
+  rawStack: [Getter] }
+Error: No account information found. Please import credentials using "azure account import <file>".
+    at Object.readFromFile (C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\lib\util\keyFiles.js:33:11)
+    at AccountClient.__.extend.managementCertificate (C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\lib\commands\core\subscriptionclient.js:357:21)
+    at AccountClient.__.extend.getCurrentSubscription (C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\lib\commands\core\subscriptionclient.js:49:35)
+    at AzureCli.exports.init.account.getCurrentSubscription (C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\lib\commands\account.js:100:26)
+    at siteAppsettings_addCommand__2 (C:\Program Files (x86)\Microsoft SDKs\Windows Azure\CLI\lib\commands\site.appsetting.js:62:47)
+
