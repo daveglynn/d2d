@@ -14,8 +14,8 @@
 var Sequelize = require('sequelize');
 var env = process.env.NODE_ENV || 'development';
 var sequelize;
-console.log('env: ', env);
-if (env === 'production') {
+ 
+if (env === 'development') {
 	sequelize = new Sequelize('postgresqldatabase46947', 'postgresqldbuser@d2d-demo-postgresqldbserver.postgres.database.azure.com', 'd2d-demo', {
 		host: 'd2d-demo-postgresqldbserver.postgres.database.azure.com',
 		dialect: 'postgres',
