@@ -20,7 +20,7 @@ var sequelize;
  
 	sequelize = new Sequelize('postgresqldatabase46947', 'postgresqldbuser', 'd2d-demo', {
 		host: 'd2d-demo-postgresqldbserver.postgres.database.azure.com',
-		dialect: 'mssql',
+		dialect: 'postgres',
 		define: {
 					underscored: false,
 					freezeTableName: true,
