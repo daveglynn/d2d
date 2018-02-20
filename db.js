@@ -21,7 +21,8 @@ var sequelize;
  if (env === 'production') {
 	sequelize = new Sequelize('postgresqldatabase46947', 'postgresqldbuser', 'd2d-demo', {
 		host: 'd2d-demo-postgresqldbserver.postgres.database.azure.com',
-		dialect: 'postgres',
+		port: 5432,
+		dialect: 'mysql',
 		define: {
 					underscored: false,
 					freezeTableName: true,
