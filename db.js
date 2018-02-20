@@ -18,6 +18,7 @@ var sequelize;
 //var env   = 'production';
 
  
+if (env === 'production') {
 	sequelize = new Sequelize('postgresqldatabase46947', 'postgresqldbuser@d2d-demo-postgresqldbserver.postgres.database.azure.com', 'd2d-demo', {
 		host: 'd2d-demo-postgresqldbserver.postgres.database.azure.com',
 		dialect: 'postgres',
@@ -31,6 +32,30 @@ var sequelize;
 							encrypt: true
 				  		}							
     });
+} else {
+	var Sequelize = require("sequelize");
+	var sequelize = new Sequelize('d2d_v1', 'postgres', 'Houses22', {
+		host: "localhost",
+		port: 5432,
+		dialect: 'postgres',
+		define: {
+			underscored: false,
+			freezeTableName: true,
+			charset: 'utf8',
+			collate: 'utf8_general_ci',
+		},
+		// use pooling in order to reduce db connection overload and to increase speed
+		// currently only for mysql and postgresql (since v1.5.0)
+		pool: { maxConnections: 5, maxIdleTime: 30},
+		
+		language: 'en'		
+    });
+	//
+	//sequelize = new Sequelize(undefined, undefined, undefined, {
+	//	'dialect': 'sqlite',
+	//	'storage': __dirname + '/data/dev-todo-api.sqlite'
+	//});
+}
  
 
 var db = {};
