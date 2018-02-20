@@ -18,7 +18,7 @@ var sequelize;
 //var env   = 'production';
 
  
-	sequelize = new Sequelize('postgresqldatabase46947', 'postgresqldbuser', 'd2d-demo', {
+	sequelize = new Sequelize('postgresqldatabase46947', 'postgresqldbuser@d2d-demo-postgresqldbserver.postgres.database.azure.com', 'd2d-demo', {
 		host: 'd2d-demo-postgresqldbserver.postgres.database.azure.com',
 		dialect: 'postgres',
 		define: {
