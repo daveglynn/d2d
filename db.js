@@ -12,10 +12,10 @@
 ******************************************************************************************************/
 "use strict";
 var Sequelize = require('sequelize');
-//var env = process.env.NODE_ENV || 'development';
+var env = process.env.NODE_ENV || 'development';
 var sequelize;
 
-var env   = 'production';
+//var env   = 'production';
 
 
  if (env === 'production') {
