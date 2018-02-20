@@ -28,7 +28,7 @@ var sequelize;
 					collate: 'utf8_general_ci'
 				},	
 		dialectOptions: {
-							encrypt: false
+							encrypt: true
 				  		}							
     });
  
