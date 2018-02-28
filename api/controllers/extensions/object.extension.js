@@ -25,11 +25,13 @@ module.exports.setPost = function (req, mode) {
 		,'active'
 		,'name'
 		,'code'
+		,'objectTypeId'
 		,'ruleBookId'
 		,'expired'
 		,'parent'
 		,'parentListId'
 		,'description'
+		,'roleId'
 	 	);
 
     //add createdBy
@@ -54,6 +56,9 @@ module.exports.prepareForUpdate =  function (body) {
 	if (body.hasOwnProperty('code')) {
 		attributes.code = body.code;
 	}
+	if (body.hasOwnProperty('objectTypeId')) {
+		attributes.objectTypeId = body.objectTypeId;
+	}
 	if (body.hasOwnProperty('ruleBookId')) {
 		attributes.ruleBookId = body.ruleBookId;
 	}
@@ -74,6 +79,9 @@ module.exports.prepareForUpdate =  function (body) {
 	}
 	if (body.hasOwnProperty('updatedBy')) {
 		attributes.updatedBy = body.updatedBy;
+	}
+	if (body.hasOwnProperty('roleId')) {
+		attributes.roleId = body.roleId;
 	}
 	 
     return attributes;
@@ -107,7 +115,12 @@ module.exports.setClauseQuery =  function (query, where) {
 			};
 		}
     
-  	if (query.hasOwnProperty('ruleBookId') && query.ruleBookId.length > 0) {
+  	if (query.hasOwnProperty('objectTypeId') && query.objectTypeId.length > 0) {
+			where.objectTypeId = {
+			$eq: query.objectTypeId
+			};
+		}
+    if (query.hasOwnProperty('ruleBookId') && query.ruleBookId.length > 0) {
 			where.ruleBookId = {
 			$eq: query.ruleBookId
 			};
@@ -117,9 +130,24 @@ module.exports.setClauseQuery =  function (query, where) {
 			$eq: query.parentListId
 			};
 		}
+    if (query.hasOwnProperty('roleId') && query.roleId.length > 0) {
+			where.roleId = {
+			$eq: query.roleId
+			};
+		}
     	return where;
 };
   	
+module.exports.setClauseObjectTypeId = function (req, where) {
+  
+    var objectTypeId = parseInt(req.params.objectTypeId, 10);
+    where.objectTypeId = {
+         $eq: objectTypeId
+    };
+
+	return where;
+};
+	
 module.exports.setClauseRuleBookId = function (req, where) {
   
     var ruleBookId = parseInt(req.params.ruleBookId, 10);
@@ -135,6 +163,16 @@ module.exports.setClauseParentListId = function (req, where) {
     var parentListId = parseInt(req.params.parentListId, 10);
     where.parentListId = {
          $eq: parentListId
+    };
+
+	return where;
+};
+	
+module.exports.setClauseRoleId = function (req, where) {
+  
+    var roleId = parseInt(req.params.roleId, 10);
+    where.roleId = {
+         $eq: roleId
     };
 
 	return where;
@@ -157,6 +195,7 @@ module.exports.setClauseOrder = function (req) {
 					|| (req.query.orderBy == 'active')
 					|| (req.query.orderBy == 'name')
 					|| (req.query.orderBy == 'code')
+					|| (req.query.orderBy == 'objectTypeId')
 					|| (req.query.orderBy == 'ruleBookId')
 					|| (req.query.orderBy == 'expired')
 					|| (req.query.orderBy == 'parent')
@@ -166,6 +205,7 @@ module.exports.setClauseOrder = function (req) {
 					|| (req.query.orderBy == 'updatedBy')
 					|| (req.query.orderBy == 'createdAt')
 					|| (req.query.orderBy == 'updatedAt')
+					|| (req.query.orderBy == 'roleId')
 		 
 		){
 

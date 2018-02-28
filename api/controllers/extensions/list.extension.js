@@ -105,6 +105,7 @@ module.exports.setClauseOrder = function (req) {
     if (req.query.hasOwnProperty('orderBy') && orderBy.length > 0) {
         if ((req.body.hasOwnProperty(req.query.orderBy)) 
 					|| (req.query.orderBy == 'id')
+					|| (req.query.orderBy == 'tenantId')
 					|| (req.query.orderBy == 'name')
 					|| (req.query.orderBy == 'active')
 					|| (req.query.orderBy == 'isMetaData')

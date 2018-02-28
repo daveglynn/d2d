@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 ******************************************************************************************************/
 module.exports.addList = function(req, res) {
 
-    // pick appropiate fields 
+    // pick appropiate fields tenant will be set to default   
     var body = extension.setPost(req, 'C');
                
     db.list.create(body).then(function(list) {
@@ -46,7 +46,7 @@ module.exports.getListsAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	where = common.setClauseActive(req, where);
 	 
-	 
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 
     var order = extension.setClauseOrder(req); 	
@@ -73,7 +73,7 @@ module.exports.getListById = function(req, res) {
     where = common.setClauseId(req, where);
 	where = common.setClauseActive(req, where);
 	 
-	 
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 
 	 		
@@ -106,7 +106,7 @@ module.exports.updateList = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
 
     // find record on database, update record and return to client
     db.list.findOne({
@@ -134,7 +134,7 @@ module.exports.deleteList = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
 
     // delete record on database
     db.list.destroy({

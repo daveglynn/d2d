@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 ******************************************************************************************************/
 module.exports.addRuleBook = function(req, res) {
 
-    // pick appropiate fields 
+    // pick appropiate fields tenant will be set to default   
     var body = extension.setPost(req, 'C');
                
     db.ruleBook.create(body).then(function(ruleBook) {
@@ -46,16 +46,19 @@ module.exports.getRuleBooksAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	where = common.setClauseActive(req, where);
 	 
-	 
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 
     var order = extension.setClauseOrder(req); 	
 
-	 		
+	 						
+	var include = [{ model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
+	
     db.ruleBook.findAll({
         attributes: attributes,
         where: where ,
-		order: [order]	
+		order: [order],
+		include: include 	
     }).then(function(ruleBooks) {
         res.json(ruleBooks);
     }, function(err) {
@@ -73,14 +76,17 @@ module.exports.getRuleBookById = function(req, res) {
     where = common.setClauseId(req, where);
 	where = common.setClauseActive(req, where);
 	 
-	 
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 
-	 		
+	 						
+	var include = [{ model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
+	
     //find and return the records 
     db.ruleBook.findOne({
         attributes: attributes,
-        where: where 	
+        where: where ,
+		include: include 	
     }).then(function(ruleBook) {
         if (!!ruleBook) {
             res.json(ruleBook.toPublicJSON());
@@ -106,7 +112,7 @@ module.exports.updateRuleBook = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
 
     // find record on database, update record and return to client
     db.ruleBook.findOne({
@@ -134,7 +140,7 @@ module.exports.deleteRuleBook = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
 
     // delete record on database
     db.ruleBook.destroy({
@@ -150,5 +156,38 @@ module.exports.deleteRuleBook = function(req, res) {
     });
 };
   	
+/******************************************************************************************************
+ Get RuleBook records by ObjectId 
+******************************************************************************************************/
+module.exports.getRuleBooksByObjectId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseObjectId(req, where);
+	where = common.setClauseActive(req, where);
+	 
+
+    where = common.setClauseTenantId(req, where);
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
+	
+    //find and return the records 
+    db.ruleBook.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (ruleBooks) {
+        res.json(ruleBooks);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
  
 

@@ -25,6 +25,7 @@ module.exports.setPost = function (req, mode) {
 		,'name'
 		,'active'
 		,'processflags'
+		,'objectId'
 	 	);
 
     //add createdBy
@@ -48,6 +49,9 @@ module.exports.prepareForUpdate =  function (body) {
 	}
 	if (body.hasOwnProperty('processflags')) {
 		attributes.processflags = body.processflags;
+	}
+	if (body.hasOwnProperty('objectId')) {
+		attributes.objectId = body.objectId;
 	}
 	if (body.hasOwnProperty('createdBy')) {
 		attributes.createdBy = body.createdBy;
@@ -76,9 +80,24 @@ module.exports.setClauseQuery =  function (query, where) {
 			};
 		}
     
-  		return where;
+  	if (query.hasOwnProperty('objectId') && query.objectId.length > 0) {
+			where.objectId = {
+			$eq: query.objectId
+			};
+		}
+    	return where;
 };
   	
+module.exports.setClauseObjectId = function (req, where) {
+  
+    var objectId = parseInt(req.params.objectId, 10);
+    where.objectId = {
+         $eq: objectId
+    };
+
+	return where;
+};
+	
 
 module.exports.setClauseOrder = function (req) {
  
@@ -93,9 +112,11 @@ module.exports.setClauseOrder = function (req) {
     if (req.query.hasOwnProperty('orderBy') && orderBy.length > 0) {
         if ((req.body.hasOwnProperty(req.query.orderBy)) 
 					|| (req.query.orderBy == 'id')
+					|| (req.query.orderBy == 'tenantId')
 					|| (req.query.orderBy == 'name')
 					|| (req.query.orderBy == 'active')
 					|| (req.query.orderBy == 'processflags')
+					|| (req.query.orderBy == 'objectId')
 					|| (req.query.orderBy == 'createdBy')
 					|| (req.query.orderBy == 'updatedBy')
 					|| (req.query.orderBy == 'createdAt')

@@ -34,6 +34,10 @@ router
     .route('/:id(\\d+)/')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRuleBook.deleteRuleBook);
 
-	 
+	
+router
+    .route('/object/:objectId(\\d+)/')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlRuleBook.getRuleBooksByObjectId);
+ 
 
 module.exports = router

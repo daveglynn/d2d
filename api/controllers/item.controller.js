@@ -23,7 +23,7 @@ var Sequelize = require('sequelize');
 ******************************************************************************************************/
 module.exports.addItem = function(req, res) {
 
-    // pick appropiate fields 
+    // pick appropiate fields tenant will be set to default   
     var body = extension.setPost(req, 'C');
                
     db.item.create(body).then(function(item) {
@@ -46,7 +46,7 @@ module.exports.getItemsAll = function(req, res) {
     where = extension.setClauseQuery(req.query, where);
 	where = common.setClauseActive(req, where);
 	where = common.setClauseExpired(req.query, where); 
-	 
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 
     var order = extension.setClauseOrder(req); 	
@@ -77,7 +77,7 @@ module.exports.getItemById = function(req, res) {
     where = common.setClauseId(req, where);
 	where = common.setClauseActive(req, where);
 	where = common.setClauseExpired(req.query, where); 
-	 
+	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 
 	 						
@@ -114,7 +114,7 @@ module.exports.updateItem = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
 
     // find record on database, update record and return to client
     db.item.findOne({
@@ -142,7 +142,7 @@ module.exports.deleteItem = function(req, res) {
     // builds clause
     var where = {};
     where = common.setClauseId(req, where);
-    
+    where = common.setClauseTenantId(req, where);
 
     // delete record on database
     db.item.destroy({
@@ -169,7 +169,7 @@ module.exports.getItemsByListId = function (req, res) {
 	where = common.setClauseActive(req, where);
 	where = common.setClauseExpired(req.query, where); 
 
-    
+    where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
 
@@ -203,7 +203,7 @@ module.exports.getItemsByRuleBookId = function (req, res) {
 	where = common.setClauseActive(req, where);
 	where = common.setClauseExpired(req.query, where); 
 
-    
+    where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
 
@@ -237,7 +237,7 @@ module.exports.getItemsByParentListId = function (req, res) {
 	where = common.setClauseActive(req, where);
 	where = common.setClauseExpired(req.query, where); 
 
-    
+    where = common.setClauseTenantId(req, where);
 
     var attributes = common.excludeAttributes();
 
@@ -269,7 +269,7 @@ module.exports.getItemsDropdown = function (req, res) {
     var where = {};
     where = common.setClauseActive(req, where);
     where = common.setClauseExpired(req.query, where);
-	 
+	where = common.setClauseTenantId(req, where); 
 	where = extension.setClauseListId(req, where);
 	 
     var order = extension.setClauseOrder(req); 	
@@ -299,7 +299,7 @@ module.exports.getItemsDropdownById = function (req, res) {
     var where = {};
     where = common.setClauseActive(req, where);
     where = common.setClauseExpired(req.query, where);
-	 
+	where = common.setClauseTenantId(req, where); 
 	where = extension.setClauseListId(req, where);
 	 
     var order = extension.setClauseOrder(req); 	
