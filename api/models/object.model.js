@@ -30,6 +30,19 @@ module.exports = function (sequelize, DataTypes) {
                 },
             },
         },
+        objectTypeId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            validate: {
+                isNumeric: function (value, next) {
+                    if (v.isNumeric(v.ltrim(value)) === false) {
+                        next('Object Type: Must be numeric.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },
         ruleBookId: {
             type: DataTypes.INTEGER,
             allowNull: true,

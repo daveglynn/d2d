@@ -9,6 +9,11 @@ var constants = require('../../shared/constant.shared');
 
 module.exports = function (sequelize, DataTypes) {
     var item = sequelize.define('item', {
+        tenantId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: constants.tenantId_Default            
+        },        
         listId: {
             type: DataTypes.INTEGER,
             allowNull: false,

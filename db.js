@@ -88,6 +88,7 @@ db.role.hasMany(db.user);
 db.ruleBook.hasMany(db.access);
 db.ruleBook.hasMany(db.company);
 db.ruleBook.hasMany(db.division);
+db.ruleBook.hasMany(db.object);
 db.role.hasMany(db.object);
 db.ruleBook.hasMany(db.profile);
 db.ruleBook.hasMany(db.language);
@@ -99,7 +100,11 @@ db.tenant.hasMany(db.division);
 db.tenant.hasMany(db.profile);
 db.tenant.hasMany(db.todo);
 db.tenant.hasMany(db.user);
+db.tenant.hasMany(db.ruleBook);
+db.tenant.hasMany(db.list);
+db.tenant.hasMany(db.item);
 db.user.hasMany(db.todo);
+
 
 db.access.belongsTo(db.company);
 db.access.belongsTo(db.division);
@@ -126,6 +131,10 @@ db.language.belongsTo(db.ruleBook);
 
 db.item.belongsTo(db.list);
 db.item.belongsTo(db.ruleBook);
+db.item.belongsTo(db.tenant);
+
+db.list.belongsTo(db.tenant);
+
 
 db.object.belongsTo(db.ruleBook);
 
@@ -134,5 +143,6 @@ db.role.belongsTo(db.ruleBook);
 db.todo.belongsTo(db.tenant);
 db.todo.belongsTo(db.user);
 
+db.ruleBook.belongsTo(db.tenant);
 
 module.exports = db;

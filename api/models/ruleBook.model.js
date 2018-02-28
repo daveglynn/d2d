@@ -8,6 +8,11 @@ var constants = require('../../shared/constant.shared');
 
 module.exports = function (sequelize, DataTypes) {
     var ruleBook = sequelize.define('ruleBook', {
+        tenantId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: constants.tenantId_Default            
+        },        
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -30,6 +35,19 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             defaultValue: false
+        },
+        objectId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            validate: {
+                isNumeric: function (value, next) {
+                    if (v.isNumeric(v.ltrim(value)) === false) {
+                        next('Object: Must be numeric.')
+                    } else {
+                        next()
+                    }
+                },
+            }
         },
         createdBy: {
             type: DataTypes.INTEGER,
