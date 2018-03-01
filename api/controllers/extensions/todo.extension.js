@@ -27,6 +27,8 @@ module.exports.setPost = function (req, mode) {
 		,'completed'
 	 	);
 
+	body.tenantId = common.modelTenantId(req);	
+	
     //add createdBy
     if (mode == 'C') {
 	 body.createdBy = common.modelUserId(req);		
