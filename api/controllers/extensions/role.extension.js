@@ -30,8 +30,6 @@ module.exports.setPost = function (req, mode) {
 		,'ruleBookId'
 		,'parent'
 		,'parentListId'
-		,'createdDate'
-		,'updatedDate'
 	 	);
 
     //add createdBy
@@ -74,14 +72,8 @@ module.exports.prepareForUpdate =  function (body) {
 	if (body.hasOwnProperty('createdBy')) {
 		attributes.createdBy = body.createdBy;
 	}
-	if (body.hasOwnProperty('createdDate')) {
-		attributes.createdDate = body.createdDate;
-	}
 	if (body.hasOwnProperty('updatedBy')) {
 		attributes.updatedBy = body.updatedBy;
-	}
-	if (body.hasOwnProperty('updatedDate')) {
-		attributes.updatedDate = body.updatedDate;
 	}
 	 
     return attributes;

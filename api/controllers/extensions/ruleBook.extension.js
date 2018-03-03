@@ -27,8 +27,6 @@ module.exports.setPost = function (req, mode) {
 		,'code'
 		,'name'
 		,'description'
-		,'createdDate'
-		,'updatedDate'
 		,'processflags'
 		,'objectId'
 	 	);
@@ -65,14 +63,8 @@ module.exports.prepareForUpdate =  function (body) {
 	if (body.hasOwnProperty('createdBy')) {
 		attributes.createdBy = body.createdBy;
 	}
-	if (body.hasOwnProperty('createdDate')) {
-		attributes.createdDate = body.createdDate;
-	}
 	if (body.hasOwnProperty('updatedBy')) {
 		attributes.updatedBy = body.updatedBy;
-	}
-	if (body.hasOwnProperty('updatedDate')) {
-		attributes.updatedDate = body.updatedDate;
 	}
 	if (body.hasOwnProperty('processflags')) {
 		attributes.processflags = body.processflags;
