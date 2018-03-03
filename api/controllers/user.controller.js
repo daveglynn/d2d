@@ -89,7 +89,8 @@ module.exports.getUsersAll = function(req, res) {
     var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 									   
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 									   
+				   ,{model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   									   
 				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   									   
 				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
@@ -119,7 +120,8 @@ module.exports.getUserById = function(req, res) {
     var attributes = common.excludeAttributes();
 
 	 						
-	var include = [{ model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
@@ -198,6 +200,78 @@ module.exports.deleteUser = function(req, res) {
 };
   	
 /******************************************************************************************************
+ Get User records by RuleBookId 
+******************************************************************************************************/
+module.exports.getUsersByRuleBookId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseRuleBookId(req, where);
+	where = common.setClauseActive(req, where);
+	 
+
+    where = common.setClauseTenantId(req, where);
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+	
+    //find and return the records 
+    db.user.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (users) {
+        res.json(users);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get User records by ParentListId 
+******************************************************************************************************/
+module.exports.getUsersByParentListId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseParentListId(req, where);
+	where = common.setClauseActive(req, where);
+	 
+
+    where = common.setClauseTenantId(req, where);
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+	
+    //find and return the records 
+    db.user.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (users) {
+        res.json(users);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
  Get User records by LanguageId 
 ******************************************************************************************************/
 module.exports.getUsersByLanguageId = function (req, res) {
@@ -215,7 +289,8 @@ module.exports.getUsersByLanguageId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
@@ -250,7 +325,8 @@ module.exports.getUsersByRoleId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
@@ -285,7 +361,8 @@ module.exports.getUsersByProfileId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.language,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	

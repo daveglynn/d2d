@@ -10,12 +10,37 @@ module.exports = function (sequelize, DataTypes) {
     var list = sequelize.define('list', {
         tenantId: {
             type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: null            
+        },    
+        active: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: true
+        },
+        expired: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        code: {
+            type: DataTypes.STRING,
             allowNull: true,
-            defaultValue: constants.tenantId_Default            
-        },        
+            defaultValue: null,
+            validate: {
+                isLength: function (value, next) {
+                    if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
+                        next('Code: Length is incorrect. Max 50 characters.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },    
         name: {
             type: DataTypes.STRING,
             allowNull: false,
+            defaultValue: null,
             validate: {
                 isLength: function (value, next) {
                     if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
@@ -26,10 +51,66 @@ module.exports = function (sequelize, DataTypes) {
                 },
             }
         },
-        active: {
+        description: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null,
+            validate: {
+                len: [1, 250]
+            }
+        },
+        ruleBookId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null,
+            validate: {
+                isNumeric: function (value, next) {
+                    if (v.isNumeric(v.ltrim(value)) === false) {
+                        next('Rule Book: Must be numeric.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },
+        parent: {
             type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: true
+            allowNull: true,
+            defaultValue: false
+        },
+        parentListId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null,
+            validate: {
+                isNumeric: function (value, next) {
+                    if (v.isNumeric(v.ltrim(value)) === false) {
+                        next('Parent List: Must be numeric.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },
+        createdBy: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null
+        },
+        createdDate: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: null
+        },
+        updatedBy: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null
+        },
+        updatedDate: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: null
         },
         isMetaData: {
             type: DataTypes.BOOLEAN,
@@ -45,18 +126,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 1,
-        },
-        createdBy: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: null
-        },
-        updatedBy: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: null
         }
-
     }, {
             getterMethods   : {
                 recordDescription  : function()  { return '(' + this.id + '/' + this.name + ')' }

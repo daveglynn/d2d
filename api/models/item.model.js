@@ -11,43 +11,23 @@ module.exports = function (sequelize, DataTypes) {
     var item = sequelize.define('item', {
         tenantId: {
             type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: constants.tenantId_Default            
-        },        
-        listId: {
-            type: DataTypes.INTEGER,
             allowNull: false,
-            validate: {
-                isNumeric: function (value, next) {
-                    if (v.isNumeric(v.ltrim(value)) === false) {
-                        next('List: Must be numeric.')
-                    } else {
-                        next()
-                    }
-                },
-            }
-        },
+            defaultValue: null            
+        },        
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
         },
-        name: {
-            type: DataTypes.STRING,
+        expired: {
+            type: DataTypes.BOOLEAN,
             allowNull: false,
-            validate: {
-                isLength: function (value, next) {
-                    if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
-                        next('Name: Length is incorrect. Max 50 characters.')
-                    } else {
-                        next()
-                    }
-                },
-            }
+            defaultValue: false
         },
         code: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isLength: function (value, next) {
                     if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
@@ -58,9 +38,32 @@ module.exports = function (sequelize, DataTypes) {
                 },
             }
         },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: null,
+            validate: {
+                isLength: function (value, next) {
+                    if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
+                        next('Name: Length is incorrect. Max 50 characters.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null,
+            validate: {
+                len: [1, 250]
+            }
+        },
         ruleBookId: {
             type: DataTypes.INTEGER,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isNumeric: function (value, next) {
                     if (v.isNumeric(v.ltrim(value)) === false) {
@@ -71,11 +74,6 @@ module.exports = function (sequelize, DataTypes) {
                 },
             }
         },
-        expired: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: true
-        },
         parent: {
             type: DataTypes.BOOLEAN,
             allowNull: true,
@@ -84,6 +82,7 @@ module.exports = function (sequelize, DataTypes) {
         parentListId: {
             type: DataTypes.INTEGER,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isNumeric: function (value, next) {
                     if (v.isNumeric(v.ltrim(value)) === false) {
@@ -99,10 +98,33 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true,
             defaultValue: null
         },
+        createdDate: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: null
+        },
         updatedBy: {
             type: DataTypes.INTEGER,
             allowNull: true,
             defaultValue: null
+        },
+        updatedDate: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: null
+        },
+        listId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                isNumeric: function (value, next) {
+                    if (v.isNumeric(v.ltrim(value)) === false) {
+                        next('List: Must be numeric.')
+                    } else {
+                        next()
+                    }
+                },
+            }
         }
     }, {
         getterMethods: {

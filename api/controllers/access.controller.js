@@ -52,11 +52,11 @@ module.exports.getAccessAll = function(req, res) {
     var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 									   
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 									   
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   									   
 				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   									   
 				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   									   
-				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   									   
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
+				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     db.access.findAll({
         attributes: attributes,
@@ -84,11 +84,11 @@ module.exports.getAccessById = function(req, res) {
     var attributes = common.excludeAttributes();
 
 	 						
-	var include = [{ model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
+				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
     db.access.findOne({
@@ -165,154 +165,6 @@ module.exports.deleteAccess = function(req, res) {
 };
   	
 /******************************************************************************************************
- Get Access records by ProfileId 
-******************************************************************************************************/
-module.exports.getAccessByProfileId = function (req, res) {
-
-    // builds clause
-    var where = {};
-    where = extension.setClauseProfileId(req, where);
-	where = common.setClauseActive(req, where);
-	where = common.setClauseExpired(req.query, where); 
-
-    where = common.setClauseTenantId(req, where);
-
-    var attributes = common.excludeAttributes();
-
-	var order = extension.setClauseOrder(req); 	
-
-	 						
-	var include = [{ model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
-				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
-	
-    //find and return the records 
-    db.access.findAll({
-        attributes: attributes,
-        where: where,
-		order: [order],
-		include: include 	
-    }).then(function (access) {
-        res.json(access);
-    }, function (err) {
-        res.status(500).json(err);
-    });
-};
-
-/******************************************************************************************************
- Get Access records by CompanyId 
-******************************************************************************************************/
-module.exports.getAccessByCompanyId = function (req, res) {
-
-    // builds clause
-    var where = {};
-    where = extension.setClauseCompanyId(req, where);
-	where = common.setClauseActive(req, where);
-	where = common.setClauseExpired(req.query, where); 
-
-    where = common.setClauseTenantId(req, where);
-
-    var attributes = common.excludeAttributes();
-
-	var order = extension.setClauseOrder(req); 	
-
-	 						
-	var include = [{ model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
-				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
-	
-    //find and return the records 
-    db.access.findAll({
-        attributes: attributes,
-        where: where,
-		order: [order],
-		include: include 	
-    }).then(function (access) {
-        res.json(access);
-    }, function (err) {
-        res.status(500).json(err);
-    });
-};
-
-/******************************************************************************************************
- Get Access records by DivisionId 
-******************************************************************************************************/
-module.exports.getAccessByDivisionId = function (req, res) {
-
-    // builds clause
-    var where = {};
-    where = extension.setClauseDivisionId(req, where);
-	where = common.setClauseActive(req, where);
-	where = common.setClauseExpired(req.query, where); 
-
-    where = common.setClauseTenantId(req, where);
-
-    var attributes = common.excludeAttributes();
-
-	var order = extension.setClauseOrder(req); 	
-
-	 						
-	var include = [{ model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
-				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
-	
-    //find and return the records 
-    db.access.findAll({
-        attributes: attributes,
-        where: where,
-		order: [order],
-		include: include 	
-    }).then(function (access) {
-        res.json(access);
-    }, function (err) {
-        res.status(500).json(err);
-    });
-};
-
-/******************************************************************************************************
- Get Access records by ObjectId 
-******************************************************************************************************/
-module.exports.getAccessByObjectId = function (req, res) {
-
-    // builds clause
-    var where = {};
-    where = extension.setClauseObjectId(req, where);
-	where = common.setClauseActive(req, where);
-	where = common.setClauseExpired(req.query, where); 
-
-    where = common.setClauseTenantId(req, where);
-
-    var attributes = common.excludeAttributes();
-
-	var order = extension.setClauseOrder(req); 	
-
-	 						
-	var include = [{ model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
-				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
-	
-    //find and return the records 
-    db.access.findAll({
-        attributes: attributes,
-        where: where,
-		order: [order],
-		include: include 	
-    }).then(function (access) {
-        res.json(access);
-    }, function (err) {
-        res.status(500).json(err);
-    });
-};
-
-/******************************************************************************************************
  Get Access records by RuleBookId 
 ******************************************************************************************************/
 module.exports.getAccessByRuleBookId = function (req, res) {
@@ -330,11 +182,11 @@ module.exports.getAccessByRuleBookId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
+				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
     db.access.findAll({
@@ -367,11 +219,159 @@ module.exports.getAccessByParentListId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   ]; 	
+				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+	
+    //find and return the records 
+    db.access.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (access) {
+        res.json(access);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get Access records by ProfileId 
+******************************************************************************************************/
+module.exports.getAccessByProfileId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseProfileId(req, where);
+	where = common.setClauseActive(req, where);
+	where = common.setClauseExpired(req.query, where); 
+
+    where = common.setClauseTenantId(req, where);
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+	
+    //find and return the records 
+    db.access.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (access) {
+        res.json(access);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get Access records by CompanyId 
+******************************************************************************************************/
+module.exports.getAccessByCompanyId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseCompanyId(req, where);
+	where = common.setClauseActive(req, where);
+	where = common.setClauseExpired(req.query, where); 
+
+    where = common.setClauseTenantId(req, where);
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+	
+    //find and return the records 
+    db.access.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (access) {
+        res.json(access);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get Access records by DivisionId 
+******************************************************************************************************/
+module.exports.getAccessByDivisionId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseDivisionId(req, where);
+	where = common.setClauseActive(req, where);
+	where = common.setClauseExpired(req.query, where); 
+
+    where = common.setClauseTenantId(req, where);
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+	
+    //find and return the records 
+    db.access.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (access) {
+        res.json(access);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get Access records by ObjectId 
+******************************************************************************************************/
+module.exports.getAccessByObjectId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseObjectId(req, where);
+	where = common.setClauseActive(req, where);
+	where = common.setClauseExpired(req.query, where); 
+
+    where = common.setClauseTenantId(req, where);
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.profile,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.company,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.division,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.object,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
     db.access.findAll({

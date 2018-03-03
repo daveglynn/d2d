@@ -36,6 +36,14 @@ router
 
 	
 router
+    .route('/ruleBook/:ruleBookId(\\d+)/')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlAccess.getAccessByRuleBookId);
+
+router
+    .route('/parentList/:parentListId(\\d+)/')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlAccess.getAccessByParentListId);
+
+router
     .route('/profile/:profileId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlAccess.getAccessByProfileId);
 
@@ -50,14 +58,6 @@ router
 router
     .route('/object/:objectId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlAccess.getAccessByObjectId);
-
-router
-    .route('/ruleBook/:ruleBookId(\\d+)/')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlAccess.getAccessByRuleBookId);
-
-router
-    .route('/parentList/:parentListId(\\d+)/')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlAccess.getAccessByParentListId);
 router
     .route('/dropdown')
 	.get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlAccess.getAccessDropdown);

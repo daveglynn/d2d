@@ -36,16 +36,16 @@ router
 
 	
 router
-    .route('/objectType/:objectTypeId(\\d+)/')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlObject.getObjectsByObjectTypeId);
-
-router
     .route('/ruleBook/:ruleBookId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlObject.getObjectsByRuleBookId);
 
 router
     .route('/parentList/:parentListId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlObject.getObjectsByParentListId);
+
+router
+    .route('/objectType/:objectTypeId(\\d+)/')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlObject.getObjectsByObjectTypeId);
 
 router
     .route('/role/:roleId(\\d+)/')

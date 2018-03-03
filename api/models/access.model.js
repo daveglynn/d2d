@@ -10,41 +10,23 @@ module.exports = function(sequelize, DataTypes) {
     var access = sequelize.define('access', {
         tenantId: {
             type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: constants.tenantId_Default            
+            allowNull: false,
+            defaultValue: null            
         },
-        profileId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: constants.profileId_Default            
-        },         
-        companyId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: constants.companyId_Default            
-        }, 
-        divisionId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: constants.divisionId_Default            
-        },
-        objectId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: constants.objectId_Default            
-        },                        
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
         },	
-        name: {
-            type: DataTypes.STRING,
+        expired: {
+            type: DataTypes.BOOLEAN,
             allowNull: false,
+            defaultValue: false
         },
         code: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isLength: function (value, next) {
                     if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
@@ -55,9 +37,32 @@ module.exports = function(sequelize, DataTypes) {
                 },
             },
         },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: null,
+            validate: {
+                isLength: function (value, next) {
+                    if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
+                        next('Name: Length is incorrect. Max 50 characters.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null,
+            validate: {
+                len: [1, 250]
+            }
+        },
         ruleBookId: {
             type: DataTypes.INTEGER,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isNumeric: function (value, next) {
                     if (v.isNumeric(v.ltrim(value)) === false) {
@@ -68,11 +73,6 @@ module.exports = function(sequelize, DataTypes) {
                 },
             }
         },
-        expired: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: true
-        },
         parent: {
             type: DataTypes.BOOLEAN,
             allowNull: true,
@@ -81,6 +81,7 @@ module.exports = function(sequelize, DataTypes) {
         parentListId: {
             type: DataTypes.INTEGER,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isNumeric: function (value, next) {
                     if (v.isNumeric(v.ltrim(value)) === false) {
@@ -91,14 +92,47 @@ module.exports = function(sequelize, DataTypes) {
                 },
             }
         },
-        description: {
-            type: DataTypes.STRING,
+        createdBy: {
+            type: DataTypes.INTEGER,
             allowNull: true,
-            validate: {
-                len: [1, 250]
-            }
+            defaultValue: null
         },
-        canAdd: {
+        createdDate: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: null
+        },
+        updatedBy: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null
+        },
+        updatedDate: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: null
+        },
+        profileId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null            
+        },         
+        companyId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null            
+        }, 
+        divisionId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null            
+        },
+        objectId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null           
+        },                        
+           canAdd: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
@@ -137,16 +171,6 @@ module.exports = function(sequelize, DataTypes) {
 		setDeleteModeElements: {
             type: DataTypes.JSON,
             allowNull: true,
-        },                                    
-        createdBy: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: null
-        },
-        updatedBy: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: null
         }
     }, {
         getterMethods: {

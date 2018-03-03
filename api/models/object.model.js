@@ -13,13 +13,15 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             defaultValue: true
         },
-        name: {
-            type: DataTypes.STRING,
+        expired: {
+            type: DataTypes.BOOLEAN,
             allowNull: false,
+            defaultValue: false
         },
         code: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isLength: function (value, next) {
                     if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
@@ -30,22 +32,32 @@ module.exports = function (sequelize, DataTypes) {
                 },
             },
         },
-        objectTypeId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: null,
             validate: {
-                isNumeric: function (value, next) {
-                    if (v.isNumeric(v.ltrim(value)) === false) {
-                        next('Object Type: Must be numeric.')
+                isLength: function (value, next) {
+                    if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
+                        next('Name: Length is incorrect. Max 50 characters.')
                     } else {
                         next()
                     }
                 },
             }
         },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null,
+            validate: {
+                len: [1, 250]
+            }
+        },
         ruleBookId: {
             type: DataTypes.INTEGER,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isNumeric: function (value, next) {
                     if (v.isNumeric(v.ltrim(value)) === false) {
@@ -56,11 +68,6 @@ module.exports = function (sequelize, DataTypes) {
                 },
             }
         },
-        expired: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: true
-        },
         parent: {
             type: DataTypes.BOOLEAN,
             allowNull: true,
@@ -69,6 +76,7 @@ module.exports = function (sequelize, DataTypes) {
         parentListId: {
             type: DataTypes.INTEGER,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isNumeric: function (value, next) {
                     if (v.isNumeric(v.ltrim(value)) === false) {
@@ -79,15 +87,13 @@ module.exports = function (sequelize, DataTypes) {
                 },
             }
         },
-        description: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            validate: {
-                len: [1, 250]
-            }
-        },
         createdBy: {
             type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null
+        },
+        createdDate: {
+            type: DataTypes.DATE,
             allowNull: true,
             defaultValue: null
         },
@@ -95,6 +101,25 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: true,
             defaultValue: null
+        },
+        updatedDate: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: null
+        },
+        objectTypeId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null,
+            validate: {
+                isNumeric: function (value, next) {
+                    if (v.isNumeric(v.ltrim(value)) === false) {
+                        next('Object Type: Must be numeric.')
+                    } else {
+                        next()
+                    }
+                },
+            }
         }
     }, {
         getterMethods: {

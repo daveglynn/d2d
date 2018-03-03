@@ -34,6 +34,14 @@ router
     .route('/:id(\\d+)/')
     .delete(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.deleteTenant);
 
-	 
+	
+router
+    .route('/ruleBook/:ruleBookId(\\d+)/')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.getTenantsByRuleBookId);
+
+router
+    .route('/parentList/:parentListId(\\d+)/')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlTenant.getTenantsByParentListId);
+ 
 
 module.exports = router

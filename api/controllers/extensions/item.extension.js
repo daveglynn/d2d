@@ -22,19 +22,23 @@ module.exports.setPost = function (req, mode) {
  
     //clean post
     var body = _.pick(req.body
-		,'listId'
 		,'active'
-		,'name'
-		,'code'
-		,'ruleBookId'
 		,'expired'
+		,'code'
+		,'name'
+		,'description'
+		,'ruleBookId'
 		,'parent'
 		,'parentListId'
+		,'createdDate'
+		,'updatedDate'
+		,'listId'
 	 	);
 
     //add createdBy
     if (mode == 'C') {
-	 body.createdBy = common.modelUserId(req);		
+		body.createdBy = common.modelUserId(req);				
+		body.tenantId = common.modelTenantId(req); 
 	} else {
         body.updatedBy = common.modelUserId(req);
     }
@@ -45,23 +49,23 @@ module.exports.prepareForUpdate =  function (body) {
         
     var attributes = {};
 
-	if (body.hasOwnProperty('listId')) {
-		attributes.listId = body.listId;
-	}
 	if (body.hasOwnProperty('active')) {
 		attributes.active = body.active;
 	}
-	if (body.hasOwnProperty('name')) {
-		attributes.name = body.name;
+	if (body.hasOwnProperty('expired')) {
+		attributes.expired = body.expired;
 	}
 	if (body.hasOwnProperty('code')) {
 		attributes.code = body.code;
 	}
+	if (body.hasOwnProperty('name')) {
+		attributes.name = body.name;
+	}
+	if (body.hasOwnProperty('description')) {
+		attributes.description = body.description;
+	}
 	if (body.hasOwnProperty('ruleBookId')) {
 		attributes.ruleBookId = body.ruleBookId;
-	}
-	if (body.hasOwnProperty('expired')) {
-		attributes.expired = body.expired;
 	}
 	if (body.hasOwnProperty('parent')) {
 		attributes.parent = body.parent;
@@ -72,8 +76,17 @@ module.exports.prepareForUpdate =  function (body) {
 	if (body.hasOwnProperty('createdBy')) {
 		attributes.createdBy = body.createdBy;
 	}
+	if (body.hasOwnProperty('createdDate')) {
+		attributes.createdDate = body.createdDate;
+	}
 	if (body.hasOwnProperty('updatedBy')) {
 		attributes.updatedBy = body.updatedBy;
+	}
+	if (body.hasOwnProperty('updatedDate')) {
+		attributes.updatedDate = body.updatedDate;
+	}
+	if (body.hasOwnProperty('listId')) {
+		attributes.listId = body.listId;
 	}
 	 
     return attributes;
@@ -84,8 +97,9 @@ module.exports.setClauseQuery =  function (query, where) {
  	if (query.hasOwnProperty('q') && query.q.length > 0) {
 		where = {
 		$or: [
-  		{name: { $like: '%' + query.q + '%' }}  
-		,{code: { $like: '%' + query.q + '%' }}  
+  		{code: { $like: '%' + query.q + '%' }}  
+		,{name: { $like: '%' + query.q + '%' }}  
+		,{description: { $like: '%' + query.q + '%' }}  
 	 			]
 			}
 		}
@@ -106,12 +120,7 @@ module.exports.setClauseQuery =  function (query, where) {
 			};
 		}
     
-  	if (query.hasOwnProperty('listId') && query.listId.length > 0) {
-			where.listId = {
-			$eq: query.listId
-			};
-		}
-    if (query.hasOwnProperty('ruleBookId') && query.ruleBookId.length > 0) {
+  	if (query.hasOwnProperty('ruleBookId') && query.ruleBookId.length > 0) {
 			where.ruleBookId = {
 			$eq: query.ruleBookId
 			};
@@ -121,19 +130,14 @@ module.exports.setClauseQuery =  function (query, where) {
 			$eq: query.parentListId
 			};
 		}
+    if (query.hasOwnProperty('listId') && query.listId.length > 0) {
+			where.listId = {
+			$eq: query.listId
+			};
+		}
     	return where;
 };
   	
-module.exports.setClauseListId = function (req, where) {
-  
-    var listId = parseInt(req.params.listId, 10);
-    where.listId = {
-         $eq: listId
-    };
-
-	return where;
-};
-	
 module.exports.setClauseRuleBookId = function (req, where) {
   
     var ruleBookId = parseInt(req.params.ruleBookId, 10);
@@ -154,6 +158,16 @@ module.exports.setClauseParentListId = function (req, where) {
 	return where;
 };
 	
+module.exports.setClauseListId = function (req, where) {
+  
+    var listId = parseInt(req.params.listId, 10);
+    where.listId = {
+         $eq: listId
+    };
+
+	return where;
+};
+	
 
 module.exports.setClauseOrder = function (req) {
  
@@ -169,18 +183,19 @@ module.exports.setClauseOrder = function (req) {
         if ((req.body.hasOwnProperty(req.query.orderBy)) 
 					|| (req.query.orderBy == 'id')
 					|| (req.query.orderBy == 'tenantId')
-					|| (req.query.orderBy == 'listId')
 					|| (req.query.orderBy == 'active')
-					|| (req.query.orderBy == 'name')
-					|| (req.query.orderBy == 'code')
-					|| (req.query.orderBy == 'ruleBookId')
 					|| (req.query.orderBy == 'expired')
+					|| (req.query.orderBy == 'code')
+					|| (req.query.orderBy == 'name')
+					|| (req.query.orderBy == 'description')
+					|| (req.query.orderBy == 'ruleBookId')
 					|| (req.query.orderBy == 'parent')
 					|| (req.query.orderBy == 'parentListId')
 					|| (req.query.orderBy == 'createdBy')
+					|| (req.query.orderBy == 'createdDate')
 					|| (req.query.orderBy == 'updatedBy')
-					|| (req.query.orderBy == 'createdAt')
-					|| (req.query.orderBy == 'updatedAt')
+					|| (req.query.orderBy == 'updatedDate')
+					|| (req.query.orderBy == 'listId')
 		 
 		){
 

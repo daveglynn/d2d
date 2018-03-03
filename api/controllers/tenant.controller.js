@@ -51,11 +51,14 @@ module.exports.getTenantsAll = function(req, res) {
 
     var order = extension.setClauseOrder(req); 	
 
-	 		
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
+	
     db.tenant.findAll({
         attributes: attributes,
         where: where ,
-		order: [order]	
+		order: [order],
+		include: include 	
     }).then(function(tenants) {
         res.json(tenants);
     }, function(err) {
@@ -76,11 +79,14 @@ module.exports.getTenantById = function(req, res) {
 	 
     var attributes = common.excludeAttributes();
 
-	 		
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
+	
     //find and return the records 
     db.tenant.findOne({
         attributes: attributes,
-        where: where 	
+        where: where ,
+		include: include 	
     }).then(function(tenant) {
         if (!!tenant) {
             res.json(tenant.toPublicJSON());
@@ -150,5 +156,71 @@ module.exports.deleteTenant = function(req, res) {
     });
 };
   	
+/******************************************************************************************************
+ Get Tenant records by RuleBookId 
+******************************************************************************************************/
+module.exports.getTenantsByRuleBookId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseRuleBookId(req, where);
+	where = common.setClauseActive(req, where);
+	 
+
+    
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
+	
+    //find and return the records 
+    db.tenant.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (tenants) {
+        res.json(tenants);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get Tenant records by ParentListId 
+******************************************************************************************************/
+module.exports.getTenantsByParentListId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseParentListId(req, where);
+	where = common.setClauseActive(req, where);
+	 
+
+    
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
+	
+    //find and return the records 
+    db.tenant.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (tenants) {
+        res.json(tenants);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
  
 

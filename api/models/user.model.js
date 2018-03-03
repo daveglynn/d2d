@@ -13,32 +13,127 @@ module.exports = function(sequelize, DataTypes) {
     var user = sequelize.define('user', {
         tenantId: {
             type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: constants.tenantId_Default
-        },
-        languageId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: constants.languageId_Default,
-        },
-        roleId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: constants.roleId_User,
-        },
-        profileId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: constants.profileId_Default,
+            allowNull: false,
+            defaultValue: null
         },
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-            defaultValue: true
+            defaultValue: false
+        },
+        expired: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        code: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null,
+            validate: {
+                isLength: function (value, next) {
+                    if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
+                        next('Code: Length is incorrect. Max 50 characters.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: null,
+            validate: {
+                isLength: function (value, next) {
+                    if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
+                        next('Name: Length is incorrect. Max 50 characters.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null,
+            validate: {
+                len: [1, 250]
+            }
+        },
+        ruleBookId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null,
+            validate: {
+                isNumeric: function (value, next) {
+                    if (v.isNumeric(v.ltrim(value)) === false) {
+                        next('Rule Book: Must be numeric.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },
+        parent: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true,
+            defaultValue: false
+        },
+        parentListId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null,
+            validate: {
+                isNumeric: function (value, next) {
+                    if (v.isNumeric(v.ltrim(value)) === false) {
+                        next('Parent List: Must be numeric.')
+                    } else {
+                        next()
+                    }
+                },
+            }
+        },
+        createdBy: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null
+        },
+        createdDate: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: null
+        },
+        updatedBy: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null
+        },
+        updatedDate: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: null
+        },
+        languageId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null
+        },
+        roleId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null
+        },
+        profileId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
+            defaultValue: null,
             validate: {
                 isEmail: function(value, next) {
                     if (v.isEmail(v.ltrim(value)) === false) {
@@ -70,6 +165,7 @@ module.exports = function(sequelize, DataTypes) {
         firstName: {
             type: DataTypes.STRING,
             allowNull: false,
+            defaultValue: null,
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
@@ -83,6 +179,7 @@ module.exports = function(sequelize, DataTypes) {
         lastName: {
             type: DataTypes.STRING,
             allowNull: false,
+            defaultValue: null,
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 1, max: 50 }) === false) {
@@ -96,6 +193,7 @@ module.exports = function(sequelize, DataTypes) {
         phone: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 0, max: 50 }) === false) {
@@ -109,6 +207,7 @@ module.exports = function(sequelize, DataTypes) {
         addressLine1: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
@@ -122,6 +221,7 @@ module.exports = function(sequelize, DataTypes) {
         addressLine2: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
@@ -135,6 +235,7 @@ module.exports = function(sequelize, DataTypes) {
         addressLine3: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
@@ -148,6 +249,7 @@ module.exports = function(sequelize, DataTypes) {
         addressLine4: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: null,
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 0, max: 100 }) === false) {
@@ -177,6 +279,7 @@ module.exports = function(sequelize, DataTypes) {
         password: {
             type: DataTypes.VIRTUAL,
             allowNull: false,
+            defaultValue: null,
             validate: {
                 isLength: function(value, next) {
                     if (v.isLength(v.ltrim(value), { min: 6, max: 10 }) === false) {
@@ -195,16 +298,6 @@ module.exports = function(sequelize, DataTypes) {
                 this.setDataValue('password_hash', hashedPassword);
 
             }
-        },
-        createdBy: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: null
-        },
-        updatedBy: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            defaultValue: null
         }
     }, {
             getterMethods   : {

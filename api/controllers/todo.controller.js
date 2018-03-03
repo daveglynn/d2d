@@ -52,7 +52,8 @@ module.exports.getTodosAll = function(req, res) {
     var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.user,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 									   
+				   ,{model: db.user,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     db.todo.findAll({
         attributes: attributes,
@@ -80,7 +81,8 @@ module.exports.getTodoById = function(req, res) {
     var attributes = common.excludeAttributes();
 
 	 						
-	var include = [{ model: db.user,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.user,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
     db.todo.findOne({
@@ -157,6 +159,74 @@ module.exports.deleteTodo = function(req, res) {
 };
   	
 /******************************************************************************************************
+ Get Todo records by RuleBookId 
+******************************************************************************************************/
+module.exports.getTodosByRuleBookId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseRuleBookId(req, where);
+	where = common.setClauseActive(req, where);
+	 
+
+    where = common.setClauseTenantId(req, where);
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.user,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+	
+    //find and return the records 
+    db.todo.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (todos) {
+        res.json(todos);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get Todo records by ParentListId 
+******************************************************************************************************/
+module.exports.getTodosByParentListId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseParentListId(req, where);
+	where = common.setClauseActive(req, where);
+	 
+
+    where = common.setClauseTenantId(req, where);
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.user,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+	
+    //find and return the records 
+    db.todo.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (todos) {
+        res.json(todos);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
  Get Todo records by UserId 
 ******************************************************************************************************/
 module.exports.getTodosByUserId = function (req, res) {
@@ -174,7 +244,8 @@ module.exports.getTodosByUserId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.user,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} ]; 	
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.user,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
     db.todo.findAll({

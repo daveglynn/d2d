@@ -52,8 +52,8 @@ module.exports.getObjectsAll = function(req, res) {
     var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.objectType,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 									   
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   									   
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 									   
+				   ,{model: db.objectType,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   									   
 				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     db.object.findAll({
@@ -82,8 +82,8 @@ module.exports.getObjectById = function(req, res) {
     var attributes = common.excludeAttributes();
 
 	 						
-	var include = [{ model: db.objectType,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   					
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.objectType,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
@@ -161,41 +161,6 @@ module.exports.deleteObject = function(req, res) {
 };
   	
 /******************************************************************************************************
- Get Object records by ObjectTypeId 
-******************************************************************************************************/
-module.exports.getObjectsByObjectTypeId = function (req, res) {
-
-    // builds clause
-    var where = {};
-    where = extension.setClauseObjectTypeId(req, where);
-	where = common.setClauseActive(req, where);
-	where = common.setClauseExpired(req.query, where); 
-
-    
-
-    var attributes = common.excludeAttributes();
-
-	var order = extension.setClauseOrder(req); 	
-
-	 						
-	var include = [{ model: db.objectType,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   					
-				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
-	
-    //find and return the records 
-    db.object.findAll({
-        attributes: attributes,
-        where: where,
-		order: [order],
-		include: include 	
-    }).then(function (objects) {
-        res.json(objects);
-    }, function (err) {
-        res.status(500).json(err);
-    });
-};
-
-/******************************************************************************************************
  Get Object records by RuleBookId 
 ******************************************************************************************************/
 module.exports.getObjectsByRuleBookId = function (req, res) {
@@ -213,8 +178,8 @@ module.exports.getObjectsByRuleBookId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.objectType,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   					
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.objectType,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
@@ -248,8 +213,43 @@ module.exports.getObjectsByParentListId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.objectType,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   					
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.objectType,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
+				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
+	
+    //find and return the records 
+    db.object.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (objects) {
+        res.json(objects);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get Object records by ObjectTypeId 
+******************************************************************************************************/
+module.exports.getObjectsByObjectTypeId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseObjectTypeId(req, where);
+	where = common.setClauseActive(req, where);
+	where = common.setClauseExpired(req.query, where); 
+
+    
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.objectType,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 
@@ -283,8 +283,8 @@ module.exports.getObjectsByRoleId = function (req, res) {
 	var order = extension.setClauseOrder(req); 	
 
 	 						
-	var include = [{ model: db.objectType,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]} 					
-				   ,{model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']}   					
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} 					
+				   ,{model: db.objectType,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   					
 				   ,{model: db.role,attributes: ['id', 'active', 'parentListId', 'name', 'code', 'ruleBookId'], include: [{model: db.ruleBook, attributes: ['id', 'active','name','processflags']}]}   ]; 	
 	
     //find and return the records 

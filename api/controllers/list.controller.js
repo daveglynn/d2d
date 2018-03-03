@@ -51,11 +51,14 @@ module.exports.getListsAll = function(req, res) {
 
     var order = extension.setClauseOrder(req); 	
 
-	 		
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
+	
     db.list.findAll({
         attributes: attributes,
         where: where ,
-		order: [order]	
+		order: [order],
+		include: include 	
     }).then(function(lists) {
         res.json(lists);
     }, function(err) {
@@ -76,11 +79,14 @@ module.exports.getListById = function(req, res) {
 	where = common.setClauseTenantId(req, where); 
     var attributes = common.excludeAttributes();
 
-	 		
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
+	
     //find and return the records 
     db.list.findOne({
         attributes: attributes,
-        where: where 	
+        where: where ,
+		include: include 	
     }).then(function(list) {
         if (!!list) {
             res.json(list.toPublicJSON());
@@ -150,5 +156,71 @@ module.exports.deleteList = function(req, res) {
     });
 };
   	
+/******************************************************************************************************
+ Get List records by RuleBookId 
+******************************************************************************************************/
+module.exports.getListsByRuleBookId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseRuleBookId(req, where);
+	where = common.setClauseActive(req, where);
+	 
+
+    where = common.setClauseTenantId(req, where);
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
+	
+    //find and return the records 
+    db.list.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (lists) {
+        res.json(lists);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
+/******************************************************************************************************
+ Get List records by ParentListId 
+******************************************************************************************************/
+module.exports.getListsByParentListId = function (req, res) {
+
+    // builds clause
+    var where = {};
+    where = extension.setClauseParentListId(req, where);
+	where = common.setClauseActive(req, where);
+	 
+
+    where = common.setClauseTenantId(req, where);
+
+    var attributes = common.excludeAttributes();
+
+	var order = extension.setClauseOrder(req); 	
+
+	 						
+	var include = [{ model: db.ruleBook,attributes: ['id', 'active', 'name', 'processflags']} ]; 	
+	
+    //find and return the records 
+    db.list.findAll({
+        attributes: attributes,
+        where: where,
+		order: [order],
+		include: include 	
+    }).then(function (lists) {
+        res.json(lists);
+    }, function (err) {
+        res.status(500).json(err);
+    });
+};
+
  
 

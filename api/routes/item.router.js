@@ -36,16 +36,16 @@ router
 
 	
 router
-    .route('/list/:listId(\\d+)/')
-    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByListId);
-
-router
     .route('/ruleBook/:ruleBookId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByRuleBookId);
 
 router
     .route('/parentList/:parentListId(\\d+)/')
     .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByParentListId);
+
+router
+    .route('/list/:listId(\\d+)/')
+    .get(middleware.requireAuthentication, middleware.requireAuthorisation, ctrlItem.getItemsByListId);
  
 router
     .route('/list/:listId(\\d+)/dropdown/')

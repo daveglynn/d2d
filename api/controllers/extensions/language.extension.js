@@ -23,17 +23,20 @@ module.exports.setPost = function (req, mode) {
     //clean post
     var body = _.pick(req.body
 		,'active'
-		,'name'
-		,'code'
-		,'ruleBookId'
 		,'expired'
+		,'code'
+		,'name'
+		,'description'
+		,'ruleBookId'
 		,'parent'
 		,'parentListId'
+		,'createdDate'
+		,'updatedDate'
 	 	);
 
     //add createdBy
     if (mode == 'C') {
-	 body.createdBy = common.modelUserId(req);		
+		body.createdBy = common.modelUserId(req);		 
 	} else {
         body.updatedBy = common.modelUserId(req);
     }
@@ -47,17 +50,20 @@ module.exports.prepareForUpdate =  function (body) {
 	if (body.hasOwnProperty('active')) {
 		attributes.active = body.active;
 	}
-	if (body.hasOwnProperty('name')) {
-		attributes.name = body.name;
+	if (body.hasOwnProperty('expired')) {
+		attributes.expired = body.expired;
 	}
 	if (body.hasOwnProperty('code')) {
 		attributes.code = body.code;
 	}
+	if (body.hasOwnProperty('name')) {
+		attributes.name = body.name;
+	}
+	if (body.hasOwnProperty('description')) {
+		attributes.description = body.description;
+	}
 	if (body.hasOwnProperty('ruleBookId')) {
 		attributes.ruleBookId = body.ruleBookId;
-	}
-	if (body.hasOwnProperty('expired')) {
-		attributes.expired = body.expired;
 	}
 	if (body.hasOwnProperty('parent')) {
 		attributes.parent = body.parent;
@@ -68,8 +74,14 @@ module.exports.prepareForUpdate =  function (body) {
 	if (body.hasOwnProperty('createdBy')) {
 		attributes.createdBy = body.createdBy;
 	}
+	if (body.hasOwnProperty('createdDate')) {
+		attributes.createdDate = body.createdDate;
+	}
 	if (body.hasOwnProperty('updatedBy')) {
 		attributes.updatedBy = body.updatedBy;
+	}
+	if (body.hasOwnProperty('updatedDate')) {
+		attributes.updatedDate = body.updatedDate;
 	}
 	 
     return attributes;
@@ -80,8 +92,9 @@ module.exports.setClauseQuery =  function (query, where) {
  	if (query.hasOwnProperty('q') && query.q.length > 0) {
 		where = {
 		$or: [
-  		{name: { $like: '%' + query.q + '%' }}  
-		,{code: { $like: '%' + query.q + '%' }}  
+  		{code: { $like: '%' + query.q + '%' }}  
+		,{name: { $like: '%' + query.q + '%' }}  
+		,{description: { $like: '%' + query.q + '%' }}  
 	 			]
 			}
 		}
@@ -150,16 +163,17 @@ module.exports.setClauseOrder = function (req) {
         if ((req.body.hasOwnProperty(req.query.orderBy)) 
 					|| (req.query.orderBy == 'id')
 					|| (req.query.orderBy == 'active')
-					|| (req.query.orderBy == 'name')
-					|| (req.query.orderBy == 'code')
-					|| (req.query.orderBy == 'ruleBookId')
 					|| (req.query.orderBy == 'expired')
+					|| (req.query.orderBy == 'code')
+					|| (req.query.orderBy == 'name')
+					|| (req.query.orderBy == 'description')
+					|| (req.query.orderBy == 'ruleBookId')
 					|| (req.query.orderBy == 'parent')
 					|| (req.query.orderBy == 'parentListId')
 					|| (req.query.orderBy == 'createdBy')
+					|| (req.query.orderBy == 'createdDate')
 					|| (req.query.orderBy == 'updatedBy')
-					|| (req.query.orderBy == 'createdAt')
-					|| (req.query.orderBy == 'updatedAt')
+					|| (req.query.orderBy == 'updatedDate')
 		 
 		){
 

@@ -31,7 +31,7 @@ if (env === 'production') {
     });
 } else {
 	var Sequelize = require("sequelize");
-	var sequelize = new Sequelize('d2d_v1', 'postgres', 'Houses22', {
+	var sequelize = new Sequelize('d2d', 'postgres', 'Houses22', {
 		host: "localhost",
 		port: 5432,
 		dialect: 'postgres',
@@ -40,6 +40,7 @@ if (env === 'production') {
 			freezeTableName: true,
 			charset: 'utf8',
 			collate: 'utf8_general_ci',
+			timestamps: false
 		},
 		// use pooling in order to reduce db connection overload and to increase speed
 		// currently only for mysql and postgresql (since v1.5.0)
