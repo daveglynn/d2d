@@ -30,6 +30,8 @@ define("tenantId_Default", 1);
 define("profileId_Default", 1);
 define("languageId_Default", 1);
 define("roleId_Default", 3);
+define("ruleBookId_Default", 1);
+define("parentListId_Default", 1);
 
 
 define("companyId_Default", 1);

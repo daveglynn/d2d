@@ -65,7 +65,7 @@ module.exports.setPost = function (req, mode) {
 			body.profileId = constants.profileId_Default.toString();
 		}
     					
-		body.tenantId = common.modelTenantId(req); 
+		body.tenantId = -9999; 
 	} else {
         body.updatedBy = common.modelUserId(req);
     }
