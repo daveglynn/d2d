@@ -6,18 +6,18 @@ var _ = require('underscore')
 var v = require('validator');
 var constants = require('../../shared/constant.shared');
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
     var access = sequelize.define('access', {
         tenantId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: null            
+            defaultValue: null
         },
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
-        },	
+        },
         expired: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
@@ -115,77 +115,76 @@ module.exports = function(sequelize, DataTypes) {
         profileId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: null            
-        },         
+            defaultValue: null
+        },
         companyId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: null            
-        }, 
+            defaultValue: null
+        },
         divisionId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: null            
+            defaultValue: null
         },
         objectId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: null           
-        },                        
-           canAdd: {
+            defaultValue: null
+        },
+        canAdd: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
-        }, 
+        },
         canView: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
-        },         
+        },
         canEdit: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
-        },   
+        },
         canDelete: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
-        },                       
-		setAllModeElements: {
+        },
+        setAllModeElements: {
             type: DataTypes.JSON,
             allowNull: true,
-        }, 
-		setAddModeElements: {
+        },
+        setAddModeElements: {
             type: DataTypes.JSON,
             allowNull: true,
-        }, 
-		setViewModeElements: {
+        },
+        setViewModeElements: {
             type: DataTypes.JSON,
             allowNull: true,
-        },     
-		setEditModeElements: {
+        },
+        setEditModeElements: {
             type: DataTypes.JSON,
             allowNull: true,
-        }, 
-		setDeleteModeElements: {
+        },
+        setDeleteModeElements: {
             type: DataTypes.JSON,
             allowNull: true,
         }
     }, {
-        getterMethods: {
-            idCode: function () {
-                return this.id + ':' + this.code
-            }
-        },
-            instanceMethods: {
-                toPublicJSON: function() {
-                    var json = this.toJSON();
-                    return _.omit(json, 'tenantId');
+            getterMethods: {
+                idCode: function () {
+                    return this.id + ':' + this.code
                 }
             }
-
         });
+
+    // Instance Methods
+    access.prototype.toPublicJSON = function () {
+        var json = this.toJSON();
+        return _.omit(json, 'tenantId');
+    }
 
     return access;
 };

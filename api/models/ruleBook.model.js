@@ -11,8 +11,8 @@ module.exports = function (sequelize, DataTypes) {
         tenantId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: null            
-        }, 
+            defaultValue: null
+        },
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
@@ -22,7 +22,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
-        },     
+        },
         code: {
             type: DataTypes.STRING,
             allowNull: true,
@@ -36,7 +36,7 @@ module.exports = function (sequelize, DataTypes) {
                     }
                 },
             }
-        },  
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -50,7 +50,7 @@ module.exports = function (sequelize, DataTypes) {
                     }
                 },
             }
-        }, 
+        },
         description: {
             type: DataTypes.STRING,
             allowNull: true,
@@ -99,17 +99,18 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
     }, {
-            getterMethods   : {
-                recordDescription  : function()  { return '(' + this.id + '/' + this.name + ')' }
-            },        
-            instanceMethods: {
-                toPublicJSON: function () {
-                    var json = this.toJSON();
-                    return _.omit(json, 'tenantId');
+            getterMethods: {
+                recordDescription: function () {
+                    return this.id + ':' + this.code
                 }
             }
-
         });
 
+    // Instance Methods
+    access.prototype.toPublicJSON = function () {
+        var json = this.toJSON();
+        return _.omit(json, 'tenantId');
+    }
+
     return ruleBook;
-}
+};

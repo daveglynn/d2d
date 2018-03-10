@@ -6,12 +6,12 @@ var _ = require('underscore')
 var v = require('validator');
 var constants = require('../../shared/constant.shared');
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
     var profile = sequelize.define('profile', {
         tenantId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: null            
+            defaultValue: null
         },
         active: {
             type: DataTypes.BOOLEAN,
@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
-        },	
+        },
         code: {
             type: DataTypes.STRING,
             allowNull: true,
@@ -113,19 +113,18 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: null
         }
     }, {
-        getterMethods: {
-            idCode: function () {
-                return this.id + ':' + this.code
-            }
-        },
-            instanceMethods: {
-                toPublicJSON: function() {
-                    var json = this.toJSON();
-                    return _.omit(json, 'tenantId');
+            getterMethods: {
+                idCode: function () {
+                    return this.id + ':' + this.code
                 }
             }
-
         });
+
+    // Instance Methods
+    access.prototype.toPublicJSON = function () {
+        var json = this.toJSON();
+        return _.omit(json, 'tenantId');
+    }
 
     return profile;
 };

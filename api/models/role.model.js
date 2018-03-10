@@ -108,19 +108,18 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: null
         }
     }, {
-        getterMethods: {
-            idCode: function () {
-                return this.id + ':' + this.code
-            }
-        },
-            instanceMethods: {
-                toPublicJSON: function () {
-                    var json = this.toJSON();
-                    return _.omit(json, 'tenantId');
+            getterMethods: {
+                idCode: function () {
+                    return this.id + ':' + this.code
                 }
             }
-
         });
 
+    // Instance Methods
+    access.prototype.toPublicJSON = function () {
+        var json = this.toJSON();
+        return _.omit(json, 'tenantId');
+    }
+
     return role;
-}
+};

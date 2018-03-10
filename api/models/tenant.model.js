@@ -6,7 +6,7 @@ var _ = require('underscore')
 var v = require('validator');
 var constants = require('../../shared/constant.shared');
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
     var tenant = sequelize.define('tenant', {
         active: {
             type: DataTypes.BOOLEAN,
@@ -108,17 +108,18 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: null
         }
     }, {
-            getterMethods   : {
-                recordDescription  : function()  { return '(' + this.id + '/' + this.name + ')' }
-            },        
-            instanceMethods: {
-                toPublicJSON: function () {
-                    var json = this.toJSON();
-                    return _.omit(json, '');
+            getterMethods: {
+                recordDescription: function () {
+                    return this.id + ':' + this.code
                 }
             }
-
         });
 
-    return tenant;
-}
+    // Instance Methods
+    access.prototype.toPublicJSON = function () {
+        var json = this.toJSON();
+        return _.omit(json, 'tenantId');
+    }
+
+    return ruleBook;
+};

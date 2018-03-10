@@ -10,14 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.15.0",
-    "crypto-js": "^3.1.6",
-    "express": "^4.13.4",
-    "jsonwebtoken": "^6.2.0",
-    "permission": "^1.0.4",
-    "pg": "^4.5.5",
+    "body-parser": "^1.18.2",
+    "crypto-js": "^3.1.9-1",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.2.0",
+    "permission": "^1.1.0",
+    "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.22.0",
+    "sequelize": "^4.35.2",
     "underscore": "^1.8.3"
   }
 }

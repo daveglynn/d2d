@@ -12,8 +12,8 @@ module.exports = function (sequelize, DataTypes) {
         tenantId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: null            
-        },        
+            defaultValue: null
+        },
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
@@ -91,7 +91,7 @@ module.exports = function (sequelize, DataTypes) {
                         next()
                     }
                 },
-            } 
+            }
         },
         createdBy: {
             type: DataTypes.INTEGER,
@@ -127,19 +127,18 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
     }, {
-        getterMethods: {
-            idCode: function () {
-                return this.id + ':' + this.code 
-            }
-        },
-            instanceMethods: {
-                toPublicJSON: function () {
-                    var json = this.toJSON();
-                    return _.omit(json, 'tenantId');
+            getterMethods: {
+                idCode: function () {
+                    return this.id + ':' + this.code
                 }
             }
-
         });
 
+    // Instance Methods
+    access.prototype.toPublicJSON = function () {
+        var json = this.toJSON();
+        return _.omit(json, 'tenantId');
+    }
+
     return item;
-}
+};

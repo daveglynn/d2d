@@ -6,7 +6,7 @@ var _ = require('underscore')
 var v = require('validator');
 var constants = require('../../shared/constant.shared');
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
     var todo = sequelize.define('todo', {
         tenantId: {
             type: DataTypes.INTEGER,
@@ -115,20 +115,21 @@ module.exports = function(sequelize, DataTypes) {
         userId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: null            
+            defaultValue: null
         }
     }, {
-            getterMethods   : {
-                recordDescription  : function()  { return '(' + this.id + '/' + this.description + ')' }
-            },        
-            instanceMethods: {
-                toPublicJSON: function() {
-                    var json = this.toJSON();
-                    return _.omit(json, 'tenantId');
+            getterMethods: {
+                recordDescription: function () {
+                    return this.id + ':' + this.code
                 }
             }
-
         });
+
+    // Instance Methods
+    access.prototype.toPublicJSON = function () {
+        var json = this.toJSON();
+        return _.omit(json, 'tenantId');
+    }
 
     return todo;
 };

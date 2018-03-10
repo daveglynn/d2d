@@ -44,8 +44,7 @@ if (env === 'production') {
 		},
 		// use pooling in order to reduce db connection overload and to increase speed
 		// currently only for mysql and postgresql (since v1.5.0)
-		pool: { maxConnections: 5, maxIdleTime: 30},
-		
+		pool: {idle: 30, max: 30},
 		language: 'en'		
     });
 	//
@@ -72,7 +71,7 @@ db.tenant = sequelize.import(__dirname + '/api/models/tenant.model.js');
 db.todo = sequelize.import(__dirname + '/api/models/todo.model.js');
 db.token = sequelize.import(__dirname + '/api/models/token.model.js');
 db.user = sequelize.import(__dirname + '/api/models/user.model.js');
-
+ 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
